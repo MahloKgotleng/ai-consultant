@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>AI Ethics Framework — Mahlo Kgotleng AI Consulting</title>
+<meta name="description" content="The complete AI Ethics Framework governing all tools and consulting work by Mahlo Kgotleng. IBM AI Ethics. POPIA. GDPR. Built for Africa and the world."/>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=DM+Sans:wght@300;400;500&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet"/>
+<style>
+  :root{--bg:#050e09;--card:#0a1f12;--border:#163324;--green:#2e8b57;--green-lt:#52b788;--gold:#f0a500;--gold-lt:#ffc93c;--teal:#009d9a;--cream:#f0f7f2;--muted:#7aab8a;}
+  *{margin:0;padding:0;box-sizing:border-box;}
+  body{background:var(--bg);color:var(--cream);font-family:'DM Sans',sans-serif;line-height:1.8;}
+  nav{display:flex;justify-content:space-between;align-items:center;padding:20px 60px;border-bottom:1px solid var(--border);background:rgba(5,14,9,0.95);position:sticky;top:0;z-index:100;}
+  .nav-logo{font-family:'Space Mono',monospace;font-size:13px;color:var(--gold);letter-spacing:2px;}
+  .nav-back{color:var(--muted);text-decoration:none;font-size:13px;font-family:'Space Mono',monospace;transition:color 0.3s;}
+  .nav-back:hover{color:var(--gold);}
+  main{max-width:900px;margin:0 auto;padding:60px 40px 100px;}
+  .page-label{font-family:'Space Mono',monospace;font-size:11px;color:var(--green-lt);letter-spacing:3px;text-transform:uppercase;margin-bottom:16px;}
+  h1{font-family:'Playfair Display',serif;font-size:48px;font-weight:900;color:var(--gold);margin-bottom:12px;line-height:1.1;}
+  .subtitle{font-size:17px;color:var(--muted);max-width:600px;line-height:1.8;margin-bottom:16px;}
+  .last-updated{font-family:'Space Mono',monospace;font-size:11px;color:var(--muted);margin-bottom:52px;}
+  
+  /* IBM PILLARS */
+  .ibm-pillars{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:18px;margin-bottom:60px;}
+  .pillar-card{background:var(--card);border-radius:4px;padding:28px 22px;text-align:center;transition:all 0.3s;}
+  .pillar-card:hover{transform:translateY(-4px);}
+  .pillar-icon{font-size:36px;margin-bottom:16px;}
+  .pillar-name{font-family:'Playfair Display',serif;font-size:18px;font-weight:700;color:var(--cream);margin-bottom:10px;}
+  .pillar-desc{font-size:13px;color:var(--muted);line-height:1.7;}
+  .pillar-ibm{font-family:'Space Mono',monospace;font-size:9px;margin-top:10px;letter-spacing:1px;text-transform:uppercase;}
+
+  h2{font-family:'Playfair Display',serif;font-size:28px;font-weight:700;color:var(--cream);margin:48px 0 16px;}
+  h3{font-family:'Space Mono',monospace;font-size:12px;color:var(--gold);letter-spacing:1.5px;text-transform:uppercase;margin:28px 0 12px;}
+  p{font-size:15px;color:var(--muted);margin-bottom:16px;line-height:1.8;}
+  ul{list-style:none;margin-bottom:24px;}
+  ul li{font-size:15px;color:var(--muted);padding:9px 0;border-bottom:1px solid rgba(22,51,36,0.5);display:flex;gap:12px;align-items:flex-start;}
+  ul li::before{content:'✦';color:var(--gold);flex-shrink:0;font-size:12px;margin-top:3px;}
+
+  .commitment-grid{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin:24px 0;}
+  .commitment-card{background:var(--card);border:1px solid var(--border);border-radius:4px;padding:22px;}
+  .commitment-card.green{border-color:rgba(46,139,87,0.4);}
+  .commitment-card.gold{border-color:rgba(240,165,0,0.3);}
+  .commitment-card.teal{border-color:rgba(0,157,154,0.3);}
+  .cc-label{font-family:'Space Mono',monospace;font-size:10px;letter-spacing:1.5px;text-transform:uppercase;margin-bottom:8px;}
+  .cc-title{font-family:'Playfair Display',serif;font-size:17px;font-weight:700;color:var(--cream);margin-bottom:8px;}
+  .cc-desc{font-size:13px;color:var(--muted);line-height:1.7;}
+
+  .promise-box{background:linear-gradient(135deg,rgba(46,139,87,0.1),rgba(240,165,0,0.05));border:2px solid rgba(46,139,87,0.4);border-radius:4px;padding:36px;text-align:center;margin:40px 0;}
+  .promise-box h3{color:var(--green-lt);font-size:14px;margin-bottom:16px;}
+  .promise-box p{font-size:16px;color:var(--cream);line-height:1.9;margin:0;max-width:640px;margin:0 auto;}
+
+  .never-list{background:rgba(193,68,14,0.05);border:1px solid rgba(193,68,14,0.2);border-radius:4px;padding:24px;margin:24px 0;}
+  .never-list h3{color:#e88;margin-bottom:14px;}
+  .never-list ul li::before{content:'✗';color:#e88;}
+  .never-list ul li{color:#c8a090;border-color:rgba(193,68,14,0.15);}
+
+  footer-bar{display:block;text-align:center;padding:32px;border-top:1px solid var(--border);font-family:'Space Mono',monospace;font-size:11px;color:var(--muted);margin-top:60px;}
+  footer-bar a{color:var(--gold);text-decoration:none;}
+  @media(max-width:700px){nav{padding:16px 20px;}main{padding:40px 20px 80px;}h1{font-size:34px;}.commitment-grid{grid-template-columns:1fr;}}
+</style>
+</head>
+<body>
+<nav>
+  <div class="nav-logo">MK · AI Consulting</div>
+  <a href="index.html" class="nav-back">← Back to Website</a>
+</nav>
+<main>
+  <div class="page-label">AI Ethics · IBM Framework · POPIA · GDPR</div>
+  <h1>AI Ethics<br/>Framework</h1>
+  <p class="subtitle">Every tool I build and every system I architect is governed by this framework — derived from IBM AI Ethics principles, POPIA legislation, and international best practice.</p>
+  <div class="last-updated">Established: 19 February 2026 · Aligned with IBM AI Ethics · POPIA Act 4 of 2013 · GDPR 2018</div>
+
+  <h2>The Five IBM AI Ethics Pillars</h2>
+  <p>My consulting practice and all tools I build are anchored in the five pillars of ethical AI as established by IBM — the organisation that certified my AI expertise.</p>
+
+  <div class="ibm-pillars">
+    <div class="pillar-card" style="border:1px solid rgba(240,165,0,0.3);">
+      <div class="pillar-icon">🔍</div>
+      <div class="pillar-name">Explainability</div>
+      <div class="pillar-desc">AI systems I build can explain their reasoning in plain language. No black boxes. Every output can be understood and justified.</div>
+      <div class="pillar-ibm" style="color:var(--gold);">IBM AI Ethics · Pillar 1</div>
+    </div>
+    <div class="pillar-card" style="border:1px solid rgba(82,183,136,0.35);">
+      <div class="pillar-icon">⚖️</div>
+      <div class="pillar-name">Fairness</div>
+      <div class="pillar-desc">AI systems I build are tested for bias and designed to treat all users equitably — regardless of race, gender, age, or geography.</div>
+      <div class="pillar-ibm" style="color:var(--green-lt);">IBM AI Ethics · Pillar 2</div>
+    </div>
+    <div class="pillar-card" style="border:1px solid rgba(0,157,154,0.3);">
+      <div class="pillar-icon">🛡️</div>
+      <div class="pillar-name">Robustness</div>
+      <div class="pillar-desc">AI systems I build handle unexpected inputs safely, fail gracefully, and maintain reliable performance even in constrained environments.</div>
+      <div class="pillar-ibm" style="color:var(--teal);">IBM AI Ethics · Pillar 3</div>
+    </div>
+    <div class="pillar-card" style="border:1px solid rgba(240,165,0,0.3);">
+      <div class="pillar-icon">👁️</div>
+      <div class="pillar-name">Transparency</div>
+      <div class="pillar-desc">Users always know they are interacting with AI. The source, purpose, and limitations of every AI system I deploy are clearly disclosed.</div>
+      <div class="pillar-ibm" style="color:var(--gold);">IBM AI Ethics · Pillar 4</div>
+    </div>
+    <div class="pillar-card" style="border:1px solid rgba(82,183,136,0.35);">
+      <div class="pillar-icon">🔒</div>
+      <div class="pillar-name">Privacy</div>
+      <div class="pillar-desc">Data minimisation, zero retention, and privacy-by-design are built into every system from the ground up — not added as afterthoughts.</div>
+      <div class="pillar-ibm" style="color:var(--green-lt);">IBM AI Ethics · Pillar 5</div>
+    </div>
+  </div>
+
+  <h2>My Specific Commitments</h2>
+
+  <div class="commitment-grid">
+    <div class="commitment-card green">
+      <div class="cc-label" style="color:var(--green-lt);">Data Sovereignty</div>
+      <div class="cc-title">Your Data Stays Yours</div>
+      <div class="cc-desc">No data entered into my demo tools is ever stored, shared, or used for any purpose beyond generating your immediate response. Zero retention. By design.</div>
+    </div>
+    <div class="commitment-card gold">
+      <div class="cc-label" style="color:var(--gold);">Transparency</div>
+      <div class="cc-title">Always Disclosed as AI</div>
+      <div class="cc-desc">Every AI tool I build clearly discloses that users are interacting with artificial intelligence. No deception. No impersonation of humans.</div>
+    </div>
+    <div class="commitment-card teal">
+      <div class="cc-label" style="color:var(--teal);">Purpose Limitation</div>
+      <div class="cc-title">Used Only for Stated Purpose</div>
+      <div class="cc-desc">Data collected during consulting engagements is used only for the specific purpose agreed upon in writing. Never repurposed. Never monetised.</div>
+    </div>
+    <div class="commitment-card green">
+      <div class="cc-label" style="color:var(--green-lt);">Bias Prevention</div>
+      <div class="cc-title">Actively Anti-Bias</div>
+      <div class="cc-desc">I evaluate AI outputs for cultural, racial, and gender bias before deployment. African contexts are tested specifically — not assumed to match Western defaults.</div>
+    </div>
+    <div class="commitment-card gold">
+      <div class="cc-label" style="color:var(--gold);">POPIA Compliance</div>
+      <div class="cc-title">South African Law First</div>
+      <div class="cc-desc">All tools and consulting services comply with the Protection of Personal Information Act 4 of 2013, including Sections 19 (security) and 22 (notification of breaches).</div>
+    </div>
+    <div class="commitment-card teal">
+      <div class="cc-label" style="color:var(--teal);">GDPR Alignment</div>
+      <div class="cc-title">International Standard</div>
+      <div class="cc-desc">For international clients, all systems are designed to meet GDPR requirements — data minimisation, right to erasure, and explicit consent where required.</div>
+    </div>
+  </div>
+
+  <div class="never-list">
+    <h3 style="font-family:'Space Mono',monospace;font-size:12px;letter-spacing:1px;">I WILL NEVER BUILD AI THAT:</h3>
+    <ul>
+      <li>Deceives users into believing they are talking to a human when they are not</li>
+      <li>Discriminates against individuals based on race, gender, age, religion, or geography</li>
+      <li>Collects or stores personal data without explicit informed consent</li>
+      <li>Is designed to surveil, manipulate, or psychologically harm individuals</li>
+      <li>Serves authoritarian control, mass surveillance, or suppression of rights</li>
+      <li>Generates or amplifies misinformation, hate speech, or harmful content</li>
+      <li>Operates without meaningful human oversight in high-stakes decisions</li>
+    </ul>
+  </div>
+
+  <h2>Africa-Specific Ethics Commitments</h2>
+  <p>As an African AI consultant serving African businesses and communities, I hold additional ethical obligations that go beyond global frameworks:</p>
+  <ul>
+    <li>AI systems I build for African clients are tested against African data, languages, and cultural contexts — not just Western benchmarks</li>
+    <li>I actively work to ensure AI adoption in Africa reduces inequality rather than amplifying existing disadvantages</li>
+    <li>I price consulting services to be accessible to SMEs and community organisations — not only large corporations</li>
+    <li>I advocate for African data sovereignty — the right of African communities to control data generated on the continent</li>
+    <li>I will not build AI systems that exploit African labour, data, or natural resources for offshore benefit without fair compensation</li>
+  </ul>
+
+  <div class="promise-box">
+    <h3>THE MAHLO KGOTLENG ETHICS PROMISE</h3>
+    <p>Every AI system I build, every strategy I recommend, and every tool I deploy will be one I would be proud to demonstrate to any regulator, any community it serves, and any future generation that inherits its impact. I build for dignity. I build for justice. I build for Africa and the world.</p>
+  </div>
+
+  <h2>Reporting an Ethics Concern</h2>
+  <p>If you believe any tool or service I provide violates these ethics principles, I want to know. Contact me directly at <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="a1cac6ced5cdc4cfc6c4dbc4cac8c4cde1c6ccc0c8cd8fc2cecc">[email&#160;protected]</a> with the subject line "Ethics Concern" — I commit to responding within 3 business days and taking appropriate corrective action.</p>
+
+  <p>For POPIA-related complaints, you may also contact South Africa's Information Regulator at <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="fc95929a938e999bbc96898f88959f99d29b938ad2869d">[email&#160;protected]</a> or visit inforegulator.org.za.</p>
+</main>
+<
