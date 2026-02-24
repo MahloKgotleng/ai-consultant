@@ -1,380 +1,59 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8"/>
-<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>Mahlo AI — Document Summarizer | POPIA Compliant | South Africa</title>
-<meta name="description" content="AI-powered document summarizer by Mahlo Kgotleng. Instantly summarize contracts, reports, and business documents. POPIA compliant. Zero data retention. IBM AI Ethics."/>
-<meta name="keywords" content="AI Document Summarizer, POPIA Compliant AI, Business AI Tool, AI Consultant South Africa, Mahlo Kgotleng, Document Analysis AI"/>
-<meta name="author" content="Mahlo Kgotleng"/>
-<meta name="robots" content="index, follow"/>
-<link rel="canonical" href="https://mahlokgotleng.github.io/developer-journey/summarizer_demo.html"/>
-<meta property="og:type" content="website"/>
-<meta property="og:url" content="https://mahlokgotleng.github.io/developer-journey/summarizer_demo.html"/>
-<meta property="og:title" content="AI Document Summarizer — Mahlo Kgotleng AI Consulting"/>
-<meta property="og:description" content="Instantly summarize any business document using AI. POPIA compliant. Zero data retention. Built by IBM-certified AI Consultant in South Africa."/>
-<meta name="twitter:card" content="summary"/>
-<meta name="twitter:title" content="AI Document Summarizer — Mahlo Kgotleng"/>
-<meta name="twitter:description" content="Instantly summarize contracts, reports, and business documents. POPIA compliant. Zero data retention."/>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400&family=DM+Sans:wght@300;400;500&family=IBM+Plex+Mono:wght@300;400;500&display=swap" rel="stylesheet"/>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Text Summarizer Demo — Mahlo Kgotleng AI Consulting</title>
 <style>
-  :root {
-    --earth:    #1a0e05;
-    --bark:     #2c1a0e;
-    --clay:     #3d2410;
-    --savanna:  #c8860a;
-    --gold:     #e8a020;
-    --gold-lt:  #f5c048;
-    --cream:    #f5ead8;
-    --fynbos:   #2d6a4f;
-    --fynbos-lt:#52b788;
-    --ndebele:  #c1440e;
-    --border:   #3d2c1a;
-    --muted:    #8a7060;
-    --mono:     'IBM Plex Mono', monospace;
-  }
-  * { margin:0; padding:0; box-sizing:border-box; }
-  body { background:var(--earth); color:var(--cream); font-family:'DM Sans',sans-serif; min-height:100vh; }
-  body::before {
-    content:''; position:fixed; inset:0;
-    background:
-      radial-gradient(ellipse 900px 600px at 10% 10%, rgba(200,134,10,0.08) 0%, transparent 60%),
-      radial-gradient(ellipse 700px 500px at 90% 90%, rgba(45,106,79,0.07) 0%, transparent 60%);
-    pointer-events:none; z-index:0;
-  }
-  body::after {
-    content:''; position:fixed; inset:0;
-    background-image:
-      linear-gradient(rgba(200,134,10,0.025) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(200,134,10,0.025) 1px, transparent 1px);
-    background-size:40px 40px;
-    pointer-events:none; z-index:0;
-  }
-
-  /* ETHICS BANNER */
-  .ethics-banner {
-    position:relative; z-index:20;
-    background:var(--fynbos); padding:10px 24px;
-    display:flex; align-items:center; justify-content:space-between;
-    flex-wrap:wrap; gap:8px; border-bottom:2px solid var(--gold);
-  }
-  .ethics-left { display:flex; align-items:center; gap:10px; font-family:var(--mono); font-size:10px; color:#fff; letter-spacing:1px; }
-  .ethics-right { font-family:var(--mono); font-size:9px; color:rgba(255,255,255,0.7); letter-spacing:0.5px; }
-
-  /* NAV */
-  nav {
-    position:sticky; top:0; z-index:10;
-    display:flex; align-items:center; justify-content:space-between;
-    padding:14px 40px; border-bottom:1px solid var(--border);
-    background:rgba(26,14,5,0.95); backdrop-filter:blur(16px);
-  }
-  .nav-brand { display:flex; align-items:center; gap:10px; }
-  .nav-icon { width:34px; height:34px; background:linear-gradient(135deg,var(--savanna),var(--ndebele)); border-radius:8px; display:flex; align-items:center; justify-content:center; font-size:17px; box-shadow:0 0 14px rgba(200,134,10,0.3); }
-  .nav-name { font-family:'Cormorant Garamond',serif; font-size:18px; font-weight:700; color:var(--gold); }
-  .nav-pill { font-family:var(--mono); font-size:10px; background:rgba(200,134,10,0.12); border:1px solid rgba(200,134,10,0.3); color:var(--gold); padding:4px 12px; border-radius:20px; }
-
-  /* MAIN */
-  main { position:relative; z-index:1; max-width:1000px; margin:0 auto; padding:40px 24px 80px; }
-
-  .page-header { text-align:center; margin-bottom:40px; animation:fadeUp 0.6s ease both; }
-  .eyebrow { font-family:var(--mono); font-size:11px; color:var(--fynbos-lt); letter-spacing:3px; text-transform:uppercase; margin-bottom:14px; }
-  .page-header h1 { font-family:'Cormorant Garamond',serif; font-size:clamp(30px,5vw,48px); font-weight:700; color:var(--gold); margin-bottom:12px; line-height:1.1; }
-  .page-header p { font-size:15px; color:var(--muted); max-width:520px; margin:0 auto; line-height:1.7; }
-
-  /* WORKSPACE */
-  .workspace { display:grid; grid-template-columns:1fr 1fr; gap:20px; animation:fadeUp 0.6s ease 0.2s both; }
-  @media(max-width:720px) { .workspace{grid-template-columns:1fr} }
-
-  .panel { background:var(--bark); border:1px solid var(--border); border-radius:14px; overflow:hidden; }
-  .panel-header { padding:14px 18px; border-bottom:1px solid var(--border); display:flex; align-items:center; justify-content:space-between; }
-  .panel-title { font-family:var(--mono); font-size:11px; color:var(--muted); letter-spacing:2px; text-transform:uppercase; display:flex; align-items:center; gap:8px; }
-  .pdot { width:8px; height:8px; border-radius:50%; }
-  .pdot.gold { background:var(--gold); }
-  .pdot.green { background:var(--fynbos-lt); }
-  .char-count { font-family:var(--mono); font-size:10px; color:var(--muted); }
-
-  .drop-zone { padding:18px; min-height:280px; display:flex; flex-direction:column; gap:14px; }
-  .drop-area {
-    border:2px dashed var(--border); border-radius:10px; padding:24px 18px;
-    text-align:center; cursor:pointer; transition:all 0.3s; background:rgba(255,255,255,0.01);
-  }
-  .drop-area:hover, .drop-area.drag-over { border-color:var(--savanna); background:rgba(200,134,10,0.06); }
-  .drop-icon { font-size:28px; margin-bottom:8px; display:block; }
-  .drop-label { font-size:14px; font-weight:600; margin-bottom:4px; color:var(--cream); }
-  .drop-sub { font-family:var(--mono); font-size:11px; color:var(--muted); }
-
-  .divider { display:flex; align-items:center; gap:10px; }
-  .divider::before,.divider::after { content:''; flex:1; height:1px; background:var(--border); }
-  .divider span { font-family:var(--mono); font-size:10px; color:var(--muted); letter-spacing:1px; }
-
-  .text-input {
-    background:rgba(255,255,255,0.03); border:1px solid var(--border);
-    color:var(--cream); font-family:'DM Sans',sans-serif; font-size:14px;
-    padding:13px 15px; border-radius:10px; resize:none; outline:none;
-    width:100%; min-height:150px; line-height:1.7; transition:border-color 0.25s;
-  }
-  .text-input::placeholder { color:var(--muted); font-style:italic; }
-  .text-input:focus { border-color:var(--savanna); }
-
-  .format-row { display:flex; gap:8px; flex-wrap:wrap; }
-  .format-chip {
-    font-family:var(--mono); font-size:11px; padding:6px 13px; border-radius:20px;
-    cursor:pointer; border:1px solid var(--border); background:transparent;
-    color:var(--muted); transition:all 0.2s; letter-spacing:0.5px;
-  }
-  .format-chip.active { background:rgba(200,134,10,0.12); border-color:var(--savanna); color:var(--cream); }
-  .format-chip:hover:not(.active) { border-color:var(--muted); color:var(--cream); }
-
-  .analyze-btn {
-    width:100%; padding:15px;
-    background:linear-gradient(135deg,var(--savanna),var(--ndebele));
-    border:none; border-radius:10px; color:#fff;
-    font-family:'Cormorant Garamond',serif; font-size:18px; font-weight:700;
-    cursor:pointer; transition:all 0.3s;
-    box-shadow:0 4px 20px rgba(200,134,10,0.3);
-  }
-  .analyze-btn:hover:not(:disabled) { transform:translateY(-2px); box-shadow:0 8px 32px rgba(200,134,10,0.45); }
-  .analyze-btn:disabled { opacity:0.5; cursor:not-allowed; transform:none; }
-
-  /* OUTPUT */
-  .output-body { padding:18px; min-height:280px; }
-  .placeholder-state { min-height:240px; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:10px; color:var(--muted); text-align:center; }
-  .placeholder-icon { font-size:36px; opacity:0.4; }
-  .placeholder-text { font-family:var(--mono); font-size:11px; letter-spacing:1px; opacity:0.5; }
-
-  .loading-state { display:none; flex-direction:column; gap:10px; padding:8px 0; }
-  .loading-state.show { display:flex; }
-  .skeleton { background:linear-gradient(90deg,var(--border) 25%,var(--clay) 50%,var(--border) 75%); background-size:200% 100%; animation:shimmer 1.5s infinite; border-radius:6px; height:13px; }
-  .skeleton.title{width:55%;height:18px} .skeleton.full{width:100%} .skeleton.wide{width:85%} .skeleton.medium{width:70%} .skeleton.short{width:50%}
-  @keyframes shimmer{0%{background-position:200% 0}100%{background-position:-200% 0}}
-
-  .result-content { display:none; }
-  .result-content.show { display:block; animation:fadeUp 0.4s ease; }
-  .result-section { margin-bottom:18px; }
-  .result-label { font-family:var(--mono); font-size:10px; color:var(--fynbos-lt); letter-spacing:2px; text-transform:uppercase; margin-bottom:8px; }
-  .result-summary { font-family:'Cormorant Garamond',serif; font-size:16px; line-height:1.8; color:var(--cream); }
-  .key-points { list-style:none; }
-  .key-points li { display:flex; gap:10px; align-items:flex-start; padding:7px 0; border-bottom:1px solid var(--border); font-size:14px; line-height:1.6; }
-  .key-points li:last-child { border-bottom:none; }
-  .key-bullet { color:var(--gold); font-weight:800; flex-shrink:0; margin-top:1px; }
-
-  /* ETHICS RESULT BADGE */
-  .ethics-result {
-    margin-top:14px; padding:10px 14px;
-    background:rgba(45,106,79,0.15); border:1px solid rgba(82,183,136,0.3);
-    border-radius:8px; font-family:var(--mono); font-size:10px;
-    color:var(--fynbos-lt); letter-spacing:0.5px; line-height:1.6;
-  }
-
-  .action-bar { display:flex; gap:8px; margin-top:16px; padding-top:14px; border-top:1px solid var(--border); }
-  .action-btn {
-    flex:1; padding:9px; border-radius:8px; cursor:pointer;
-    font-family:var(--mono); font-size:11px; font-weight:500;
-    border:1px solid var(--border); background:transparent; color:var(--muted); transition:all 0.2s;
-  }
-  .action-btn:hover { border-color:var(--savanna); color:var(--cream); }
-  .action-btn.copied { border-color:var(--fynbos-lt); color:var(--fynbos-lt); }
-
-  /* STATS */
-  .stats-bar { display:none; grid-template-columns:repeat(3,1fr); gap:14px; margin-top:20px; animation:fadeUp 0.5s ease both; }
-  .stats-bar.show { display:grid; }
-  .stat-card { background:var(--bark); border:1px solid var(--border); border-radius:10px; padding:18px 14px; text-align:center; }
-  .stat-num { font-family:'Cormorant Garamond',serif; font-size:30px; font-weight:700; color:var(--gold); margin-bottom:4px; }
-  .stat-label { font-family:var(--mono); font-size:10px; color:var(--muted); letter-spacing:1px; text-transform:uppercase; }
-
-  /* COPYRIGHT */
-  .copyright-footer {
-    text-align:center; margin-top:32px; padding:20px;
-    border-top:1px solid var(--border);
-    font-family:var(--mono); font-size:10px; color:var(--muted);
-    line-height:1.8; letter-spacing:0.3px;
-  }
-  .copyright-footer a { color:var(--savanna); text-decoration:none; }
-
-  @keyframes fadeUp { from{opacity:0;transform:translateY(14px)} to{opacity:1;transform:translateY(0)} }
+  body {font-family:'DM Sans',sans-serif; background:#050e09; color:#f0f7f2; margin:0; padding:0;}
+  nav{display:flex;justify-content:space-between;padding:16px 40px;background:rgba(5,14,9,0.95);border-bottom:1px solid #163324;}
+  .nav-logo{font-family:'Space Mono',monospace;color:#f0a500;letter-spacing:2px;}
+  .nav-back{color:#7aab8a;text-decoration:none;font-size:13px;}
+  main{max-width:800px;margin:60px auto;padding:0 20px;}
+  h1{font-family:'Playfair Display',serif;color:#f0a500;font-size:36px;margin-bottom:16px;}
+  textarea{width:100%;height:200px;padding:12px;border-radius:4px;border:1px solid #163324;background:#0a1f12;color:#f0f7f2;resize:none;}
+  button{padding:12px 20px;margin-top:12px;background:#2e8b57;border:none;color:#f0f7f2;border-radius:4px;cursor:pointer;}
+  button:hover{background:#52b788;}
+  #result{margin-top:20px;padding:12px;border-radius:4px;border:1px solid #163324;background:#0a1f12;color:#52b788;}
 </style>
 </head>
 <body>
-
-<!-- ETHICS BANNER -->
-<div class="ethics-banner">
-  <div class="ethics-left">
-    <span>🛡️</span>
-    <span>POPIA COMPLIANT · GDPR ALIGNED · IBM AI ETHICS · YOUR DOCUMENTS ARE NEVER STORED OR SHARED</span>
-  </div>
-  <div class="ethics-right">Zero data retention · No third-party sharing · Session-only processing · Powered by Claude AI</div>
-</div>
-
 <nav>
-  <div class="nav-brand">
-    <div class="nav-icon">📄</div>
-    <div class="nav-name">Mahlo AI · Document Summarizer</div>
-  </div>
-  <div class="nav-pill">LIVE DEMO</div>
+  <div class="nav-logo">MK · AI Consulting</div>
+  <a href="index.html" class="nav-back">← Back to Website</a>
 </nav>
-
 <main>
-  <div class="page-header">
-    <div class="eyebrow">AI-Powered · Ethically Built · Africa-First</div>
-    <h1>Turn Any Document<br/>Into Instant Clarity</h1>
-    <p>Paste any business text — contracts, reports, emails, proposals. Get a sharp, structured AI summary in seconds. Your document never leaves your browser.</p>
-  </div>
-
-  <div class="workspace">
-    <div class="panel">
-      <div class="panel-header">
-        <div class="panel-title"><div class="pdot gold"></div>Input Document</div>
-        <div class="char-count" id="charCount">0 / 8,000</div>
-      </div>
-      <div class="drop-zone">
-        <div class="drop-area" id="dropArea" onclick="document.getElementById('fileInput').click()" ondragover="event.preventDefault();this.classList.add('drag-over')" ondragleave="this.classList.remove('drag-over')" ondrop="handleDrop(event)">
-          <span class="drop-icon">📂</span>
-          <div class="drop-label">Drop a .txt file here</div>
-          <div class="drop-sub">or click to browse</div>
-          <input type="file" id="fileInput" accept=".txt,.md,.csv" style="display:none" onchange="handleFile(event)"/>
-        </div>
-        <div class="divider"><span>OR PASTE TEXT</span></div>
-        <textarea class="text-input" id="docInput" placeholder="Paste your document here...&#10;Contracts, reports, meeting notes, proposals, emails — any text." oninput="updateCount()" maxlength="8000"></textarea>
-        <div>
-          <div style="font-family:var(--mono);font-size:10px;color:var(--muted);letter-spacing:1px;margin-bottom:8px;">SUMMARY FORMAT</div>
-          <div class="format-row">
-            <button class="format-chip active" onclick="selectFormat(this,'executive')">Executive Brief</button>
-            <button class="format-chip" onclick="selectFormat(this,'bullets')">Key Points</button>
-            <button class="format-chip" onclick="selectFormat(this,'action')">Action Items</button>
-            <button class="format-chip" onclick="selectFormat(this,'risk')">Risk & Opportunities</button>
-          </div>
-        </div>
-        <button class="analyze-btn" id="analyzeBtn" onclick="analyze()">⚡ Analyze Document</button>
-      </div>
-    </div>
-
-    <div class="panel">
-      <div class="panel-header">
-        <div class="panel-title"><div class="pdot green"></div>AI Analysis</div>
-        <div id="procTime" style="font-family:var(--mono);font-size:10px;color:var(--muted);"></div>
-      </div>
-      <div class="output-body">
-        <div class="placeholder-state" id="placeholder">
-          <div class="placeholder-icon">✨</div>
-          <div class="placeholder-text">YOUR ANALYSIS WILL APPEAR HERE</div>
-        </div>
-        <div class="loading-state" id="loader">
-          <div class="skeleton title"></div>
-          <div style="height:6px"></div>
-          <div class="skeleton full"></div><div class="skeleton wide"></div><div class="skeleton medium"></div>
-          <div style="height:6px"></div>
-          <div class="skeleton full"></div><div class="skeleton short"></div><div class="skeleton wide"></div>
-        </div>
-        <div class="result-content" id="result">
-          <div class="result-section">
-            <div class="result-label">Summary</div>
-            <div class="result-summary" id="rSummary"></div>
-          </div>
-          <div class="result-section">
-            <div class="result-label">Key Points</div>
-            <ul class="key-points" id="rPoints"></ul>
-          </div>
-          <div class="ethics-result">
-            🛡️ ETHICS CONFIRMATION: This document was processed in your browser session only. No content was stored, logged, or shared with any third party. This tool is POPIA §19 compliant and GDPR aligned. Powered by Anthropic Claude AI — disclosed in accordance with IBM AI Ethics transparency principles. © 2026 Mahlo Kgotleng · mahlokgotleng.github.io/developer-journey
-          </div>
-          <div class="action-bar">
-            <button class="action-btn" id="copyBtn" onclick="copyResult()">📋 Copy</button>
-            <button class="action-btn" onclick="clearAll()">🗑 Clear</button>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <div class="stats-bar" id="statsBar">
-    <div class="stat-card"><div class="stat-num" id="sTime">—</div><div class="stat-label">Seconds</div></div>
-    <div class="stat-card"><div class="stat-num" id="sWords">—</div><div class="stat-label">Words Processed</div></div>
-    <div class="stat-card"><div class="stat-num" id="sReduce">—</div><div class="stat-label">Length Reduced</div></div>
-  </div>
-
-  <div class="copyright-footer">
-    © 2026 Mahlo Kgotleng · AI Consultant · South Africa · All Rights Reserved<br/>
-    <a href="https://mahlokgotleng.github.io/developer-journey/" target="_blank">mahlokgotleng.github.io/developer-journey</a><br/>
-    This tool is provided for demonstration purposes only. No personal information is collected, stored, or processed beyond your active session.<br/>
-    POPIA Section 19 Compliant · GDPR Aligned · IBM AI Ethics Principles Honoured · Powered by Anthropic Claude AI<br/>
-    Unauthorised copying, reselling, or redistribution of this tool is prohibited.
-  </div>
+<h1>Text Summarizer Demo</h1>
+<textarea id="input-text" placeholder="Paste text to summarize here..."></textarea>
+<button id="summarize-btn">Summarize</button>
+<div id="result"></div>
 </main>
-
 <script>
-let selectedFormat='executive';
-const prompts={
-  executive:`Analyze this business document. Respond ONLY in JSON: {"summary":"2-3 sentence executive summary","points":["point1","point2","point3","point4"]}`,
-  bullets:`Extract key information. Respond ONLY in JSON: {"summary":"2 sentence overview","points":["bullet1","bullet2","bullet3","bullet4","bullet5"]}`,
-  action:`Find action items. Respond ONLY in JSON: {"summary":"2 sentence context","points":["action1","action2","action3","action4"]}`,
-  risk:`Identify risks and opportunities. Respond ONLY in JSON: {"summary":"2 sentence context","points":["item1","item2","item3","item4"]}`
-};
+const HF_API_KEY = "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"; // <- replace with your Hugging Face API key
+const MODEL_URL = "https://api-inference.huggingface.co/models/Granite/instruct"; // Granite instruct
 
-function selectFormat(btn,f){document.querySelectorAll('.format-chip').forEach(b=>b.classList.remove('active'));btn.classList.add('active');selectedFormat=f;}
-function updateCount(){const v=document.getElementById('docInput').value.length;document.getElementById('charCount').textContent=v.toLocaleString()+' / 8,000';}
-function handleFile(e){const file=e.target.files[0];if(!file)return;const r=new FileReader();r.onload=ev=>{document.getElementById('docInput').value=ev.target.result.substring(0,8000);updateCount();};r.readAsText(file);}
-function handleDrop(e){e.preventDefault();document.getElementById('dropArea').classList.remove('drag-over');const file=e.dataTransfer.files[0];if(file){const r=new FileReader();r.onload=ev=>{document.getElementById('docInput').value=ev.target.result.substring(0,8000);updateCount();};r.readAsText(file);}}
-
-async function analyze(){
-  const text=document.getElementById('docInput').value.trim();
-  if(!text||text.length<50){alert('Please enter at least 50 characters.');return;}
-  const t0=Date.now();
-  const words=text.split(/\s+/).length;
-  document.getElementById('placeholder').style.display='none';
-  document.getElementById('result').classList.remove('show');
-  document.getElementById('loader').classList.add('show');
-  document.getElementById('analyzeBtn').disabled=true;
-  document.getElementById('statsBar').classList.remove('show');
-  try{
-    const res=await fetch('https://api.anthropic.com/v1/messages',{
-      method:'POST',headers:{'Content-Type':'application/json'},
-      body:JSON.stringify({model:'claude-sonnet-4-20250514',max_tokens:1000,
-        messages:[{role:'user',content:prompts[selectedFormat]+'\n\n---\n'+text+'\n---'}]})
-    });
-    if(!res.ok)throw new Error('API error '+res.status);
-    const data=await res.json();
-    const raw=data.content?.[0]?.text||'{}';
-    const elapsed=((Date.now()-t0)/1000).toFixed(1);
-    let parsed;
-    try{const m=raw.match(/\{[\s\S]*\}/);parsed=JSON.parse(m?m[0]:raw);}
-    catch{parsed={summary:raw,points:[]};}
-    document.getElementById('loader').classList.remove('show');
-    document.getElementById('result').classList.add('show');
-    document.getElementById('rSummary').textContent=parsed.summary||'';
-    const ul=document.getElementById('rPoints');ul.innerHTML='';
-    (parsed.points||[]).forEach(p=>{const li=document.createElement('li');li.innerHTML='<span class="key-bullet">→</span><span>'+p+'</span>';ul.appendChild(li);});
-    const sumWords=(parsed.summary+' '+(parsed.points||[]).join(' ')).split(/\s+/).length;
-    const red=Math.max(0,Math.round((1-sumWords/words)*100));
-    document.getElementById('sTime').textContent=elapsed+'s';
-    document.getElementById('sWords').textContent=words.toLocaleString();
-    document.getElementById('sReduce').textContent=red+'%';
-    document.getElementById('procTime').textContent='✓ '+elapsed+'s';
-    document.getElementById('statsBar').classList.add('show');
-  }catch(err){
-    document.getElementById('loader').classList.remove('show');
-    document.getElementById('placeholder').style.display='flex';
-    document.getElementById('placeholder').innerHTML='<div style="color:#e88;font-family:var(--mono);font-size:12px;">⚠ '+err.message+'</div>';
-  }
-  document.getElementById('analyzeBtn').disabled=false;
-}
-
-function copyResult(){
-  const s=document.getElementById('rSummary').textContent;
-  const pts=Array.from(document.getElementById('rPoints').children).map(li=>'→ '+li.querySelector('span:last-child').textContent);
-  navigator.clipboard.writeText('SUMMARY\n'+s+'\n\nKEY POINTS\n'+pts.join('\n')+'\n\n© 2026 Mahlo Kgotleng · mahlokgotleng.github.io/developer-journey').then(()=>{
-    const btn=document.getElementById('copyBtn');btn.textContent='✓ Copied!';btn.classList.add('copied');
-    setTimeout(()=>{btn.textContent='📋 Copy';btn.classList.remove('copied');},2000);
+async function summarizeText(text){
+  const prompt = "Summarize this text clearly and concisely:\n\n" + text;
+  const response = await fetch(MODEL_URL, {
+    method: "POST",
+    headers: {
+      "Authorization": "Bearer " + HF_API_KEY,
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify({inputs: prompt})
   });
+  const data = await response.json();
+  return data?.generated_text || data?.[0]?.generated_text || "No summary available";
 }
 
-function clearAll(){
-  document.getElementById('docInput').value='';updateCount();
-  document.getElementById('result').classList.remove('show');
-  document.getElementById('placeholder').style.display='flex';
-  document.getElementById('placeholder').innerHTML='<div class="placeholder-icon">✨</div><div class="placeholder-text">YOUR ANALYSIS WILL APPEAR HERE</div>';
-  document.getElementById('statsBar').classList.remove('show');
-  document.getElementById('procTime').textContent='';
-}
+document.getElementById('summarize-btn').addEventListener('click', async () => {
+  const text = document.getElementById('input-text').value.trim();
+  if(!text) return;
+  const resultDiv = document.getElementById('result');
+  resultDiv.textContent = "Summarizing...";
+  const summary = await summarizeText(text);
+  resultDiv.textContent = summary;
+});
 </script>
 </body>
 </html>
