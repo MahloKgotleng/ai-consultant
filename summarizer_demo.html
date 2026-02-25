@@ -1,59 +1,278 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Text Summarizer Demo — Mahlo Kgotleng AI Consulting</title>
-<style>
-  body {font-family:'DM Sans',sans-serif; background:#050e09; color:#f0f7f2; margin:0; padding:0;}
-  nav{display:flex;justify-content:space-between;padding:16px 40px;background:rgba(5,14,9,0.95);border-bottom:1px solid #163324;}
-  .nav-logo{font-family:'Space Mono',monospace;color:#f0a500;letter-spacing:2px;}
-  .nav-back{color:#7aab8a;text-decoration:none;font-size:13px;}
-  main{max-width:800px;margin:60px auto;padding:0 20px;}
-  h1{font-family:'Playfair Display',serif;color:#f0a500;font-size:36px;margin-bottom:16px;}
-  textarea{width:100%;height:200px;padding:12px;border-radius:4px;border:1px solid #163324;background:#0a1f12;color:#f0f7f2;resize:none;}
-  button{padding:12px 20px;margin-top:12px;background:#2e8b57;border:none;color:#f0f7f2;border-radius:4px;cursor:pointer;}
-  button:hover{background:#52b788;}
-  #result{margin-top:20px;padding:12px;border-radius:4px;border:1px solid #163324;background:#0a1f12;color:#52b788;}
-</style>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>AI Document Summarizer Demo | Mahlo Kgotleng</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: #0a0a0f;
+      color: #e0e0e0;
+      min-height: 100vh;
+      padding: 30px 20px;
+    }
+    .container { max-width: 900px; margin: 0 auto; }
+    header { text-align: center; margin-bottom: 40px; }
+    header h1 {
+      font-size: 2rem;
+      background: linear-gradient(135deg, #06b6d4, #6366f1);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin-bottom: 8px;
+    }
+    header p { color: #888; font-size: 0.95rem; }
+    .badge {
+      display: inline-block;
+      background: #1a1a2e;
+      border: 1px solid #06b6d4;
+      color: #06b6d4;
+      font-size: 0.75rem;
+      padding: 4px 12px;
+      border-radius: 20px;
+      margin-top: 10px;
+    }
+    .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+    @media (max-width: 600px) { .grid { grid-template-columns: 1fr; } }
+    .panel {
+      background: #12121c;
+      border: 1px solid #1e1e3a;
+      border-radius: 16px;
+      overflow: hidden;
+    }
+    .panel-header {
+      background: #1a1a2e;
+      padding: 14px 18px;
+      font-size: 0.88rem;
+      color: #888;
+      border-bottom: 1px solid #1e1e3a;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .panel-header strong { color: #e0e0e0; }
+    textarea {
+      width: 100%;
+      height: 320px;
+      background: transparent;
+      border: none;
+      padding: 18px;
+      color: #d0d0e0;
+      font-size: 0.9rem;
+      line-height: 1.7;
+      resize: none;
+      outline: none;
+      font-family: 'Segoe UI', sans-serif;
+    }
+    .output-panel { min-height: 360px; }
+    .output-content {
+      padding: 18px;
+      font-size: 0.9rem;
+      line-height: 1.8;
+      color: #c0c0d8;
+      white-space: pre-wrap;
+    }
+    .placeholder {
+      color: #444;
+      font-style: italic;
+      text-align: center;
+      margin-top: 80px;
+      font-size: 0.9rem;
+    }
+    .actions { margin-top: 20px; display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
+    .btn-primary {
+      background: linear-gradient(135deg, #06b6d4, #6366f1);
+      border: none;
+      border-radius: 10px;
+      padding: 14px 32px;
+      color: white;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: opacity 0.2s;
+      font-weight: 600;
+    }
+    .btn-primary:hover { opacity: 0.85; }
+    .btn-primary:disabled { opacity: 0.4; cursor: not-allowed; }
+    .btn-secondary {
+      background: transparent;
+      border: 1px solid #2a2a4a;
+      border-radius: 10px;
+      padding: 14px 24px;
+      color: #888;
+      font-size: 0.9rem;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .btn-secondary:hover { border-color: #6366f1; color: #6366f1; }
+    .sample-docs {
+      margin-top: 30px;
+      text-align: center;
+    }
+    .sample-docs p { color: #666; font-size: 0.85rem; margin-bottom: 12px; }
+    .sample-btns { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; }
+    .sample-btn {
+      background: #1a1a2e;
+      border: 1px solid #2a2a4a;
+      color: #a0a0c0;
+      padding: 8px 16px;
+      border-radius: 20px;
+      font-size: 0.8rem;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .sample-btn:hover { border-color: #06b6d4; color: #06b6d4; }
+    .loading {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 18px;
+      color: #666;
+      font-size: 0.9rem;
+    }
+    .spinner {
+      width: 20px; height: 20px;
+      border: 2px solid #2a2a4a;
+      border-top-color: #06b6d4;
+      border-radius: 50%;
+      animation: spin 0.8s linear infinite;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+    .powered-by { text-align: center; color: #444; font-size: 0.75rem; margin-top: 30px; }
+  </style>
 </head>
 <body>
-<nav>
-  <div class="nav-logo">MK · AI Consulting</div>
-  <a href="index.html" class="nav-back">← Back to Website</a>
-</nav>
-<main>
-<h1>Text Summarizer Demo</h1>
-<textarea id="input-text" placeholder="Paste text to summarize here..."></textarea>
-<button id="summarize-btn">Summarize</button>
-<div id="result"></div>
-</main>
-<script>
-const HF_API_KEY = "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"; // <- replace with your Hugging Face API key
-const MODEL_URL = "https://api-inference.huggingface.co/models/Granite/instruct"; // Granite instruct
+  <div class="container">
+    <header>
+      <h1>AI Document Summarizer</h1>
+      <p>Paste any business document and get instant AI-powered insights and recommendations</p>
+      <span class="badge">⚡ Powered by Claude AI</span>
+    </header>
 
-async function summarizeText(text){
-  const prompt = "Summarize this text clearly and concisely:\n\n" + text;
-  const response = await fetch(MODEL_URL, {
-    method: "POST",
-    headers: {
-      "Authorization": "Bearer " + HF_API_KEY,
-      "Content-Type": "application/json"
-    },
-    body: JSON.stringify({inputs: prompt})
-  });
-  const data = await response.json();
-  return data?.generated_text || data?.[0]?.generated_text || "No summary available";
-}
+    <div class="grid">
+      <div class="panel">
+        <div class="panel-header">📄 <strong>Input Document</strong> &nbsp;— Paste your text here</div>
+        <textarea id="docInput" placeholder="Paste your business document, report, proposal, or any text here..."></textarea>
+      </div>
 
-document.getElementById('summarize-btn').addEventListener('click', async () => {
-  const text = document.getElementById('input-text').value.trim();
-  if(!text) return;
-  const resultDiv = document.getElementById('result');
-  resultDiv.textContent = "Summarizing...";
-  const summary = await summarizeText(text);
-  resultDiv.textContent = summary;
-});
-</script>
+      <div class="panel output-panel">
+        <div class="panel-header">🧠 <strong>AI Analysis</strong> &nbsp;— Executive summary & insights</div>
+        <div id="outputArea">
+          <div class="placeholder">Your AI-powered analysis will appear here after you click Summarize</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="actions">
+      <button class="btn-primary" id="summarizeBtn" onclick="summarize()">⚡ Summarize & Analyse</button>
+      <button class="btn-secondary" onclick="clearAll()">Clear</button>
+    </div>
+
+    <div class="sample-docs">
+      <p>Try a sample document:</p>
+      <div class="sample-btns">
+        <button class="sample-btn" onclick="loadSample('business')">Business Proposal</button>
+        <button class="sample-btn" onclick="loadSample('strategy')">AI Strategy Report</button>
+        <button class="sample-btn" onclick="loadSample('financial')">Financial Summary</button>
+      </div>
+    </div>
+
+    <p class="powered-by">Demo by Mahlo Kgotleng | AI Consultant | kgotlengezekiel@gmail.com</p>
+  </div>
+
+  <script>
+    const WORKER_URL = "https://ai-consultant.kgotlengezekiel.workers.dev";
+
+    const samples = {
+      business: `Business Proposal: AI Integration for Retail Operations
+
+Executive Overview:
+Our retail chain currently operates 45 stores across South Africa with a workforce of 1,200 employees. We are experiencing challenges in inventory management, customer service response times, and personalization of the shopping experience. Manual processes are costing us approximately R2.3 million annually in operational inefficiencies.
+
+Proposed Solution:
+We propose implementing an AI-driven operations platform that includes automated inventory forecasting, AI-powered customer service chatbots, and personalized marketing engines. The implementation will be phased over 18 months with a total investment of R850,000.
+
+Expected Outcomes:
+Phase 1 (Months 1-6): Inventory optimization reducing overstock by 30%
+Phase 2 (Months 7-12): Customer service automation handling 60% of queries
+Phase 3 (Months 13-18): Personalization engine increasing basket size by 15%
+
+The ROI projection shows full cost recovery within 14 months with ongoing annual savings of R1.8 million thereafter.`,
+
+      strategy: `AI Strategy Report: Financial Services Sector 2025
+
+The financial services industry is undergoing rapid transformation driven by artificial intelligence adoption. Institutions that fail to integrate AI capabilities risk losing competitive advantage within the next 3-5 years.
+
+Key findings from our analysis of 200 regional financial institutions show that 67% plan to increase AI investment by over 40% in the next fiscal year. Primary use cases include fraud detection, credit scoring automation, customer onboarding, and regulatory compliance monitoring.
+
+Fraud detection AI systems are showing 94% accuracy rates compared to 71% for traditional rule-based systems. This translates to an average saving of R4.2 million annually per institution in fraud losses.
+
+Regulatory technology (RegTech) powered by AI is reducing compliance costs by an average of 35% while improving audit trail quality significantly.
+
+Barriers to adoption include data quality issues (cited by 58% of respondents), skills shortage (52%), and legacy system integration challenges (71%).
+
+Recommendation: Institutions should prioritize a data modernization strategy before AI deployment, invest in upskilling programs, and consider phased implementation starting with highest-ROI use cases such as fraud detection.`,
+
+      financial: `Q3 Financial Performance Summary - TechCorp SA
+
+Revenue: R45.2 million (up 18% year-on-year)
+Operating Costs: R31.8 million (up 9% year-on-year)
+EBITDA: R13.4 million (margin: 29.6%)
+Net Profit: R8.7 million (up 34% year-on-year)
+
+Key Drivers:
+- New enterprise client acquisitions contributed R8.2 million in new revenue
+- Cost efficiency program saved R2.1 million in operational expenses
+- Software licensing revenue grew 42% driven by AI product line
+
+Challenges:
+- Hardware supply chain delays impacted project delivery timelines
+- Staff turnover in technical roles increased recruitment costs by R450,000
+- Currency fluctuation impacted import costs negatively by R320,000
+
+Outlook Q4:
+Management projects Q4 revenue of R52-55 million based on confirmed pipeline. Three major enterprise deals totalling R18 million are expected to close before year end. The AI consulting division is tracking ahead of annual target by 23%.`
+    };
+
+    function loadSample(type) {
+      document.getElementById('docInput').value = samples[type];
+    }
+
+    function clearAll() {
+      document.getElementById('docInput').value = '';
+      document.getElementById('outputArea').innerHTML = '<div class="placeholder">Your AI-powered analysis will appear here after you click Summarize</div>';
+    }
+
+    async function summarize() {
+      const doc = document.getElementById('docInput').value.trim();
+      if (!doc) { alert('Please paste a document first.'); return; }
+
+      const btn = document.getElementById('summarizeBtn');
+      btn.disabled = true;
+      btn.textContent = 'Analysing...';
+
+      document.getElementById('outputArea').innerHTML = `
+        <div class="loading">
+          <div class="spinner"></div>
+          Claude is reading and analysing your document...
+        </div>`;
+
+      try {
+        const res = await fetch(`${WORKER_URL}/summarize`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ document: doc }),
+        });
+        const data = await res.json();
+        document.getElementById('outputArea').innerHTML = `<div class="output-content">${data.summary.replace(/\n/g, '<br>')}</div>`;
+      } catch (err) {
+        document.getElementById('outputArea').innerHTML = '<div class="output-content" style="color:#ef4444">Error connecting to AI. Please try again.</div>';
+      }
+
+      btn.disabled = false;
+      btn.textContent = '⚡ Summarize & Analyse';
+    }
+  </script>
 </body>
 </html>
+
