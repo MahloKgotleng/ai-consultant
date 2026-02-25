@@ -1,76 +1,291 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Chatbot Demo — Mahlo Kgotleng AI Consulting</title>
-<style>
-  body {font-family:'DM Sans',sans-serif; background:#050e09; color:#f0f7f2; margin:0; padding:0;}
-  nav{display:flex;justify-content:space-between;padding:16px 40px;background:rgba(5,14,9,0.95);border-bottom:1px solid #163324;}
-  .nav-logo{font-family:'Space Mono',monospace;color:#f0a500;letter-spacing:2px;}
-  .nav-back{color:#7aab8a;text-decoration:none;font-size:13px;}
-  main{max-width:800px;margin:60px auto;padding:0 20px;}
-  h1{font-family:'Playfair Display',serif;color:#f0a500;font-size:36px;margin-bottom:16px;}
-  .chat-container{display:flex;flex-direction:column;gap:12px;}
-  #chat-box{height:400px;overflow-y:auto;background:#0a1f12;padding:12px;border-radius:4px;border:1px solid #163324;}
-  #user-input{width:100%;padding:12px;border-radius:4px;border:1px solid #163324;background:#0a1f12;color:#f0f7f2;}
-  #send-btn{padding:12px 20px;margin-top:8px;background:#2e8b57;border:none;color:#f0f7f2;border-radius:4px;cursor:pointer;}
-  #send-btn:hover{background:#52b788;}
-  .message{margin-bottom:12px;}
-  .user-msg{color:#ffc93c;}
-  .bot-msg{color:#52b788;}
-</style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>AI Consultant Chat Demo | Mahlo Kgotleng</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: #0a0a0f;
+      color: #e0e0e0;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 20px;
+    }
+    header {
+      text-align: center;
+      padding: 30px 0 20px;
+      width: 100%;
+      max-width: 800px;
+    }
+    header h1 {
+      font-size: 2rem;
+      background: linear-gradient(135deg, #6366f1, #06b6d4);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin-bottom: 8px;
+    }
+    header p {
+      color: #888;
+      font-size: 0.95rem;
+    }
+    .badge {
+      display: inline-block;
+      background: #1a1a2e;
+      border: 1px solid #6366f1;
+      color: #6366f1;
+      font-size: 0.75rem;
+      padding: 4px 12px;
+      border-radius: 20px;
+      margin-top: 10px;
+    }
+    .chat-container {
+      width: 100%;
+      max-width: 800px;
+      background: #12121c;
+      border: 1px solid #1e1e3a;
+      border-radius: 16px;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      height: 65vh;
+      margin-top: 20px;
+    }
+    .chat-header {
+      background: linear-gradient(135deg, #1a1a2e, #16213e);
+      padding: 16px 20px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      border-bottom: 1px solid #1e1e3a;
+    }
+    .avatar {
+      width: 40px; height: 40px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #6366f1, #06b6d4);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.2rem;
+    }
+    .chat-header-info h3 { font-size: 1rem; color: #e0e0e0; }
+    .chat-header-info span { font-size: 0.78rem; color: #4ade80; }
+    .messages {
+      flex: 1;
+      overflow-y: auto;
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+    .message {
+      display: flex;
+      gap: 10px;
+      animation: fadeIn 0.3s ease;
+    }
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+    .message.user { flex-direction: row-reverse; }
+    .message .bubble {
+      max-width: 75%;
+      padding: 12px 16px;
+      border-radius: 16px;
+      font-size: 0.92rem;
+      line-height: 1.6;
+    }
+    .message.ai .bubble {
+      background: #1a1a2e;
+      border: 1px solid #2a2a4a;
+      color: #d0d0e0;
+      border-radius: 4px 16px 16px 16px;
+    }
+    .message.user .bubble {
+      background: linear-gradient(135deg, #6366f1, #4f46e5);
+      color: white;
+      border-radius: 16px 4px 16px 16px;
+    }
+    .msg-avatar {
+      width: 32px; height: 32px;
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 0.9rem;
+      flex-shrink: 0;
+    }
+    .ai .msg-avatar { background: linear-gradient(135deg, #6366f1, #06b6d4); }
+    .user .msg-avatar { background: #374151; }
+    .typing { display: flex; gap: 4px; align-items: center; padding: 4px 0; }
+    .typing span {
+      width: 8px; height: 8px;
+      background: #6366f1;
+      border-radius: 50%;
+      animation: bounce 1.2s infinite;
+    }
+    .typing span:nth-child(2) { animation-delay: 0.2s; }
+    .typing span:nth-child(3) { animation-delay: 0.4s; }
+    @keyframes bounce { 0%,60%,100% { transform: translateY(0); } 30% { transform: translateY(-6px); } }
+    .input-area {
+      padding: 16px;
+      border-top: 1px solid #1e1e3a;
+      display: flex;
+      gap: 10px;
+      background: #0e0e1a;
+    }
+    .input-area input {
+      flex: 1;
+      background: #1a1a2e;
+      border: 1px solid #2a2a4a;
+      border-radius: 10px;
+      padding: 12px 16px;
+      color: #e0e0e0;
+      font-size: 0.92rem;
+      outline: none;
+      transition: border 0.2s;
+    }
+    .input-area input:focus { border-color: #6366f1; }
+    .input-area button {
+      background: linear-gradient(135deg, #6366f1, #4f46e5);
+      border: none;
+      border-radius: 10px;
+      padding: 12px 20px;
+      color: white;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: opacity 0.2s;
+    }
+    .input-area button:hover { opacity: 0.85; }
+    .input-area button:disabled { opacity: 0.4; cursor: not-allowed; }
+    .suggestions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      padding: 0 20px 16px;
+    }
+    .suggestion-btn {
+      background: #1a1a2e;
+      border: 1px solid #2a2a4a;
+      color: #a0a0c0;
+      padding: 6px 14px;
+      border-radius: 20px;
+      font-size: 0.8rem;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .suggestion-btn:hover { border-color: #6366f1; color: #6366f1; }
+    .powered-by {
+      text-align: center;
+      color: #444;
+      font-size: 0.75rem;
+      margin-top: 12px;
+    }
+  </style>
 </head>
 <body>
-<nav>
-  <div class="nav-logo">MK · AI Consulting</div>
-  <a href="index.html" class="nav-back">← Back to Website</a>
-</nav>
-<main>
-<h1>AI Chatbot Demo</h1>
-<div class="chat-container">
-  <div id="chat-box"></div>
-  <input type="text" id="user-input" placeholder="Type your message here...">
-  <button id="send-btn">Send</button>
-</div>
-</main>
-<script>
-const chatBox = document.getElementById('chat-box');
-const input = document.getElementById('user-input');
-const button = document.getElementById('send-btn');
+  <header>
+    <h1>AI Business Consultant</h1>
+    <p>Ask anything about AI strategy, implementation, or transformation for your business</p>
+    <span class="badge">⚡ Powered by Claude AI</span>
+  </header>
 
-const HF_API_KEY = "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"; // <- replace with your Hugging Face API key
-const MODEL_URL = "https://api-inference.huggingface.co/models/Granite/instruct"; // Granite instruct
+  <div class="chat-container">
+    <div class="chat-header">
+      <div class="avatar">🤖</div>
+      <div class="chat-header-info">
+        <h3>Mahlo AI Consultant</h3>
+        <span>● Online — Ready to help</span>
+      </div>
+    </div>
 
-async function queryGranite(prompt){
-  const response = await fetch(MODEL_URL, {
-    method: "POST",
-    headers: {
-      "Authorization": "Bearer " + HF_API_KEY,
-      "Content-Type": "application/json"
-    },
-    body: JSON.stringify({inputs: prompt})
-  });
-  const data = await response.json();
-  return data?.generated_text || data?.[0]?.generated_text || "No response";
-}
+    <div class="messages" id="messages">
+      <div class="message ai">
+        <div class="msg-avatar">🤖</div>
+        <div class="bubble">
+          Hello! I'm your AI business consultant, powered by Claude. I can help you understand how AI can transform your business, reduce costs, and unlock new opportunities.<br><br>
+          What business challenge can I help you with today?
+        </div>
+      </div>
+    </div>
 
-button.addEventListener('click', async () => {
-  const userText = input.value.trim();
-  if(!userText) return;
-  chatBox.innerHTML += `<div class="message user-msg">You: ${userText}</div>`;
-  input.value = "";
-  chatBox.innerHTML += `<div class="message bot-msg">Bot: ...thinking...</div>`;
-  chatBox.scrollTop = chatBox.scrollHeight;
+    <div class="suggestions" id="suggestions">
+      <button class="suggestion-btn" onclick="sendSuggestion(this)">How can AI reduce our costs?</button>
+      <button class="suggestion-btn" onclick="sendSuggestion(this)">What AI tools suit my SME?</button>
+      <button class="suggestion-btn" onclick="sendSuggestion(this)">How do I start my AI journey?</button>
+      <button class="suggestion-btn" onclick="sendSuggestion(this)">AI for customer service</button>
+    </div>
 
-  const botResponse = await queryGranite(userText);
-  chatBox.lastChild.innerHTML = `Bot: ${botResponse}`;
-  chatBox.scrollTop = chatBox.scrollHeight;
-});
+    <div class="input-area">
+      <input type="text" id="userInput" placeholder="Ask about AI for your business..." onkeydown="if(event.key==='Enter') sendMessage()" />
+      <button id="sendBtn" onclick="sendMessage()">➤</button>
+    </div>
+  </div>
 
-input.addEventListener('keypress', (e) => {
-  if(e.key === 'Enter') button.click();
-});
-</script>
+  <p class="powered-by">Demo by Mahlo Kgotleng | AI Consultant | kgotlengezekiel@gmail.com</p>
+
+  <script>
+    const WORKER_URL = "https://ai-consultant.kgotlengezekiel.workers.dev";
+
+    function sendSuggestion(btn) {
+      document.getElementById('userInput').value = btn.textContent;
+      document.getElementById('suggestions').style.display = 'none';
+      sendMessage();
+    }
+
+    async function sendMessage() {
+      const input = document.getElementById('userInput');
+      const msg = input.value.trim();
+      if (!msg) return;
+
+      appendMessage('user', msg);
+      input.value = '';
+      document.getElementById('sendBtn').disabled = true;
+
+      const typingId = showTyping();
+
+      try {
+        const res = await fetch(`${WORKER_URL}/chat`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ message: msg }),
+        });
+        const data = await res.json();
+        removeTyping(typingId);
+        appendMessage('ai', data.reply);
+      } catch (err) {
+        removeTyping(typingId);
+        appendMessage('ai', 'Sorry, I encountered an error. Please try again.');
+      }
+
+      document.getElementById('sendBtn').disabled = false;
+    }
+
+    function appendMessage(role, text) {
+      const messages = document.getElementById('messages');
+      const div = document.createElement('div');
+      div.className = `message ${role}`;
+      div.innerHTML = `
+        <div class="msg-avatar">${role === 'ai' ? '🤖' : '👤'}</div>
+        <div class="bubble">${text.replace(/\n/g, '<br>')}</div>
+      `;
+      messages.appendChild(div);
+      messages.scrollTop = messages.scrollHeight;
+    }
+
+    function showTyping() {
+      const messages = document.getElementById('messages');
+      const id = 'typing-' + Date.now();
+      const div = document.createElement('div');
+      div.className = 'message ai';
+      div.id = id;
+      div.innerHTML = `<div class="msg-avatar">🤖</div><div class="bubble"><div class="typing"><span></span><span></span><span></span></div></div>`;
+      messages.appendChild(div);
+      messages.scrollTop = messages.scrollHeight;
+      return id;
+    }
+
+    function removeTyping(id) {
+      const el = document.getElementById(id);
+      if (el) el.remove();
+    }
+  </script>
 </body>
 </html>
