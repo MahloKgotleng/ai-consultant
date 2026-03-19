@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -12,652 +13,626 @@
     :root{
       --bg:#0A0D1A;--dark:#111422;--card:#161928;--card2:#1C2035;
       --ibm:#0F62FE;--ibm-h:#0353E9;--ibm-l:#4589FF;--ibm-dim:rgba(15,98,254,.1);--ibm-b:rgba(15,98,254,.22);
-      --aws:#FF9900;--aws-dim:rgba(255,153,0,.08);--aws-b:rgba(255,153,0,.2);
+      --aws:#FF9900;--aws-h:#E68A00;--aws-dim:rgba(255,153,0,.08);--aws-b:rgba(255,153,0,.2);
       --white:#F4F4F4;--white2:#E0E0E0;--muted:#8D8D8D;--muted2:#525252;
       --border:rgba(69,137,255,.12);--border2:rgba(255,255,255,.06);
       --green:#42BE65;--red:#FA4D56;
-      --fh:'Syne',sans-serif;--fs:'IBM Plex Sans',sans-serif;--fm:'IBM Plex Mono',monospace;
+      --fh:"Syne",sans-serif;--fs:"IBM Plex Sans",sans-serif;--fm:"IBM Plex Mono",monospace;
     }
     *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
     html{scroll-behavior:smooth}
-    body{background:var(--bg);color:var(--white);font-family:var(--fs);line-height:1.6;min-height:100vh;overflow-x:hidden}
-    body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellipse 60% 40% at 10% 0%,rgba(15,98,254,.06),transparent),radial-gradient(ellipse 40% 30% at 90% 100%,rgba(255,153,0,.03),transparent);pointer-events:none;z-index:0}
+    body{background:var(--bg);color:var(--white);font-family:var(--fs);line-height:1.65;min-height:100vh;overflow-x:hidden}
+    body::before{content:"";position:fixed;inset:0;background:radial-gradient(ellipse 60% 40% at 10% 0%,rgba(15,98,254,.06),transparent),radial-gradient(ellipse 40% 30% at 90% 100%,rgba(255,153,0,.03),transparent);pointer-events:none;z-index:0}
     a{color:var(--ibm-l);text-decoration:none}
     a:hover{color:var(--white)}
 
-    /* NAV */
     nav{background:rgba(10,13,26,.95);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);padding:0 2rem;height:56px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100}
-    .nav-back{font-family:var(--fm);font-size:.75rem;color:var(--muted);display:flex;align-items:center;gap:.5rem;transition:color .2s}
+    .nav-back{font-family:var(--fm);font-size:.73rem;color:var(--muted);display:flex;align-items:center;gap:.5rem;transition:color .2s}
     .nav-back:hover{color:var(--ibm-l)}
-    .nav-title{font-family:var(--fh);font-size:.88rem;font-weight:800;color:var(--white)}
+    .nav-title{font-family:var(--fh);font-size:.86rem;font-weight:800}
     .nav-title em{color:var(--ibm);font-style:normal}
-    .nav-badge{font-family:var(--fm);font-size:.65rem;color:var(--green);background:rgba(66,190,101,.1);border:1px solid rgba(66,190,101,.25);padding:.2rem .6rem;border-radius:2px;letter-spacing:.08em}
+    .nav-badge{font-family:var(--fm);font-size:.63rem;color:var(--green);background:rgba(66,190,101,.1);border:1px solid rgba(66,190,101,.22);padding:.18rem .55rem;border-radius:2px;letter-spacing:.08em}
 
-    /* MAIN LAYOUT */
-    .container{max-width:1100px;margin:0 auto;padding:2.5rem 2rem;position:relative;z-index:1}
-    .hero{text-align:center;margin-bottom:3rem}
-    .hero-label{font-family:var(--fm);font-size:.65rem;color:var(--ibm-l);letter-spacing:.18em;text-transform:uppercase;margin-bottom:1rem;opacity:.8}
-    .hero h1{font-family:var(--fh);font-size:clamp(1.8rem,4vw,2.8rem);font-weight:800;line-height:1.1;margin-bottom:.8rem}
-    .hero p{font-size:.92rem;color:var(--muted);max-width:580px;margin:0 auto 1.5rem;line-height:1.78}
-    .hero-badges{display:flex;gap:.6rem;justify-content:center;flex-wrap:wrap}
-    .hbadge{font-family:var(--fm);font-size:.65rem;color:var(--muted);background:var(--card);border:1px solid var(--border2);padding:.2rem .65rem;border-radius:2px}
-    .hbadge.green{color:var(--green);border-color:rgba(66,190,101,.2);background:rgba(66,190,101,.06)}
-    .hbadge.blue{color:var(--ibm-l);border-color:var(--ibm-b);background:var(--ibm-dim)}
+    .container{max-width:1060px;margin:0 auto;padding:2.5rem 2rem;position:relative;z-index:1}
+
+    /* API KEY BANNER */
+    .key-banner{background:var(--card);border:1px solid var(--ibm-b);border-left:3px solid var(--ibm);padding:1.2rem 1.4rem;margin-bottom:2rem;border-radius:2px}
+    .key-banner-top{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:.75rem;margin-bottom:.75rem}
+    .key-title{font-family:var(--fh);font-size:.92rem;font-weight:800}
+    .key-note{font-size:.76rem;color:var(--muted);font-family:var(--fm)}
+    .key-row{display:flex;gap:.6rem;align-items:center;flex-wrap:wrap}
+    .key-input{flex:1;min-width:260px;background:var(--bg);border:1px solid var(--border2);color:var(--white);padding:.65rem .9rem;font-family:var(--fm);font-size:.8rem;border-radius:2px;outline:none;transition:border-color .2s;letter-spacing:.04em}
+    .key-input:focus{border-color:var(--ibm)}
+    .key-input::placeholder{color:var(--muted2)}
+    .key-btn{background:var(--ibm);color:#fff;border:none;padding:.65rem 1.2rem;font-family:var(--fm);font-size:.75rem;font-weight:600;letter-spacing:.07em;cursor:pointer;border-radius:2px;transition:background .2s;white-space:nowrap;text-transform:uppercase}
+    .key-btn:hover{background:var(--ibm-h)}
+    .key-status{font-size:.74rem;font-family:var(--fm);display:flex;align-items:center;gap:.4rem}
+    .key-status.ok{color:var(--green)}
+    .key-status.err{color:var(--red)}
+    .key-priv{font-size:.72rem;color:var(--muted);margin-top:.6rem;line-height:1.65}
+    .key-priv strong{color:var(--white2)}
+
+    /* HERO */
+    .hero{text-align:center;margin-bottom:2rem}
+    .hero-label{font-family:var(--fm);font-size:.63rem;color:var(--ibm-l);letter-spacing:.18em;text-transform:uppercase;margin-bottom:.9rem;opacity:.8}
+    .hero h1{font-family:var(--fh);font-size:clamp(1.7rem,4vw,2.6rem);font-weight:800;line-height:1.1;margin-bottom:.75rem}
+    .hero p{font-size:.9rem;color:var(--muted);max-width:560px;margin:0 auto 1.2rem;line-height:1.8}
+    .hero-badges{display:flex;gap:.5rem;justify-content:center;flex-wrap:wrap}
+    .hb{font-family:var(--fm);font-size:.63rem;color:var(--muted);background:var(--card);border:1px solid var(--border2);padding:.18rem .6rem;border-radius:2px}
+    .hb.g{color:var(--green);border-color:rgba(66,190,101,.2);background:rgba(66,190,101,.06)}
+    .hb.b{color:var(--ibm-l);border-color:var(--ibm-b);background:var(--ibm-dim)}
 
     /* MAIN GRID */
-    .main-grid{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--border2);border:1px solid var(--border2)}
-    .panel{background:var(--bg);padding:2rem}
-    .panel-title{font-family:var(--fm);font-size:.65rem;color:var(--ibm-l);letter-spacing:.16em;text-transform:uppercase;margin-bottom:1.2rem;opacity:.8}
+    .grid2{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--border2);border:1px solid var(--border2);border-radius:2px}
+    .panel{background:var(--bg);padding:1.6rem}
+    .plabel{font-family:var(--fm);font-size:.62rem;color:var(--ibm-l);letter-spacing:.16em;text-transform:uppercase;margin-bottom:1rem;opacity:.8}
 
-    /* DOCUMENT PANEL */
-    .doc-tabs{display:flex;gap:1px;background:var(--border2);margin-bottom:1rem}
-    .dtab{flex:1;padding:.65rem 1rem;background:var(--card);border:none;color:var(--muted);font-family:var(--fm);font-size:.7rem;letter-spacing:.06em;cursor:pointer;transition:all .2s;text-transform:uppercase}
-    .dtab.active{background:var(--ibm-dim);color:var(--ibm-l);border-bottom:2px solid var(--ibm)}
-    .dtab:hover:not(.active){color:var(--white);background:var(--card2)}
-    .doc-area{width:100%;min-height:280px;background:var(--card);border:1px solid var(--border2);color:var(--white2);padding:1rem;font-family:var(--fm);font-size:.82rem;line-height:1.65;resize:vertical;outline:none;transition:border-color .2s;border-radius:2px}
-    .doc-area:focus{border-color:var(--ibm-b)}
-    .doc-area::placeholder{color:var(--muted2)}
-    .doc-meta{display:flex;align-items:center;justify-content:space-between;margin-top:.75rem;flex-wrap:wrap;gap:.5rem}
-    .doc-stat{font-family:var(--fm);font-size:.68rem;color:var(--muted)}
-    .doc-stat span{color:var(--ibm-l)}
-    .sample-docs{display:grid;grid-template-columns:1fr 1fr;gap:.5rem;margin-top:1rem}
-    .sdoc{background:var(--card);border:1px solid var(--border2);padding:.8rem 1rem;border-radius:2px;cursor:pointer;transition:all .2s;text-align:left}
+    /* DOC PANEL */
+    .tabs{display:flex;gap:1px;background:var(--border2);margin-bottom:.9rem}
+    .dtab{flex:1;padding:.55rem .8rem;background:var(--card);border:none;color:var(--muted);font-family:var(--fm);font-size:.68rem;letter-spacing:.06em;cursor:pointer;transition:all .2s;text-transform:uppercase}
+    .dtab.on{background:var(--ibm-dim);color:var(--ibm-l);box-shadow:inset 0 -2px 0 var(--ibm)}
+    .dtab:hover:not(.on){color:var(--white);background:var(--card2)}
+    textarea#doc{width:100%;min-height:240px;background:var(--card);border:1px solid var(--border2);color:var(--white2);padding:.8rem .9rem;font-family:var(--fm);font-size:.78rem;line-height:1.65;resize:vertical;outline:none;transition:border-color .2s;border-radius:2px}
+    textarea#doc:focus{border-color:var(--ibm-b)}
+    textarea#doc::placeholder{color:var(--muted2)}
+    .doc-meta{display:flex;justify-content:space-between;margin-top:.55rem;font-size:.68rem;color:var(--muted);font-family:var(--fm)}
+    .doc-meta span span{color:var(--ibm-l)}
+    .proc-btn{width:100%;margin-top:.7rem;background:var(--ibm);color:#fff;border:none;padding:.78rem;font-size:.74rem;font-family:var(--fm);font-weight:600;letter-spacing:.08em;cursor:pointer;border-radius:2px;transition:background .2s;text-transform:uppercase}
+    .proc-btn:hover:not(:disabled){background:var(--ibm-h)}
+    .proc-btn:disabled{opacity:.4;cursor:not-allowed}
+    .samples{display:grid;grid-template-columns:1fr 1fr;gap:.5rem}
+    .sdoc{background:var(--card);border:1px solid var(--border2);padding:.7rem .85rem;cursor:pointer;font-size:.8rem;text-align:left;border-radius:2px;transition:all .2s;color:var(--white)}
     .sdoc:hover{border-color:var(--ibm-b);background:var(--card2)}
-    .sdoc-title{font-size:.8rem;font-weight:600;color:var(--white2);margin-bottom:.2rem}
-    .sdoc-sub{font-size:.7rem;color:var(--muted);font-family:var(--fm)}
+    .sdoc-t{font-weight:600;margin-bottom:2px;font-size:.8rem}
+    .sdoc-s{font-size:.68rem;color:var(--muted);font-family:var(--fm)}
 
-    /* PROCESS INDICATOR */
-    .process-bar{background:var(--card);border:1px solid var(--border2);padding:1rem 1.2rem;margin-bottom:1.2rem;border-left:3px solid var(--ibm);display:none}
-    .process-bar.show{display:block}
-    .process-steps{display:flex;gap:1.5rem;flex-wrap:wrap}
-    .pstep{display:flex;align-items:center;gap:.5rem;font-family:var(--fm);font-size:.7rem}
-    .pstep-dot{width:8px;height:8px;border-radius:50%;background:var(--muted2);flex-shrink:0;transition:background .3s}
-    .pstep-dot.done{background:var(--green)}
-    .pstep-dot.active{background:var(--aws);animation:pulse 1s infinite}
-    @keyframes pulse{0%,100%{opacity:1}50%{opacity:.3}}
-    .pstep-label{color:var(--muted);transition:color .3s}
-    .pstep.done .pstep-label{color:var(--green)}
-    .pstep.active .pstep-label{color:var(--aws)}
+    /* PROCESS BAR */
+    .pbar{background:var(--card);border:1px solid var(--border2);border-left:2px solid var(--ibm);padding:.6rem .9rem;margin-bottom:.9rem;display:none;border-radius:2px}
+    .pbar.show{display:block}
+    .psteps{display:flex;gap:1.2rem;flex-wrap:wrap}
+    .ps{display:flex;align-items:center;gap:5px;font-family:var(--fm);font-size:.68rem;color:var(--muted)}
+    .pd{width:7px;height:7px;border-radius:50%;background:var(--muted2);flex-shrink:0;transition:background .3s}
+    .ps.done .pd{background:var(--green)}
+    .ps.act .pd{background:var(--aws);animation:pp .8s infinite}
+    .ps.done{color:var(--green)}
+    .ps.act{color:var(--aws)}
+    @keyframes pp{0%,100%{opacity:1}50%{opacity:.2}}
 
     /* CHAT PANEL */
-    .chat-msgs{min-height:300px;max-height:420px;overflow-y:auto;display:flex;flex-direction:column;gap:.75rem;margin-bottom:1rem;padding-right:.25rem}
-    .chat-msgs::-webkit-scrollbar{width:3px}
-    .chat-msgs::-webkit-scrollbar-thumb{background:var(--ibm-b)}
-    .cmsg{padding:.9rem 1.1rem;border-radius:2px;font-size:.85rem;line-height:1.65;animation:fadeIn .25s ease}
-    @keyframes fadeIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
-    .cmsg.user{background:var(--ibm-dim);border:1px solid var(--ibm-b);border-left:3px solid var(--ibm);color:var(--white2)}
-    .cmsg.bot{background:var(--card);border:1px solid var(--border2);border-left:3px solid var(--aws);color:var(--white2)}
-    .cmsg.system{background:transparent;border:1px solid var(--border2);color:var(--muted);font-family:var(--fm);font-size:.75rem;text-align:center;letter-spacing:.04em}
-    .cmsg-role{font-family:var(--fm);font-size:.62rem;letter-spacing:.1em;text-transform:uppercase;margin-bottom:.4rem;opacity:.7}
-    .cmsg.user .cmsg-role{color:var(--ibm-l)}
-    .cmsg.bot .cmsg-role{color:var(--aws)}
-    .typing-indicator{display:flex;gap:5px;align-items:center;padding:.9rem 1.1rem;background:var(--card);border:1px solid var(--border2);border-left:3px solid var(--aws)}
-    .tdot{width:6px;height:6px;border-radius:50%;background:var(--muted);animation:tbounce .9s infinite}
-    .tdot:nth-child(2){animation-delay:.18s}.tdot:nth-child(3){animation-delay:.36s}
-    @keyframes tbounce{0%,60%,100%{transform:translateY(0)}30%{transform:translateY(-6px)}}
-    .chat-input-row{display:flex;gap:.5rem}
-    .chat-input{flex:1;background:var(--card);border:1px solid var(--border2);color:var(--white);padding:.75rem 1rem;font-family:var(--fs);font-size:.85rem;outline:none;transition:border-color .2s;border-radius:2px}
-    .chat-input:focus{border-color:var(--ibm)}
-    .chat-input::placeholder{color:var(--muted2)}
-    .chat-input:disabled{opacity:.4;cursor:not-allowed}
-    .send-btn{background:var(--ibm);color:#fff;border:none;padding:.75rem 1.3rem;cursor:pointer;font-family:var(--fm);font-size:.78rem;font-weight:600;letter-spacing:.05em;transition:background .2s;border-radius:2px;white-space:nowrap}
-    .send-btn:hover:not(:disabled){background:var(--ibm-h)}
-    .send-btn:disabled{opacity:.4;cursor:not-allowed}
-    .quick-q{display:flex;gap:.4rem;flex-wrap:wrap;margin-bottom:.75rem}
-    .qq{background:transparent;border:1px solid var(--ibm-b);color:var(--ibm-l);padding:.3rem .75rem;border-radius:2px;font-family:var(--fm);font-size:.68rem;cursor:pointer;transition:all .2s;white-space:nowrap}
-    .qq:hover{background:var(--ibm-dim);color:var(--white)}
+    .qquick{display:flex;gap:4px;flex-wrap:wrap;margin-bottom:.7rem}
+    .qq{background:transparent;border:1px solid var(--ibm-b);color:var(--ibm-l);padding:3px 8px;border-radius:2px;font-size:.67rem;cursor:pointer;font-family:var(--fm);transition:all .2s;white-space:nowrap}
+    .qq:hover:not(:disabled){background:var(--ibm-dim);color:var(--white)}
     .qq:disabled{opacity:.3;cursor:not-allowed}
-
-    /* CHUNKS PANEL */
-    .chunks-section{margin-top:2rem;background:var(--card);border:1px solid var(--border2);border-top:3px solid var(--ibm)}
-    .chunks-header{padding:1rem 1.3rem;display:flex;align-items:center;justify-content:space-between;cursor:pointer;transition:background .2s}
-    .chunks-header:hover{background:var(--card2)}
-    .chunks-title{font-family:var(--fm);font-size:.7rem;letter-spacing:.12em;text-transform:uppercase;color:var(--ibm-l)}
-    .chunks-toggle{font-family:var(--fm);font-size:.7rem;color:var(--muted)}
-    .chunks-body{display:none;padding:0 1.3rem 1.3rem;max-height:300px;overflow-y:auto}
-    .chunks-body.show{display:block}
-    .chunk{background:var(--bg);border:1px solid var(--border2);padding:.75rem;margin-bottom:.5rem;border-radius:2px;font-family:var(--fm);font-size:.73rem;color:var(--muted);line-height:1.65}
-    .chunk-num{color:var(--ibm-l);margin-bottom:.35rem;font-size:.65rem;letter-spacing:.1em}
+    .msgs{min-height:220px;max-height:340px;overflow-y:auto;display:flex;flex-direction:column;gap:8px;margin-bottom:.7rem;padding-right:2px}
+    .msgs::-webkit-scrollbar{width:2px}
+    .msgs::-webkit-scrollbar-thumb{background:var(--ibm-b)}
+    .msg{padding:8px 10px;border-radius:2px;font-size:.82rem;line-height:1.62;animation:fi .2s ease}
+    @keyframes fi{from{opacity:0;transform:translateY(4px)}to{opacity:1}}
+    .msg.user{background:var(--ibm-dim);border:0.5px solid var(--ibm-b);border-left:2px solid var(--ibm);color:var(--white2)}
+    .msg.bot{background:var(--card);border:0.5px solid var(--border2);border-left:2px solid var(--aws);color:var(--white2)}
+    .msg.sys{background:transparent;border:0.5px solid var(--border2);color:var(--muted);text-align:center;font-family:var(--fm);font-size:.7rem}
+    .mrole{font-size:.6rem;letter-spacing:.1em;text-transform:uppercase;margin-bottom:3px;opacity:.65;font-family:var(--fm)}
+    .msg.user .mrole{color:var(--ibm-l)}
+    .msg.bot .mrole{color:var(--aws)}
+    .typing{display:flex;gap:4px;align-items:center;padding:8px 10px;background:var(--card);border:0.5px solid var(--border2);border-left:2px solid var(--aws);border-radius:2px}
+    .td{width:5px;height:5px;border-radius:50%;background:var(--muted);animation:tb .9s infinite}
+    .td:nth-child(2){animation-delay:.18s}.td:nth-child(3){animation-delay:.36s}
+    @keyframes tb{0%,60%,100%{transform:translateY(0)}30%{transform:translateY(-5px)}}
+    .inp-row{display:flex;gap:6px}
+    input#qi{flex:1;background:var(--card);border:1px solid var(--border2);color:var(--white);padding:.65rem .85rem;font-family:var(--fs);font-size:.82rem;border-radius:2px;outline:none;transition:border-color .2s}
+    input#qi:focus{border-color:var(--ibm)}
+    input#qi::placeholder{color:var(--muted2)}
+    .ask-btn{background:var(--ibm);color:#fff;border:none;padding:.65rem 1.1rem;cursor:pointer;font-family:var(--fm);font-size:.75rem;font-weight:600;border-radius:2px;transition:background .2s;white-space:nowrap}
+    .ask-btn:hover:not(:disabled){background:var(--ibm-h)}
+    .ask-btn:disabled{opacity:.4;cursor:not-allowed}
 
     /* HOW IT WORKS */
-    .how-section{margin-top:1.5rem;display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--border2);border:1px solid var(--border2)}
-    .how-step{background:var(--bg);padding:1.5rem}
-    .how-num{font-family:var(--fm);font-size:.62rem;color:var(--ibm-l);letter-spacing:.14em;margin-bottom:.6rem;opacity:.7}
-    .how-icon{font-size:1.5rem;margin-bottom:.6rem}
-    .how-title{font-family:var(--fh);font-size:.9rem;font-weight:800;margin-bottom:.4rem}
-    .how-desc{font-size:.78rem;color:var(--muted);line-height:1.65}
+    .how{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--border2);border:1px solid var(--border2);margin-top:1.5rem}
+    .hs{background:var(--bg);padding:1.4rem}
+    .hs-num{font-family:var(--fm);font-size:.6rem;color:var(--ibm-l);letter-spacing:.14em;margin-bottom:.6rem;opacity:.7}
+    .hs-icon{font-size:1.4rem;margin-bottom:.55rem}
+    .hs-title{font-family:var(--fh);font-size:.9rem;font-weight:800;margin-bottom:.4rem}
+    .hs-desc{font-size:.78rem;color:var(--muted);line-height:1.68}
 
-    /* PRIVACY NOTICE */
-    .privacy-bar{background:rgba(66,190,101,.05);border:1px solid rgba(66,190,101,.15);border-left:3px solid var(--green);padding:1rem 1.3rem;margin-top:1.5rem;display:flex;align-items:flex-start;gap:.75rem}
-    .privacy-icon{font-size:1rem;flex-shrink:0;margin-top:.1rem}
-    .privacy-text{font-size:.8rem;color:var(--muted);line-height:1.65}
-    .privacy-text strong{color:var(--white2)}
+    /* PRIVACY */
+    .priv{background:rgba(66,190,101,.05);border:0.5px solid rgba(66,190,101,.18);border-left:3px solid var(--green);padding:.9rem 1.1rem;margin-top:1.5rem;display:flex;gap:.75rem;border-radius:2px}
+    .priv-text{font-size:.78rem;color:var(--muted);line-height:1.7}
+    .priv-text strong{color:var(--white2)}
 
     /* CTA */
-    .bottom-cta{background:var(--card);border:1px solid var(--ibm-b);border-top:3px solid var(--ibm);padding:2.5rem;text-align:center;margin-top:1.5rem}
-    .cta-title{font-family:var(--fh);font-size:1.4rem;font-weight:800;margin-bottom:.6rem}
-    .cta-sub{font-size:.88rem;color:var(--muted);margin-bottom:1.5rem;line-height:1.7}
-    .cta-btn{display:inline-flex;align-items:center;gap:.5rem;background:var(--aws);color:#000;padding:.9rem 2.2rem;border-radius:2px;font-weight:600;font-size:.85rem;letter-spacing:.05em;font-family:var(--fm);transition:background .2s}
-    .cta-btn:hover{background:#e68a00;color:#000}
+    .cta{background:var(--card);border:1px solid var(--ibm-b);border-top:3px solid var(--ibm);padding:2rem;text-align:center;margin-top:1.5rem}
+    .cta-t{font-family:var(--fh);font-size:1.3rem;font-weight:800;margin-bottom:.5rem}
+    .cta-s{font-size:.86rem;color:var(--muted);margin-bottom:1.2rem;line-height:1.72}
+    .cta-a{display:inline-flex;align-items:center;gap:.5rem;background:var(--aws);color:#000;padding:.8rem 2rem;border-radius:2px;font-weight:600;font-size:.83rem;font-family:var(--fm);cursor:pointer;border:none;transition:background .2s;text-decoration:none}
+    .cta-a:hover{background:var(--aws-h);color:#000}
 
-    /* FOOTER NOTE */
-    .foot-note{text-align:center;padding:2rem;font-family:var(--fm);font-size:.7rem;color:var(--muted2)}
-    .foot-note a{color:var(--muted);transition:color .2s}
-    .foot-note a:hover{color:var(--ibm-l)}
+    .foot{text-align:center;padding:2rem;font-family:var(--fm);font-size:.68rem;color:var(--muted2)}
+    .foot a{color:var(--muted);transition:color .2s}.foot a:hover{color:var(--ibm-l)}
 
-    /* RESPONSIVE */
-    @media(max-width:768px){
-      .main-grid{grid-template-columns:1fr}
-      .how-section{grid-template-columns:1fr}
-      .sample-docs{grid-template-columns:1fr}
-      .container{padding:1.5rem 1rem}
-      .hero{margin-bottom:2rem}
-      .chat-msgs{max-height:320px}
-      .panel{padding:1.3rem}
+    @media(max-width:760px){
+      .grid2{grid-template-columns:1fr}
+      .how{grid-template-columns:1fr}
+      .samples{grid-template-columns:1fr}
+      .container{padding:1.4rem 1rem}
+      .hero{margin-bottom:1.5rem}
+      .msgs{max-height:260px}
+      .key-row{flex-direction:column}
+      .key-input{min-width:100%;width:100%}
+      .key-btn{width:100%}
     }
   </style>
 </head>
 <body>
 
 <nav>
-  <a href="/" class="nav-back">← Back to Mahlo AI</a>
+  <a href="/" class="nav-back">&#8592; Back to Mahlo AI</a>
   <div class="nav-title"><em>Mahlo</em> AI Consulting</div>
-  <span class="nav-badge">● LIVE</span>
+  <span class="nav-badge">&#9679; LIVE</span>
 </nav>
 
 <div class="container">
+
+  <!-- API KEY BANNER -->
+  <div class="key-banner" id="key-banner">
+    <div class="key-banner-top">
+      <div class="key-title">&#128272; Claude API Key Required to Run This Demo</div>
+      <span id="key-status" class="key-status" style="display:none"></span>
+    </div>
+    <div class="key-row">
+      <input class="key-input" id="key-inp" type="password" placeholder="sk-ant-api03-..." autocomplete="off" spellcheck="false"/>
+      <button class="key-btn" onclick="saveKey()">Connect &#8594;</button>
+    </div>
+    <div class="key-priv" id="key-priv">
+      <strong>Privacy:</strong> Your API key is stored only in your browser session memory (sessionStorage). It is sent directly from your browser to Anthropic&apos;s API &#8212; it never passes through Mahlo AI Consulting&apos;s servers. It is deleted the moment you close this tab. Get your key at <a href="https://console.anthropic.com" target="_blank" rel="noopener" style="color:var(--ibm-l)">console.anthropic.com</a>.
+    </div>
+  </div>
+
+  <!-- HERO -->
   <div class="hero">
-    <div class="hero-label">The Lab · Demo 3</div>
-    <h1>🧠 RAG Private Document Agent</h1>
-    <p>Paste or upload any business document. Ask it anything. The AI answers using only your document — no hallucinations, no internet lookup. Your data never leaves your browser.</p>
+    <div class="hero-label">The Lab &#183; Demo 3 &#183; Now Live</div>
+    <h1>&#129504; RAG Private Document Agent</h1>
+    <p>Paste any business document. Ask it anything. The AI answers using only your document &#8212; no hallucinations, no internet lookup. Your data never leaves your browser.</p>
     <div class="hero-badges">
-      <span class="hbadge green">● Zero Data Retention</span>
-      <span class="hbadge blue">Claude API</span>
-      <span class="hbadge">POPIA Compliant</span>
-      <span class="hbadge">Browser-Only Processing</span>
-      <span class="hbadge">RAG Architecture</span>
+      <span class="hb g">&#9679; Zero Data Retention</span>
+      <span class="hb b">Claude API</span>
+      <span class="hb">POPIA Compliant</span>
+      <span class="hb">Browser-Only Chunking</span>
+      <span class="hb">RAG Architecture</span>
     </div>
   </div>
 
-  <div class="process-bar" id="process-bar">
-    <div class="process-steps">
-      <div class="pstep" id="ps1"><div class="pstep-dot"></div><span class="pstep-label">Parsing document</span></div>
-      <div class="pstep" id="ps2"><div class="pstep-dot"></div><span class="pstep-label">Chunking text</span></div>
-      <div class="pstep" id="ps3"><div class="pstep-dot"></div><span class="pstep-label">Indexing chunks</span></div>
-      <div class="pstep" id="ps4"><div class="pstep-dot"></div><span class="pstep-label">Retrieving context</span></div>
-      <div class="pstep" id="ps5"><div class="pstep-dot"></div><span class="pstep-label">Generating answer</span></div>
+  <!-- PROCESS BAR -->
+  <div class="pbar" id="pbar">
+    <div class="psteps">
+      <div class="ps" id="s1"><div class="pd"></div>Parsing</div>
+      <div class="ps" id="s2"><div class="pd"></div>Chunking</div>
+      <div class="ps" id="s3"><div class="pd"></div>Indexing</div>
+      <div class="ps" id="s4"><div class="pd"></div>Retrieving</div>
+      <div class="ps" id="s5"><div class="pd"></div>Generating</div>
     </div>
   </div>
 
-  <div class="main-grid">
-    <!-- LEFT: DOCUMENT PANEL -->
+  <!-- MAIN GRID -->
+  <div class="grid2">
+    <!-- DOC PANEL -->
     <div class="panel">
-      <div class="panel-title">01 — Your Document</div>
-      <div class="doc-tabs">
-        <button class="dtab active" onclick="switchTab('paste')">Paste Text</button>
-        <button class="dtab" onclick="switchTab('sample')">Sample Docs</button>
+      <div class="plabel">01 &#8212; Your Document</div>
+      <div class="tabs">
+        <button class="dtab on" onclick="setTab('paste',this)">Paste Text</button>
+        <button class="dtab" onclick="setTab('sample',this)">Sample Docs</button>
       </div>
       <div id="tab-paste">
-        <textarea class="doc-area" id="doc-input" placeholder="Paste any business document here — a contract, policy, report, SOP, financial statement, employee handbook, compliance document, or any text you want to query...&#10;&#10;Minimum 100 characters. Maximum 15,000 characters.&#10;&#10;Example: Paste your company HR policy and ask: 'What is the leave policy for senior employees?'"></textarea>
+        <textarea id="doc" placeholder="Paste any business document here &#8212; a contract, HR policy, financial report, SOP, compliance doc, or any business text you want to query.&#10;&#10;Minimum 100 characters. The AI will answer questions strictly from your document."></textarea>
         <div class="doc-meta">
-          <span class="doc-stat">Characters: <span id="char-count">0</span> / 15,000</span>
-          <span class="doc-stat">Chunks: <span id="chunk-count">0</span></span>
+          <span>Characters: <span id="cc">0</span> / 15,000</span>
+          <span>Chunks: <span id="ck">0</span></span>
         </div>
-        <button onclick="processDocument()" id="proc-btn" style="margin-top:.9rem;width:100%;background:var(--ibm);color:#fff;border:none;padding:.85rem;font-family:var(--fm);font-size:.78rem;font-weight:600;letter-spacing:.07em;cursor:pointer;border-radius:2px;transition:background .2s;text-transform:uppercase" onmouseover="this.style.background='var(--ibm-h)'" onmouseout="this.style.background='var(--ibm)'">Process Document →</button>
+        <button class="proc-btn" id="pbtn" onclick="processDoc()" disabled>Connect API Key First</button>
       </div>
       <div id="tab-sample" style="display:none">
-        <p style="font-size:.8rem;color:var(--muted);margin-bottom:.9rem;line-height:1.65">Select a pre-loaded sample document to try the system immediately.</p>
-        <div class="sample-docs">
-          <button class="sdoc" onclick="loadSample('hr')"><div class="sdoc-title">📋 HR Policy Manual</div><div class="sdoc-sub">Leave · Benefits · Conduct</div></button>
-          <button class="sdoc" onclick="loadSample('financial')"><div class="sdoc-title">📊 Q2 Financial Report</div><div class="sdoc-sub">Revenue · Expenses · KPIs</div></button>
-          <button class="sdoc" onclick="loadSample('contract')"><div class="sdoc-title">📄 Service Agreement</div><div class="sdoc-sub">Terms · Deliverables · SLAs</div></button>
-          <button class="sdoc" onclick="loadSample('compliance')"><div class="sdoc-title">🛡️ POPIA Compliance SOP</div><div class="sdoc-sub">Data · Privacy · Procedures</div></button>
+        <p style="font-size:.78rem;color:var(--muted);margin-bottom:.85rem;line-height:1.68">Select a pre-loaded document to test the system instantly.</p>
+        <div class="samples">
+          <button class="sdoc" onclick="loadS('hr')"><div class="sdoc-t">&#128203; HR Policy Manual</div><div class="sdoc-s">Leave &#183; Benefits &#183; Conduct</div></button>
+          <button class="sdoc" onclick="loadS('fin')"><div class="sdoc-t">&#128202; Q2 Financial Report</div><div class="sdoc-s">Revenue &#183; KPIs &#183; Margins</div></button>
+          <button class="sdoc" onclick="loadS('contract')"><div class="sdoc-t">&#128196; Service Agreement</div><div class="sdoc-s">Terms &#183; Deliverables &#183; Fees</div></button>
+          <button class="sdoc" onclick="loadS('popia')"><div class="sdoc-t">&#128737;&#65039; POPIA Compliance SOP</div><div class="sdoc-s">Data &#183; Privacy &#183; Procedures</div></button>
         </div>
       </div>
     </div>
 
-    <!-- RIGHT: CHAT PANEL -->
+    <!-- CHAT PANEL -->
     <div class="panel">
-      <div class="panel-title">02 — Ask Your Document</div>
-      <div class="quick-q" id="quick-questions">
-        <button class="qq" disabled onclick="askQuick(this)" data-q="What are the main topics covered in this document?">Main Topics</button>
-        <button class="qq" disabled onclick="askQuick(this)" data-q="Summarise the key points in 3 bullet points.">Summary</button>
-        <button class="qq" disabled onclick="askQuick(this)" data-q="What are the most important rules or requirements mentioned?">Key Rules</button>
-        <button class="qq" disabled onclick="askQuick(this)" data-q="What actions or steps are described?">Actions/Steps</button>
+      <div class="plabel">02 &#8212; Ask Your Document</div>
+      <div class="qquick" id="qqs">
+        <button class="qq" disabled data-q="What are the main topics covered in this document?">Main Topics</button>
+        <button class="qq" disabled data-q="Summarise the key points in 3 bullet points.">Summary</button>
+        <button class="qq" disabled data-q="What are the most important rules or requirements mentioned?">Key Rules</button>
+        <button class="qq" disabled data-q="What actions or steps are described in this document?">Steps</button>
       </div>
-      <div class="chat-msgs" id="chat-msgs">
-        <div class="cmsg system">Load a document on the left to begin querying it.</div>
+      <div class="msgs" id="msgs">
+        <div class="msg sys">Connect your API key and load a document to begin.</div>
       </div>
-      <div class="chat-input-row">
-        <input class="chat-input" id="chat-input" type="text" placeholder="Load a document first, then ask anything..." disabled maxlength="500"/>
-        <button class="send-btn" id="send-btn" disabled onclick="sendMessage()">Ask →</button>
+      <div class="inp-row">
+        <input id="qi" type="text" placeholder="Load a document first, then ask anything..." disabled maxlength="500"/>
+        <button class="ask-btn" id="abtn" disabled onclick="ask()">Ask &#8594;</button>
       </div>
     </div>
-  </div>
-
-  <!-- CHUNKS VIEWER -->
-  <div class="chunks-section" id="chunks-section" style="display:none">
-    <div class="chunks-header" onclick="toggleChunks()">
-      <span class="chunks-title">Document Chunks — <span id="chunks-label">0 chunks indexed</span></span>
-      <span class="chunks-toggle" id="chunks-toggle-label">Show ▼</span>
-    </div>
-    <div class="chunks-body" id="chunks-body"></div>
   </div>
 
   <!-- HOW IT WORKS -->
-  <div class="how-section">
-    <div class="how-step"><div class="how-num">STEP 01</div><div class="how-icon">📄</div><div class="how-title">Document Ingestion</div><p class="how-desc">Your document is parsed and cleaned entirely in your browser. Nothing is uploaded to any server at this stage.</p></div>
-    <div class="how-step"><div class="how-num">STEP 02</div><div class="how-icon">✂️</div><div class="how-title">Chunking & Indexing</div><p class="how-desc">The text is split into overlapping 500-character chunks with context preservation. Each chunk is indexed for fast retrieval.</p></div>
-    <div class="how-step"><div class="how-num">STEP 03</div><div class="how-icon">🎯</div><div class="how-title">Retrieval & Generation</div><p class="how-desc">Your question retrieves the most relevant chunks. Claude generates an answer grounded strictly in your document content.</p></div>
+  <div class="how">
+    <div class="hs"><div class="hs-num">STEP 01</div><div class="hs-icon">&#128196;</div><div class="hs-title">Document Ingestion</div><p class="hs-desc">Your document is parsed and cleaned entirely in your browser. Nothing is uploaded to any server at this stage.</p></div>
+    <div class="hs"><div class="hs-num">STEP 02</div><div class="hs-icon">&#9986;&#65039;</div><div class="hs-title">Chunking &amp; Indexing</div><p class="hs-desc">Text is split into overlapping 480-character chunks preserving sentence boundaries. Each chunk is indexed for fast keyword retrieval.</p></div>
+    <div class="hs"><div class="hs-num">STEP 03</div><div class="hs-icon">&#127919;</div><div class="hs-title">Retrieval &amp; Generation</div><p class="hs-desc">Your question retrieves the most relevant chunks. Claude generates an answer grounded strictly in your document &#8212; not from general knowledge.</p></div>
   </div>
 
   <!-- PRIVACY BAR -->
-  <div class="privacy-bar">
-    <span class="privacy-icon">🛡️</span>
-    <div class="privacy-text"><strong>Zero Data Retention — POPIA Compliant.</strong> Your document exists only in your browser's memory during this session. No document content is stored, logged, or transmitted to Mahlo AI Consulting's servers. The only external call made is to the Claude API to generate your answer — and only the relevant extracted chunks (not your full document) are sent. When you close this tab, everything is gone. <a href="/privacy.html" style="color:var(--ibm-l)">Read the full privacy policy →</a></div>
+  <div class="priv">
+    <span style="font-size:1rem;flex-shrink:0;margin-top:.1rem">&#128737;&#65039;</span>
+    <div class="priv-text"><strong>Zero Data Retention &#8212; POPIA Compliant.</strong> Your document exists only in your browser&#39;s session memory. No document content is stored, logged, or sent to Mahlo AI Consulting&#39;s servers. Only the most relevant extracted chunks (not your full document) are sent to Claude API to generate your answer. When you close this tab, everything is permanently gone. <a href="/privacy.html" style="color:var(--ibm-l)">Read the full privacy policy &#8594;</a></div>
   </div>
 
   <!-- BOTTOM CTA -->
-  <div class="bottom-cta">
-    <div class="cta-title">Deploy This for Your Business</div>
-    <p class="cta-sub">This demo shows what's possible in a browser. The enterprise version uses LangChain + FAISS + IBM Granite with local embeddings — your documents never touch the internet at all. Deployable in your private cloud, on-premise, or in a POPIA-compliant SA data centre.</p>
-    <a href="https://wa.me/27736464935?text=Hi%20Mahlo%2C%20I%20tried%20the%20RAG%20Document%20Agent%20demo%20and%20would%20like%20to%20deploy%20it%20for%20my%20business" class="cta-btn">WhatsApp to Deploy This →</a>
+  <div class="cta">
+    <div class="cta-t">Deploy This for Your Business</div>
+    <p class="cta-s">This demo shows what&#39;s possible in a browser. The enterprise version uses LangChain + FAISS + IBM Granite with local embeddings &#8212; your documents never touch the internet at all. Deployable in your private cloud, on-premise, or in a POPIA-compliant SA data centre.</p>
+    <a href="https://wa.me/27736464935?text=Hi%20Mahlo%2C%20I%20tried%20the%20RAG%20Document%20Agent%20demo%20and%20would%20like%20to%20deploy%20it%20for%20my%20business" class="cta-a" target="_blank" rel="noopener">WhatsApp to Deploy This &#8594;</a>
   </div>
 
-  <div class="foot-note">
-    <a href="/">← Mahlo AI Consulting</a> · 
-    <a href="/chatbot_demo.html">AI Chatbot Demo</a> · 
-    <a href="/summarizer_demo.html">Document Summarizer</a> · 
-    IBM AI Ethics Aligned · POPIA Compliant · Zero Data Retention
+  <div class="foot">
+    <a href="/">&#8592; Mahlo AI Consulting</a> &#183;
+    <a href="/chatbot_demo.html">AI Chatbot Demo</a> &#183;
+    <a href="/summarizer_demo.html">Document Summarizer</a> &#183;
+    IBM AI Ethics Aligned &#183; POPIA Compliant &#183; Zero Data Retention
   </div>
 </div>
 
 <script>
 // ─── SAMPLE DOCUMENTS ───
-const SAMPLES = {
-  hr: `ZENITH MANUFACTURING — EMPLOYEE HANDBOOK (Excerpt)
-Effective Date: 1 January 2025
-
+const DOCS = {
+  hr:`ZENITH MANUFACTURING EMPLOYEE HANDBOOK
 SECTION 3 — LEAVE POLICY
-
-3.1 Annual Leave
-All permanent employees are entitled to 21 working days of annual leave per calendar year. Employees in management grades (M1-M4) receive 25 working days. Leave must be applied for at least 5 working days in advance using the HR portal. Unused leave may be carried over for a maximum of 10 days into the following year, after which it lapses.
-
-3.2 Sick Leave
-During every sick leave cycle of 36 months, an employee is entitled to an amount of paid sick leave equal to the number of days the employee would normally work during a period of six weeks. During the first 6 months of employment, employees are entitled to 1 day paid sick leave for every 26 days worked.
-
-3.3 Maternity and Parental Leave
-Female employees are entitled to 4 consecutive months of maternity leave. The first 2 months are paid at 60% of basic salary if the employee has been employed for more than 12 months. Male employees and co-parents receive 10 working days of paid parental leave.
-
-3.4 Family Responsibility Leave
-Employees are entitled to 3 days per year of paid family responsibility leave for the following: birth of a child, illness or death of a spouse, partner, parent, child or sibling.
-
+3.1 Annual Leave: All permanent employees are entitled to 21 working days annual leave per calendar year. Management grades M1-M4 receive 25 working days. Leave must be applied at least 5 working days in advance via the HR portal. Unused leave carries over for a maximum of 10 days; the remainder lapses.
+3.2 Sick Leave: During every sick leave cycle of 36 months, employees receive paid sick leave equal to 6 weeks of normal working days. During the first 6 months of employment, 1 day per 26 days worked.
+3.3 Maternity Leave: Female employees receive 4 consecutive months. The first 2 months are paid at 60% if employed more than 12 months. Male and co-parents receive 10 working days paid parental leave.
+3.4 Family Responsibility: 3 days per year for birth of child, illness or death of spouse, parent, child, or sibling.
 SECTION 4 — CODE OF CONDUCT
+4.1 Workplace Behaviour: Harassment of any kind results in disciplinary action up to dismissal. All incidents reported to HR within 48 hours.
+4.2 Conflict of Interest: Disclose financial interest in suppliers, clients, or competitors within 30 days.
+4.3 Social Media: No posts that could bring Zenith into disrepute. References to clients, financials, or internal operations require written approval.
+SECTION 5 — REMUNERATION
+5.1 Salary Review: Annual in March. Outstanding (4.1-5.0) = 8-10%. Exceeds Expectations (3.1-4.0) = 5-7%. Meets Expectations (2.1-3.0) = 2-4%. Below Expectations = 0%.
+5.2 Medical Aid: Company contributes 60% of employee premium and 40% of dependant premium. Discovery Keycare Plus is the default plan. Employees must join within 30 days of commencement.
+5.3 Provident Fund: Company contributes 7.5% of basic salary. Minimum employee contribution is 7.5%. Employees are vested after 3 years of continuous service.`,
 
-4.1 Workplace Behaviour
-All employees are expected to maintain professional conduct at all times. Harassment of any kind, including sexual, racial, or workplace bullying, will result in immediate disciplinary action up to and including dismissal. All incidents must be reported to HR within 48 hours.
+  fin:`MERIDIAN PROPERTY GROUP — Q2 2025 FINANCIAL SUMMARY
+Period: April 1 to June 30, 2025
+EXECUTIVE SUMMARY: Revenue up 18% year-on-year to R47.8m. EBITDA margin improved 2.3 percentage points to 34.7%. Residential vacancy fell to 3-year low of 6.2%.
+REVENUE (Q2 2025 vs Q2 2024):
+Residential Lettings: R18.2m (38% of revenue), up 12% year-on-year.
+Commercial Lettings: R22.4m (47% of revenue), up 26% year-on-year.
+Property Management Fees: R4.6m (10% of revenue), up 8% year-on-year.
+Facilities Services: R2.6m (5% of revenue), down 3% year-on-year.
+KEY PERFORMANCE INDICATORS:
+Properties Under Management: 847, up from 791 in Q1.
+Commercial Occupancy Rate: 87.4% (Q1: 83.1%).
+Residential Occupancy Rate: 93.8% (Q1: 91.2%).
+New Leases Signed: 124 (Q1: 98). Renewals: 211. Renewal rate: 91%.
+Average Commercial Lease Duration: 3.4 years.
+Net Promoter Score (Tenants): 62 (Q1: 57).
+OPERATING EXPENSES (Total R31.2m):
+Staff Costs: R14.8m (47%), up 9% due to 12 new hires.
+Property Maintenance: R8.7m (28%), above target due to 3 major repairs.
+Marketing and Leasing: R2.9m (9%).
+IT and Technology: R1.8m (6%). CRM upgrade completed.
+Admin and General: R3.0m (10%).
+EBITDA: R16.6m at 34.7% margin vs R13.0m at 32.1% in Q2 2024.
+BALANCE SHEET: Cash R22.4m. Total Debt R180m. LTV ratio 42%. Portfolio valuation R428m. DSCR 2.1x against covenant minimum of 1.3x.
+Q3 GUIDANCE: Revenue R50-53m. EBITDA margin 35-36%. Two new commercial properties totalling 4,200sqm transfer in July.`,
 
-4.2 Conflict of Interest
-Employees must disclose any financial interest in suppliers, clients, or competitors within 30 days of such interest arising. Failure to disclose constitutes grounds for disciplinary action.
+  contract:`PROFESSIONAL SERVICES AGREEMENT
+Parties: Kgotla AI (Pty) Ltd as Service Provider and NovaBridge Logistics (Pty) Ltd as Client. Dated 15 February 2025.
+SCOPE OF SERVICES:
+Phase 1 — AI Recruitment Screening System: Automated CV processing and shortlisting using Claude AI. Deliverables include configured Make.com workflow, Notion candidate database, scoring rubric, and 90-day support.
+Phase 2 — Operations Knowledge Base: Notion-based internal wiki with RAG-powered AI question and answer layer covering logistics SOPs, client onboarding, and HR procedures. Deliverables include populated Notion workspace with 50 base documents and Make.com integration.
+Phase 3 — Monthly Analytics Reports: AI-generated operational performance reports from NovaBridge existing data sources. Deliverables include 3 report templates and 6 months of monthly delivery.
+FEES AND PAYMENT:
+Phase 1 (Recruitment System): R18,500 due on project commencement.
+Phase 2 (Knowledge Base): R12,000 due on delivery of completed workspace.
+Phase 3 (Analytics Retainer): R3,500 per month, invoiced monthly, payable within 14 days.
+Total Project Value: R51,500 plus ongoing monthly retainer.
+TIMELINE: Phase 1 — 14 calendar days. Phase 2 — 21 days from Phase 1 sign-off. Phase 3 — commences month following Phase 2 sign-off.
+OWNERSHIP: All systems, workflows, templates, and documentation become sole property of Client upon full payment. All login credentials and API keys transferred within 5 business days of final payment.
+DATA PROTECTION: Both parties comply with POPIA Act 4 of 2013. Service Provider processes Client data only as strictly necessary. No Client data stored beyond engagement period or shared with third parties without written consent.
+LIABILITY: Total liability capped at fees paid in preceding 12 months. No indirect or consequential damages.
+TERMINATION: 30 days written notice by either party. All Client deliverables transferred within 5 business days of effective date.`,
 
-4.3 Social Media Policy
-Employees may not post content that could bring Zenith Manufacturing into disrepute. References to clients, financial performance, or internal operations on social media are strictly prohibited without written approval from the Communications Manager.
-
-SECTION 5 — REMUNERATION AND BENEFITS
-
-5.1 Salary Review
-Salary reviews are conducted annually in March. Performance ratings determine the increase percentage: Outstanding (4.1-5.0) — 8-10%, Exceeds Expectations (3.1-4.0) — 5-7%, Meets Expectations (2.1-3.0) — 2-4%, Below Expectations (1.0-2.0) — 0%.
-
-5.2 Medical Aid
-The company contributes 60% of the medical aid premium for the employee and 40% for dependants. The Discovery Keycare Plus plan is the default option. Employees must join within 30 days of commencement.
-
-5.3 Provident Fund
-The company contributes 7.5% of basic salary to the company provident fund. The employee contributes a minimum of 7.5%. Employees are vested after 3 years of service.`,
-
-  financial: `MERIDIAN PROPERTY GROUP — Q2 2025 FINANCIAL REPORT (Summary)
-Period: April 1 — June 30, 2025
-
-EXECUTIVE SUMMARY
-Meridian Property Group delivered strong Q2 performance with revenue up 18% year-on-year, driven primarily by new commercial lettings in Sandton and Rosebank. EBITDA margin improved by 2.3 percentage points to 34.7%. Vacancy rates across the residential portfolio fell to a 3-year low of 6.2%.
-
-REVENUE BREAKDOWN
-Total Revenue: R47.8 million (Q2 2025) vs R40.5 million (Q2 2024)
-— Residential Lettings: R18.2m (38% of revenue) — up 12% YoY
-— Commercial Lettings: R22.4m (47% of revenue) — up 26% YoY  
-— Property Management Fees: R4.6m (10% of revenue) — up 8% YoY
-— Facilities Services: R2.6m (5% of revenue) — down 3% YoY
-
-KEY PERFORMANCE INDICATORS
-— Properties Under Management: 847 (up from 791 in Q1)
-— Average Commercial Occupancy Rate: 87.4% (Q1: 83.1%)
-— Average Residential Occupancy Rate: 93.8% (Q1: 91.2%)
-— New Leases Signed: 124 (Q1: 98)
-— Lease Renewals: 211 (Q1: 189), renewal rate 91%
-— Average Lease Duration (Commercial): 3.4 years
-— Net Promoter Score (Tenants): 62 (Q1: 57)
-
-OPERATING EXPENSES
-Total Opex: R31.2 million
-— Staff Costs: R14.8m (47% of opex) — up 9% due to 12 new hires
-— Property Maintenance: R8.7m (28%) — higher than target due to 3 major repairs
-— Marketing and Leasing: R2.9m (9%) — new digital campaign launched
-— IT and Technology: R1.8m (6%) — CRM upgrade completed
-— Admin and General: R3.0m (10%)
-
-EBITDA: R16.6 million (34.7% margin) vs R13.0 million (32.1%) in Q2 2024
-
-BALANCE SHEET HIGHLIGHTS
-— Cash and Equivalents: R22.4m
-— Total Debt: R180m (LTV ratio: 42%)
-— Portfolio Valuation: R428m (independent valuation, May 2025)
-— Debt Service Coverage Ratio: 2.1x (covenant minimum: 1.3x)
-
-OUTLOOK
-Q3 2025 guidance: Revenue R50-53m, EBITDA margin 35-36%. Two new commercial properties (combined 4,200 sqm) are scheduled to transfer in July. The residential expansion into Centurion is on track for Q4 delivery.`,
-
-  contract: `PROFESSIONAL SERVICES AGREEMENT
-Between: Kgotla AI (Pty) Ltd ("Service Provider") and NovaBridge Logistics (Pty) Ltd ("Client")
-Date: 15 February 2025
-
-1. SCOPE OF SERVICES
-The Service Provider shall deliver the following AI automation services:
-(a) AI Recruitment Screening System — automated candidate CV processing, scoring, and shortlisting using Claude AI. Deliverables include: configured Make.com workflow, Notion candidate database, scoring rubric, and 90-day support.
-(b) Operations Knowledge Base — a Notion-based internal wiki with RAG-powered Q&A layer covering logistics SOPs, client onboarding, and HR procedures. Deliverables include: fully populated Notion workspace, 50 base documents, and Make.com integration for updates.
-(c) Monthly Analytics Reports — AI-generated operational performance reports from NovaBridge's existing data sources. Deliverables: 3 report templates, 6 months of monthly delivery.
-
-2. FEES AND PAYMENT
-Phase 1 (Recruitment System): R18,500 — due on project commencement
-Phase 2 (Knowledge Base): R12,000 — due on delivery of completed workspace
-Phase 3 (Analytics Retainer): R3,500/month — invoiced monthly, payable within 14 days
-Total Project Value: R51,500 plus monthly retainer
-
-3. TIMELINE
-Phase 1: 14 calendar days from commencement
-Phase 2: 21 calendar days from Phase 1 sign-off
-Phase 3: Commences month following Phase 2 sign-off
-
-4. INTELLECTUAL PROPERTY AND OWNERSHIP
-All systems, workflows, templates, and documentation delivered under this Agreement become the sole property of the Client upon full payment of the applicable phase fee. The Service Provider retains no ongoing rights to the Client's data, systems, or custom configurations. The Client shall be provided with all login credentials, API keys, and documentation within 5 business days of final payment.
-
-5. CONFIDENTIALITY AND DATA PROTECTION
-Both parties agree to comply with the Protection of Personal Information Act 4 of 2013 (POPIA). The Service Provider shall process Client data only as strictly necessary to deliver the services. No Client data shall be stored beyond the engagement period or shared with third parties without written consent.
-
-6. LIMITATION OF LIABILITY
-The Service Provider's total liability under this Agreement shall not exceed the total fees paid in the 12 months preceding the claim. Neither party shall be liable for indirect, consequential, or punitive damages.
-
-7. TERMINATION
-Either party may terminate with 30 days written notice. Upon termination, all Client-owned deliverables shall be transferred within 5 business days. Outstanding fees for work completed remain payable.`,
-
-  compliance: `POPIA COMPLIANCE STANDARD OPERATING PROCEDURE
-Prepared by: Mahlo AI Consulting for Internal Use
-Version: 2.1 | Last Reviewed: March 2025
-
+  popia:`POPIA COMPLIANCE STANDARD OPERATING PROCEDURE — Version 2.1
 SECTION 1 — PURPOSE AND SCOPE
-This SOP establishes procedures for compliance with the Protection of Personal Information Act 4 of 2013 (POPIA) and the General Data Protection Regulation (GDPR) where applicable. It applies to all personal information processed by the organisation in the course of its business operations, including client data, employee data, and supplier data.
-
+Establishes compliance procedures for the Protection of Personal Information Act 4 of 2013 (POPIA) and GDPR where applicable. Applies to all personal information processed by the organisation including client, employee, and supplier data.
 SECTION 2 — DATA CLASSIFICATION
-All personal information must be classified as follows:
-Category A (Highly Sensitive): Identity numbers, biometric data, health records, financial account details, criminal records. Storage: Encrypted at rest and in transit. Access: Senior management only. Retention: Minimum required by law.
-Category B (Sensitive): Contact details, salary information, employment history, home addresses. Storage: Password-protected systems only. Access: Role-based, need-to-know basis. Retention: Duration of relationship plus 5 years.
-Category C (Standard): Business contact information, public professional profiles. Storage: Standard business systems. Access: General staff with business need.
-
+Category A (Highly Sensitive): Identity numbers, biometric data, health records, financial account details, criminal records. Must be encrypted at rest and in transit. Access restricted to senior management only.
+Category B (Sensitive): Contact details, salary information, employment history, home addresses. Password-protected systems only. Role-based access on need-to-know basis. Retention: duration of relationship plus 5 years.
+Category C (Standard): Business contact information, public professional profiles. Standard business systems. General staff with business need.
 SECTION 3 — LAWFUL BASIS FOR PROCESSING
-Personal information may only be processed if one of the following grounds exists: (a) the data subject has given consent, (b) processing is necessary for performance of a contract, (c) processing is required by law, (d) processing protects a legitimate interest of the data subject, (e) processing is necessary for the exercise of public interest functions. Consent must be freely given, specific, and documented. Consent may be withdrawn at any time.
-
+Personal information may only be processed if: the data subject has consented; processing is necessary for a contract; required by law; protects a legitimate interest of the data subject; or necessary for a public interest function. Consent must be freely given, specific, documented, and may be withdrawn at any time.
 SECTION 4 — DATA SUBJECT RIGHTS
-Data subjects have the right to: access their personal information within 30 days of request; correct inaccurate information within 15 days; object to processing; request erasure where legally permissible; lodge a complaint with the Information Regulator. All requests must be logged in the Data Subject Request Register and responded to within the statutory timeframe.
-
+Data subjects have the right to access their information within 30 days of request, correct inaccurate data within 15 days, object to processing, request erasure where legally permissible, and lodge a complaint with the Information Regulator. All requests must be logged in the Data Subject Request Register.
 SECTION 5 — DATA BREACH PROCEDURE
-In the event of a data breach: (1) Contain the breach within 1 hour of discovery. (2) Assess severity and scope within 4 hours. (3) Notify the Information Regulator within 72 hours if there is a risk to data subjects. (4) Notify affected data subjects if there is a real risk of harm. (5) Document the incident in the Breach Register. (6) Conduct root cause analysis within 5 business days.
-
+Step 1: Contain the breach within 1 hour of discovery. Step 2: Assess severity and scope within 4 hours. Step 3: Notify the Information Regulator within 72 hours if there is a risk to data subjects. Step 4: Notify affected data subjects if there is a real risk of harm. Step 5: Document the incident in the Breach Register. Step 6: Conduct root cause analysis within 5 business days.
 SECTION 6 — THIRD PARTY PROCESSORS
-All third-party processors must sign a Processing Agreement before receiving any personal information. Processors must demonstrate adequate technical and organisational security measures. Annual processor audits are required for processors handling Category A or B data.`
+All third-party processors must sign a Processing Agreement before receiving any personal information. Annual processor audits required for processors handling Category A or B data.`
 };
 
-// ─── STATE ───
-let chunks = [];
-let docLoaded = false;
-let isProcessing = false;
+// ─── API KEY MANAGEMENT ───
+let apiKey = sessionStorage.getItem('rag_api_key') || '';
+if (apiKey) {
+  document.getElementById('key-inp').value = apiKey;
+  showKeyStatus(true, 'API key loaded from session');
+  enableProc();
+}
+
+function saveKey() {
+  const val = document.getElementById('key-inp').value.trim();
+  if (!val.startsWith('sk-ant-')) {
+    showKeyStatus(false, 'Key must start with sk-ant-');
+    return;
+  }
+  apiKey = val;
+  sessionStorage.setItem('rag_api_key', apiKey);
+  showKeyStatus(true, 'Key saved to session — ready');
+  enableProc();
+}
+
+function showKeyStatus(ok, msg) {
+  const el = document.getElementById('key-status');
+  el.style.display = 'flex';
+  el.className = 'key-status ' + (ok ? 'ok' : 'err');
+  el.textContent = (ok ? '✓ ' : '✗ ') + msg;
+}
+
+function enableProc() {
+  const btn = document.getElementById('pbtn');
+  btn.disabled = false;
+  btn.textContent = 'Process Document →';
+}
+
+document.getElementById('key-inp').addEventListener('keydown', e => {
+  if (e.key === 'Enter') saveKey();
+});
 
 // ─── TABS ───
-function switchTab(tab) {
-  document.querySelectorAll('.dtab').forEach(t => t.classList.remove('active'));
-  event.target.classList.add('active');
-  document.getElementById('tab-paste').style.display = tab === 'paste' ? 'block' : 'none';
-  document.getElementById('tab-sample').style.display = tab === 'sample' ? 'block' : 'none';
+function setTab(t, btn) {
+  document.querySelectorAll('.dtab').forEach(b => b.classList.remove('on'));
+  btn.classList.add('on');
+  document.getElementById('tab-paste').style.display = t === 'paste' ? 'block' : 'none';
+  document.getElementById('tab-sample').style.display = t === 'sample' ? 'block' : 'none';
 }
 
-function loadSample(key) {
-  switchTab('paste');
-  document.querySelectorAll('.dtab')[0].classList.add('active');
-  document.querySelectorAll('.dtab')[1].classList.remove('active');
+function loadS(k) {
+  if (!apiKey) { saveKey(); if (!apiKey) return; }
+  document.getElementById('doc').value = DOCS[k];
+  setTab('paste', document.querySelectorAll('.dtab')[0]);
+  document.querySelectorAll('.dtab')[1].classList.remove('on');
   document.getElementById('tab-paste').style.display = 'block';
   document.getElementById('tab-sample').style.display = 'none';
-  document.getElementById('doc-input').value = SAMPLES[key];
-  updateCounts();
-  processDocument();
+  upCount();
+  processDoc();
 }
 
-// ─── CHAR COUNT ───
-document.getElementById('doc-input').addEventListener('input', updateCounts);
-function updateCounts() {
-  const val = document.getElementById('doc-input').value;
-  document.getElementById('char-count').textContent = val.length.toLocaleString();
+document.getElementById('doc').addEventListener('input', upCount);
+function upCount() {
+  const v = document.getElementById('doc').value;
+  document.getElementById('cc').textContent = v.length.toLocaleString();
 }
 
 // ─── CHUNKING ───
-function chunkText(text, chunkSize = 500, overlap = 80) {
+let chunks = [], ready = false, busy = false;
+
+function chunkText(text, size = 480, ov = 70) {
   text = text.trim();
-  if (text.length < 50) return [];
-  const results = [];
+  if (text.length < 80) return [];
+  const res = [];
   let start = 0;
   while (start < text.length) {
-    let end = Math.min(start + chunkSize, text.length);
-    // Try to break at sentence boundary
+    let end = Math.min(start + size, text.length);
     if (end < text.length) {
-      const boundary = text.lastIndexOf('.', end);
-      if (boundary > start + chunkSize * 0.6) end = boundary + 1;
+      const nb = text.lastIndexOf('
+', end);
+      const sb = text.lastIndexOf('. ', end);
+      const boundary = Math.max(nb, sb);
+      if (boundary > start + size * 0.5) end = boundary + 1;
     }
-    results.push({ id: results.length + 1, text: text.slice(start, end).trim() });
-    start = end - overlap;
+    res.push({ id: res.length + 1, text: text.slice(start, end).trim() });
+    start = end - ov;
     if (start >= text.length) break;
   }
-  return results;
+  return res;
 }
 
-function simpleScore(chunk, query) {
-  const qWords = query.toLowerCase().split(/\s+/).filter(w => w.length > 3);
-  const chunkLower = chunk.text.toLowerCase();
-  let score = 0;
-  qWords.forEach(w => { if (chunkLower.includes(w)) score += 1; });
-  return score;
+function scoreChunk(chunk, q) {
+  const words = q.toLowerCase().split(/\s+/).filter(w => w.length > 3);
+  const cl = chunk.text.toLowerCase();
+  return words.reduce((s, w) => s + (cl.includes(w) ? 1 : 0), 0);
 }
 
-function getTopChunks(query, k = 4) {
+function topChunks(q, k = 4) {
   if (!chunks.length) return [];
-  const scored = chunks.map(c => ({ ...c, score: simpleScore(c, query) }));
-  scored.sort((a, b) => b.score - a.score);
-  // Always include first chunk for context, plus top k
-  const top = scored.slice(0, k);
-  if (!top.find(c => c.id === 1) && chunks.length > 0) top[top.length - 1] = { ...chunks[0], score: 0 };
-  return [...new Set(top.map(c => c.id))].map(id => chunks.find(c => c.id === id)).filter(Boolean).sort((a, b) => a.id - b.id);
+  return [...chunks]
+    .map(c => ({ ...c, sc: scoreChunk(c, q) }))
+    .sort((a, b) => b.sc - a.sc)
+    .slice(0, k)
+    .sort((a, b) => a.id - b.id);
 }
 
-// ─── PROCESS DOCUMENT ───
-async function processDocument() {
-  const text = document.getElementById('doc-input').value.trim();
-  if (text.length < 100) { addMsg('system', 'Document too short. Please paste at least 100 characters.'); return; }
-  if (text.length > 15000) { addMsg('system', 'Document too long. Please keep it under 15,000 characters.'); return; }
-
-  // Show process bar
-  const bar = document.getElementById('process-bar');
-  bar.classList.add('show');
-  
-  await stepProcess('ps1', 400);
-  await stepProcess('ps2', 500);
-  chunks = chunkText(text);
-  document.getElementById('chunk-count').textContent = chunks.length;
-  await stepProcess('ps3', 400);
-  
-  // Done
-  setTimeout(() => { bar.classList.remove('show'); resetSteps(); }, 800);
-
-  // Show chunks viewer
-  const cs = document.getElementById('chunks-section');
-  cs.style.display = 'block';
-  document.getElementById('chunks-label').textContent = chunks.length + ' chunks indexed';
-  const body = document.getElementById('chunks-body');
-  body.innerHTML = chunks.map(c => `<div class="chunk"><div class="chunk-num">CHUNK ${c.id} / ${chunks.length}</div>${escHtml(c.text)}</div>`).join('');
-
-  // Enable chat
-  docLoaded = true;
-  document.getElementById('chat-input').disabled = false;
-  document.getElementById('send-btn').disabled = false;
-  document.getElementById('chat-input').placeholder = 'Ask anything about your document...';
-  document.querySelectorAll('.qq').forEach(q => q.disabled = false);
-
-  // Clear and add system msg
-  const msgs = document.getElementById('chat-msgs');
-  msgs.innerHTML = '';
-  addMsg('system', `✓ Document processed — ${chunks.length} chunks indexed. ${text.length.toLocaleString()} characters. Ready for questions.`);
-  document.getElementById('chat-input').focus();
-}
-
-async function stepProcess(id, delay) {
+// ─── PROCESS STEPS ───
+async function stepGo(id, ms) {
   const el = document.getElementById(id);
-  el.classList.add('active');
-  el.querySelector('.pstep-dot').classList.add('active');
-  el.querySelector('.pstep-label').style.color = 'var(--aws)';
-  await sleep(delay);
-  el.classList.remove('active');
+  el.classList.add('act');
+  el.querySelector('.pd').classList.add('act');
+  await sleep(ms);
+  el.classList.remove('act');
   el.classList.add('done');
-  el.querySelector('.pstep-dot').classList.remove('active');
-  el.querySelector('.pstep-dot').classList.add('done');
-  el.querySelector('.pstep-label').style.color = 'var(--green)';
+  el.querySelector('.pd').classList.remove('act');
+  el.querySelector('.pd').classList.add('done');
 }
 
 function resetSteps() {
-  ['ps1','ps2','ps3','ps4','ps5'].forEach(id => {
+  ['s1','s2','s3','s4','s5'].forEach(id => {
     const el = document.getElementById(id);
-    el.classList.remove('active','done');
-    el.querySelector('.pstep-dot').className = 'pstep-dot';
-    el.querySelector('.pstep-label').style.color = '';
+    el.className = 'ps';
+    const pd = el.querySelector('.pd');
+    pd.className = 'pd';
   });
 }
 
 function sleep(ms) { return new Promise(r => setTimeout(r, ms)); }
 
-// ─── CHAT ───
-function askQuick(btn) { document.getElementById('chat-input').value = btn.dataset.q; sendMessage(); }
-document.getElementById('chat-input').addEventListener('keydown', e => { if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); sendMessage(); } });
+// ─── PROCESS DOCUMENT ───
+async function processDoc() {
+  if (!apiKey) { addMsg('sys', 'Please connect your API key first.'); return; }
+  const text = document.getElementById('doc').value.trim();
+  if (text.length < 80) { addMsg('sys', 'Document too short — paste at least 80 characters.'); return; }
+  if (text.length > 15000) { addMsg('sys', 'Document too long — maximum 15,000 characters.'); return; }
 
-async function sendMessage() {
-  if (!docLoaded || isProcessing) return;
-  const inp = document.getElementById('chat-input');
+  document.getElementById('pbtn').disabled = true;
+  const pb = document.getElementById('pbar');
+  pb.classList.add('show');
+  resetSteps();
+
+  await stepGo('s1', 350);
+  await stepGo('s2', 450);
+  chunks = chunkText(text);
+  document.getElementById('ck').textContent = chunks.length;
+  await stepGo('s3', 350);
+  setTimeout(() => { pb.classList.remove('show'); resetSteps(); }, 800);
+
+  ready = true;
+  document.getElementById('qi').disabled = false;
+  document.getElementById('abtn').disabled = false;
+  document.getElementById('qi').placeholder = 'Ask anything about your document...';
+  document.querySelectorAll('.qq').forEach(q => q.disabled = false);
+  document.getElementById('msgs').innerHTML = '';
+  addMsg('sys', `Document processed — ${chunks.length} chunks indexed, ${text.length.toLocaleString()} characters. Ready for questions.`);
+  document.getElementById('pbtn').disabled = false;
+  document.getElementById('qi').focus();
+}
+
+// ─── CHAT ───
+document.getElementById('qi').addEventListener('keydown', e => {
+  if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); ask(); }
+});
+document.querySelectorAll('.qq').forEach(btn => {
+  btn.addEventListener('click', () => {
+    if (btn.disabled) return;
+    document.getElementById('qi').value = btn.dataset.q;
+    ask();
+  });
+});
+
+async function ask() {
+  if (!ready || busy || !apiKey) return;
+  const inp = document.getElementById('qi');
   const q = inp.value.trim();
   if (!q) return;
   inp.value = '';
-  isProcessing = true;
-  document.getElementById('send-btn').disabled = true;
+  busy = true;
+  document.getElementById('abtn').disabled = true;
   inp.disabled = true;
-
   addMsg('user', q);
 
-  // Show retrieval steps
-  const bar = document.getElementById('process-bar');
-  bar.classList.add('show');
+  const pb = document.getElementById('pbar');
+  pb.classList.add('show');
   resetSteps();
-  await stepProcess('ps4', 300);
-
-  const relevant = getTopChunks(q, 4);
-  const context = relevant.map((c, i) => `[Chunk ${c.id}]: ${c.text}`).join('
+  await stepGo('s4', 300);
+  const relevant = topChunks(q, 4);
+  const ctx = relevant.map(c => `[Chunk ${c.id}]: ${c.text}`).join('
 
 ');
+  await stepGo('s5', 200);
 
-  await stepProcess('ps5', 200);
-
-  // Show typing
-  const msgs = document.getElementById('chat-msgs');
+  const msgs = document.getElementById('msgs');
   const typing = document.createElement('div');
-  typing.className = 'typing-indicator';
+  typing.className = 'typing';
   typing.id = 'typing';
-  typing.innerHTML = '<div class="tdot"></div><div class="tdot"></div><div class="tdot"></div>';
+  typing.innerHTML = '<div class="td"></div><div class="td"></div><div class="td"></div>';
   msgs.appendChild(typing);
   msgs.scrollTop = msgs.scrollHeight;
 
   try {
-    const sysPrompt = `You are a precise document analysis assistant. You answer questions STRICTLY based on the document context provided. 
+    const res = await fetch('https://api.anthropic.com/v1/messages', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'x-api-key': apiKey,
+        'anthropic-version': '2023-06-01',
+        'anthropic-dangerous-direct-browser-access': 'true'
+      },
+      body: JSON.stringify({
+        model: 'claude-sonnet-4-20250514',
+        max_tokens: 800,
+        system: `You are a precise document analysis assistant. Answer questions ONLY from the document context provided. If the answer is not in the document, say exactly: "This information is not in the provided document." Be concise and accurate. Quote specific parts when helpful. Never use outside knowledge or make assumptions.`,
+        messages: [{ role: 'user', content: `Document context:
 
-RULES:
-- Answer ONLY from the provided document chunks. Do not use outside knowledge.
-- If the answer is not in the document, say: "This information is not found in the provided document."
-- Be concise and accurate. Quote specific parts of the document when helpful.
-- Format your answer clearly. Use bullet points for lists if appropriate.
-- Never fabricate information or fill gaps with assumptions.`;
-
-    const userMsg = `Document context (retrieved chunks):
-
-${context}
+${ctx}
 
 ---
 
-Question: ${q}`;
-
-    const res = await fetch('https://api.anthropic.com/v1/messages', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ model: 'claude-sonnet-4-20250514', max_tokens: 1000, system: sysPrompt, messages: [{ role: 'user', content: userMsg }] })
+Question: ${q}` }]
+      })
     });
     const data = await res.json();
-    const answer = data.content && data.content[0] ? data.content[0].text : 'Error connecting to Claude API. Please try again.';
     document.getElementById('typing').remove();
-    bar.classList.remove('show');
+    pb.classList.remove('show');
     resetSteps();
-    addMsg('bot', answer);
+    if (data.error) {
+      const errMsg = data.error.message || 'API error';
+      addMsg('sys', 'API error: ' + errMsg + (errMsg.includes('API key') ? ' — please check your key above.' : ''));
+    } else {
+      const reply = data.content && data.content[0] ? data.content[0].text : 'No response received.';
+      addMsg('bot', reply);
+    }
   } catch (e) {
-    document.getElementById('typing').remove();
-    bar.classList.remove('show');
+    document.getElementById('typing')?.remove();
+    document.getElementById('pbar').classList.remove('show');
     resetSteps();
-    addMsg('bot', 'Connection error. Please check your connection and try again.');
+    addMsg('sys', 'Connection error. Please check your internet connection and try again.');
   }
 
-  isProcessing = false;
-  document.getElementById('send-btn').disabled = false;
+  busy = false;
+  document.getElementById('abtn').disabled = false;
   inp.disabled = false;
   inp.focus();
 }
 
 function addMsg(type, text) {
-  const msgs = document.getElementById('chat-msgs');
-  const div = document.createElement('div');
-  div.className = 'cmsg ' + type;
-  if (type === 'user') { div.innerHTML = '<div class="cmsg-role">You</div>' + escHtml(text); }
-  else if (type === 'bot') { div.innerHTML = '<div class="cmsg-role">Kgotla AI</div>' + formatAnswer(text); }
-  else { div.textContent = text; }
-  msgs.appendChild(div);
+  const msgs = document.getElementById('msgs');
+  const d = document.createElement('div');
+  d.className = 'msg ' + type;
+  if (type === 'user') {
+    d.innerHTML = '<div class="mrole">You</div>' + esc(text);
+  } else if (type === 'bot') {
+    d.innerHTML = '<div class="mrole">Kgotla AI</div>' + fmt(text);
+  } else {
+    d.textContent = text;
+  }
+  msgs.appendChild(d);
   msgs.scrollTop = msgs.scrollHeight;
 }
 
-function formatAnswer(text) {
-  text = escHtml(text);
-  text = text.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
-  text = text.replace(/
+function fmt(t) {
+  t = esc(t);
+  t = t.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
+  t = t.replace(/
 - /g, '
 • ');
-  text = text.replace(/
-/g, '<br/>');
-  return text;
+  t = t.replace(/
+/g, '<br>');
+  return t;
 }
 
-function escHtml(t) {
-  return t.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
-}
-
-function toggleChunks() {
-  const body = document.getElementById('chunks-body');
-  const label = document.getElementById('chunks-toggle-label');
-  body.classList.toggle('show');
-  label.textContent = body.classList.contains('show') ? 'Hide ▲' : 'Show ▼';
+function esc(t) {
+  return t.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
 }
 </script>
 </body>
