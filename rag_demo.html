@@ -1,0 +1,664 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+  <title>RAG Document Agent — Mahlo AI Consulting</title>
+  <meta name="description" content="Ask any question about your private business documents. AI-powered. POPIA compliant. Zero data retention."/>
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='4' fill='%230F62FE'/><text y='23' x='5' font-size='18' font-family='monospace' font-weight='900' fill='%23ffffff'>M</text></svg>"/>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&family=Syne:wght@700;800&display=swap" rel="stylesheet"/>
+  <style>
+    :root{
+      --bg:#0A0D1A;--dark:#111422;--card:#161928;--card2:#1C2035;
+      --ibm:#0F62FE;--ibm-h:#0353E9;--ibm-l:#4589FF;--ibm-dim:rgba(15,98,254,.1);--ibm-b:rgba(15,98,254,.22);
+      --aws:#FF9900;--aws-dim:rgba(255,153,0,.08);--aws-b:rgba(255,153,0,.2);
+      --white:#F4F4F4;--white2:#E0E0E0;--muted:#8D8D8D;--muted2:#525252;
+      --border:rgba(69,137,255,.12);--border2:rgba(255,255,255,.06);
+      --green:#42BE65;--red:#FA4D56;
+      --fh:'Syne',sans-serif;--fs:'IBM Plex Sans',sans-serif;--fm:'IBM Plex Mono',monospace;
+    }
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+    html{scroll-behavior:smooth}
+    body{background:var(--bg);color:var(--white);font-family:var(--fs);line-height:1.6;min-height:100vh;overflow-x:hidden}
+    body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellipse 60% 40% at 10% 0%,rgba(15,98,254,.06),transparent),radial-gradient(ellipse 40% 30% at 90% 100%,rgba(255,153,0,.03),transparent);pointer-events:none;z-index:0}
+    a{color:var(--ibm-l);text-decoration:none}
+    a:hover{color:var(--white)}
+
+    /* NAV */
+    nav{background:rgba(10,13,26,.95);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);padding:0 2rem;height:56px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100}
+    .nav-back{font-family:var(--fm);font-size:.75rem;color:var(--muted);display:flex;align-items:center;gap:.5rem;transition:color .2s}
+    .nav-back:hover{color:var(--ibm-l)}
+    .nav-title{font-family:var(--fh);font-size:.88rem;font-weight:800;color:var(--white)}
+    .nav-title em{color:var(--ibm);font-style:normal}
+    .nav-badge{font-family:var(--fm);font-size:.65rem;color:var(--green);background:rgba(66,190,101,.1);border:1px solid rgba(66,190,101,.25);padding:.2rem .6rem;border-radius:2px;letter-spacing:.08em}
+
+    /* MAIN LAYOUT */
+    .container{max-width:1100px;margin:0 auto;padding:2.5rem 2rem;position:relative;z-index:1}
+    .hero{text-align:center;margin-bottom:3rem}
+    .hero-label{font-family:var(--fm);font-size:.65rem;color:var(--ibm-l);letter-spacing:.18em;text-transform:uppercase;margin-bottom:1rem;opacity:.8}
+    .hero h1{font-family:var(--fh);font-size:clamp(1.8rem,4vw,2.8rem);font-weight:800;line-height:1.1;margin-bottom:.8rem}
+    .hero p{font-size:.92rem;color:var(--muted);max-width:580px;margin:0 auto 1.5rem;line-height:1.78}
+    .hero-badges{display:flex;gap:.6rem;justify-content:center;flex-wrap:wrap}
+    .hbadge{font-family:var(--fm);font-size:.65rem;color:var(--muted);background:var(--card);border:1px solid var(--border2);padding:.2rem .65rem;border-radius:2px}
+    .hbadge.green{color:var(--green);border-color:rgba(66,190,101,.2);background:rgba(66,190,101,.06)}
+    .hbadge.blue{color:var(--ibm-l);border-color:var(--ibm-b);background:var(--ibm-dim)}
+
+    /* MAIN GRID */
+    .main-grid{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--border2);border:1px solid var(--border2)}
+    .panel{background:var(--bg);padding:2rem}
+    .panel-title{font-family:var(--fm);font-size:.65rem;color:var(--ibm-l);letter-spacing:.16em;text-transform:uppercase;margin-bottom:1.2rem;opacity:.8}
+
+    /* DOCUMENT PANEL */
+    .doc-tabs{display:flex;gap:1px;background:var(--border2);margin-bottom:1rem}
+    .dtab{flex:1;padding:.65rem 1rem;background:var(--card);border:none;color:var(--muted);font-family:var(--fm);font-size:.7rem;letter-spacing:.06em;cursor:pointer;transition:all .2s;text-transform:uppercase}
+    .dtab.active{background:var(--ibm-dim);color:var(--ibm-l);border-bottom:2px solid var(--ibm)}
+    .dtab:hover:not(.active){color:var(--white);background:var(--card2)}
+    .doc-area{width:100%;min-height:280px;background:var(--card);border:1px solid var(--border2);color:var(--white2);padding:1rem;font-family:var(--fm);font-size:.82rem;line-height:1.65;resize:vertical;outline:none;transition:border-color .2s;border-radius:2px}
+    .doc-area:focus{border-color:var(--ibm-b)}
+    .doc-area::placeholder{color:var(--muted2)}
+    .doc-meta{display:flex;align-items:center;justify-content:space-between;margin-top:.75rem;flex-wrap:wrap;gap:.5rem}
+    .doc-stat{font-family:var(--fm);font-size:.68rem;color:var(--muted)}
+    .doc-stat span{color:var(--ibm-l)}
+    .sample-docs{display:grid;grid-template-columns:1fr 1fr;gap:.5rem;margin-top:1rem}
+    .sdoc{background:var(--card);border:1px solid var(--border2);padding:.8rem 1rem;border-radius:2px;cursor:pointer;transition:all .2s;text-align:left}
+    .sdoc:hover{border-color:var(--ibm-b);background:var(--card2)}
+    .sdoc-title{font-size:.8rem;font-weight:600;color:var(--white2);margin-bottom:.2rem}
+    .sdoc-sub{font-size:.7rem;color:var(--muted);font-family:var(--fm)}
+
+    /* PROCESS INDICATOR */
+    .process-bar{background:var(--card);border:1px solid var(--border2);padding:1rem 1.2rem;margin-bottom:1.2rem;border-left:3px solid var(--ibm);display:none}
+    .process-bar.show{display:block}
+    .process-steps{display:flex;gap:1.5rem;flex-wrap:wrap}
+    .pstep{display:flex;align-items:center;gap:.5rem;font-family:var(--fm);font-size:.7rem}
+    .pstep-dot{width:8px;height:8px;border-radius:50%;background:var(--muted2);flex-shrink:0;transition:background .3s}
+    .pstep-dot.done{background:var(--green)}
+    .pstep-dot.active{background:var(--aws);animation:pulse 1s infinite}
+    @keyframes pulse{0%,100%{opacity:1}50%{opacity:.3}}
+    .pstep-label{color:var(--muted);transition:color .3s}
+    .pstep.done .pstep-label{color:var(--green)}
+    .pstep.active .pstep-label{color:var(--aws)}
+
+    /* CHAT PANEL */
+    .chat-msgs{min-height:300px;max-height:420px;overflow-y:auto;display:flex;flex-direction:column;gap:.75rem;margin-bottom:1rem;padding-right:.25rem}
+    .chat-msgs::-webkit-scrollbar{width:3px}
+    .chat-msgs::-webkit-scrollbar-thumb{background:var(--ibm-b)}
+    .cmsg{padding:.9rem 1.1rem;border-radius:2px;font-size:.85rem;line-height:1.65;animation:fadeIn .25s ease}
+    @keyframes fadeIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
+    .cmsg.user{background:var(--ibm-dim);border:1px solid var(--ibm-b);border-left:3px solid var(--ibm);color:var(--white2)}
+    .cmsg.bot{background:var(--card);border:1px solid var(--border2);border-left:3px solid var(--aws);color:var(--white2)}
+    .cmsg.system{background:transparent;border:1px solid var(--border2);color:var(--muted);font-family:var(--fm);font-size:.75rem;text-align:center;letter-spacing:.04em}
+    .cmsg-role{font-family:var(--fm);font-size:.62rem;letter-spacing:.1em;text-transform:uppercase;margin-bottom:.4rem;opacity:.7}
+    .cmsg.user .cmsg-role{color:var(--ibm-l)}
+    .cmsg.bot .cmsg-role{color:var(--aws)}
+    .typing-indicator{display:flex;gap:5px;align-items:center;padding:.9rem 1.1rem;background:var(--card);border:1px solid var(--border2);border-left:3px solid var(--aws)}
+    .tdot{width:6px;height:6px;border-radius:50%;background:var(--muted);animation:tbounce .9s infinite}
+    .tdot:nth-child(2){animation-delay:.18s}.tdot:nth-child(3){animation-delay:.36s}
+    @keyframes tbounce{0%,60%,100%{transform:translateY(0)}30%{transform:translateY(-6px)}}
+    .chat-input-row{display:flex;gap:.5rem}
+    .chat-input{flex:1;background:var(--card);border:1px solid var(--border2);color:var(--white);padding:.75rem 1rem;font-family:var(--fs);font-size:.85rem;outline:none;transition:border-color .2s;border-radius:2px}
+    .chat-input:focus{border-color:var(--ibm)}
+    .chat-input::placeholder{color:var(--muted2)}
+    .chat-input:disabled{opacity:.4;cursor:not-allowed}
+    .send-btn{background:var(--ibm);color:#fff;border:none;padding:.75rem 1.3rem;cursor:pointer;font-family:var(--fm);font-size:.78rem;font-weight:600;letter-spacing:.05em;transition:background .2s;border-radius:2px;white-space:nowrap}
+    .send-btn:hover:not(:disabled){background:var(--ibm-h)}
+    .send-btn:disabled{opacity:.4;cursor:not-allowed}
+    .quick-q{display:flex;gap:.4rem;flex-wrap:wrap;margin-bottom:.75rem}
+    .qq{background:transparent;border:1px solid var(--ibm-b);color:var(--ibm-l);padding:.3rem .75rem;border-radius:2px;font-family:var(--fm);font-size:.68rem;cursor:pointer;transition:all .2s;white-space:nowrap}
+    .qq:hover{background:var(--ibm-dim);color:var(--white)}
+    .qq:disabled{opacity:.3;cursor:not-allowed}
+
+    /* CHUNKS PANEL */
+    .chunks-section{margin-top:2rem;background:var(--card);border:1px solid var(--border2);border-top:3px solid var(--ibm)}
+    .chunks-header{padding:1rem 1.3rem;display:flex;align-items:center;justify-content:space-between;cursor:pointer;transition:background .2s}
+    .chunks-header:hover{background:var(--card2)}
+    .chunks-title{font-family:var(--fm);font-size:.7rem;letter-spacing:.12em;text-transform:uppercase;color:var(--ibm-l)}
+    .chunks-toggle{font-family:var(--fm);font-size:.7rem;color:var(--muted)}
+    .chunks-body{display:none;padding:0 1.3rem 1.3rem;max-height:300px;overflow-y:auto}
+    .chunks-body.show{display:block}
+    .chunk{background:var(--bg);border:1px solid var(--border2);padding:.75rem;margin-bottom:.5rem;border-radius:2px;font-family:var(--fm);font-size:.73rem;color:var(--muted);line-height:1.65}
+    .chunk-num{color:var(--ibm-l);margin-bottom:.35rem;font-size:.65rem;letter-spacing:.1em}
+
+    /* HOW IT WORKS */
+    .how-section{margin-top:1.5rem;display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--border2);border:1px solid var(--border2)}
+    .how-step{background:var(--bg);padding:1.5rem}
+    .how-num{font-family:var(--fm);font-size:.62rem;color:var(--ibm-l);letter-spacing:.14em;margin-bottom:.6rem;opacity:.7}
+    .how-icon{font-size:1.5rem;margin-bottom:.6rem}
+    .how-title{font-family:var(--fh);font-size:.9rem;font-weight:800;margin-bottom:.4rem}
+    .how-desc{font-size:.78rem;color:var(--muted);line-height:1.65}
+
+    /* PRIVACY NOTICE */
+    .privacy-bar{background:rgba(66,190,101,.05);border:1px solid rgba(66,190,101,.15);border-left:3px solid var(--green);padding:1rem 1.3rem;margin-top:1.5rem;display:flex;align-items:flex-start;gap:.75rem}
+    .privacy-icon{font-size:1rem;flex-shrink:0;margin-top:.1rem}
+    .privacy-text{font-size:.8rem;color:var(--muted);line-height:1.65}
+    .privacy-text strong{color:var(--white2)}
+
+    /* CTA */
+    .bottom-cta{background:var(--card);border:1px solid var(--ibm-b);border-top:3px solid var(--ibm);padding:2.5rem;text-align:center;margin-top:1.5rem}
+    .cta-title{font-family:var(--fh);font-size:1.4rem;font-weight:800;margin-bottom:.6rem}
+    .cta-sub{font-size:.88rem;color:var(--muted);margin-bottom:1.5rem;line-height:1.7}
+    .cta-btn{display:inline-flex;align-items:center;gap:.5rem;background:var(--aws);color:#000;padding:.9rem 2.2rem;border-radius:2px;font-weight:600;font-size:.85rem;letter-spacing:.05em;font-family:var(--fm);transition:background .2s}
+    .cta-btn:hover{background:#e68a00;color:#000}
+
+    /* FOOTER NOTE */
+    .foot-note{text-align:center;padding:2rem;font-family:var(--fm);font-size:.7rem;color:var(--muted2)}
+    .foot-note a{color:var(--muted);transition:color .2s}
+    .foot-note a:hover{color:var(--ibm-l)}
+
+    /* RESPONSIVE */
+    @media(max-width:768px){
+      .main-grid{grid-template-columns:1fr}
+      .how-section{grid-template-columns:1fr}
+      .sample-docs{grid-template-columns:1fr}
+      .container{padding:1.5rem 1rem}
+      .hero{margin-bottom:2rem}
+      .chat-msgs{max-height:320px}
+      .panel{padding:1.3rem}
+    }
+  </style>
+</head>
+<body>
+
+<nav>
+  <a href="/" class="nav-back">← Back to Mahlo AI</a>
+  <div class="nav-title"><em>Mahlo</em> AI Consulting</div>
+  <span class="nav-badge">● LIVE</span>
+</nav>
+
+<div class="container">
+  <div class="hero">
+    <div class="hero-label">The Lab · Demo 3</div>
+    <h1>🧠 RAG Private Document Agent</h1>
+    <p>Paste or upload any business document. Ask it anything. The AI answers using only your document — no hallucinations, no internet lookup. Your data never leaves your browser.</p>
+    <div class="hero-badges">
+      <span class="hbadge green">● Zero Data Retention</span>
+      <span class="hbadge blue">Claude API</span>
+      <span class="hbadge">POPIA Compliant</span>
+      <span class="hbadge">Browser-Only Processing</span>
+      <span class="hbadge">RAG Architecture</span>
+    </div>
+  </div>
+
+  <div class="process-bar" id="process-bar">
+    <div class="process-steps">
+      <div class="pstep" id="ps1"><div class="pstep-dot"></div><span class="pstep-label">Parsing document</span></div>
+      <div class="pstep" id="ps2"><div class="pstep-dot"></div><span class="pstep-label">Chunking text</span></div>
+      <div class="pstep" id="ps3"><div class="pstep-dot"></div><span class="pstep-label">Indexing chunks</span></div>
+      <div class="pstep" id="ps4"><div class="pstep-dot"></div><span class="pstep-label">Retrieving context</span></div>
+      <div class="pstep" id="ps5"><div class="pstep-dot"></div><span class="pstep-label">Generating answer</span></div>
+    </div>
+  </div>
+
+  <div class="main-grid">
+    <!-- LEFT: DOCUMENT PANEL -->
+    <div class="panel">
+      <div class="panel-title">01 — Your Document</div>
+      <div class="doc-tabs">
+        <button class="dtab active" onclick="switchTab('paste')">Paste Text</button>
+        <button class="dtab" onclick="switchTab('sample')">Sample Docs</button>
+      </div>
+      <div id="tab-paste">
+        <textarea class="doc-area" id="doc-input" placeholder="Paste any business document here — a contract, policy, report, SOP, financial statement, employee handbook, compliance document, or any text you want to query...&#10;&#10;Minimum 100 characters. Maximum 15,000 characters.&#10;&#10;Example: Paste your company HR policy and ask: 'What is the leave policy for senior employees?'"></textarea>
+        <div class="doc-meta">
+          <span class="doc-stat">Characters: <span id="char-count">0</span> / 15,000</span>
+          <span class="doc-stat">Chunks: <span id="chunk-count">0</span></span>
+        </div>
+        <button onclick="processDocument()" id="proc-btn" style="margin-top:.9rem;width:100%;background:var(--ibm);color:#fff;border:none;padding:.85rem;font-family:var(--fm);font-size:.78rem;font-weight:600;letter-spacing:.07em;cursor:pointer;border-radius:2px;transition:background .2s;text-transform:uppercase" onmouseover="this.style.background='var(--ibm-h)'" onmouseout="this.style.background='var(--ibm)'">Process Document →</button>
+      </div>
+      <div id="tab-sample" style="display:none">
+        <p style="font-size:.8rem;color:var(--muted);margin-bottom:.9rem;line-height:1.65">Select a pre-loaded sample document to try the system immediately.</p>
+        <div class="sample-docs">
+          <button class="sdoc" onclick="loadSample('hr')"><div class="sdoc-title">📋 HR Policy Manual</div><div class="sdoc-sub">Leave · Benefits · Conduct</div></button>
+          <button class="sdoc" onclick="loadSample('financial')"><div class="sdoc-title">📊 Q2 Financial Report</div><div class="sdoc-sub">Revenue · Expenses · KPIs</div></button>
+          <button class="sdoc" onclick="loadSample('contract')"><div class="sdoc-title">📄 Service Agreement</div><div class="sdoc-sub">Terms · Deliverables · SLAs</div></button>
+          <button class="sdoc" onclick="loadSample('compliance')"><div class="sdoc-title">🛡️ POPIA Compliance SOP</div><div class="sdoc-sub">Data · Privacy · Procedures</div></button>
+        </div>
+      </div>
+    </div>
+
+    <!-- RIGHT: CHAT PANEL -->
+    <div class="panel">
+      <div class="panel-title">02 — Ask Your Document</div>
+      <div class="quick-q" id="quick-questions">
+        <button class="qq" disabled onclick="askQuick(this)" data-q="What are the main topics covered in this document?">Main Topics</button>
+        <button class="qq" disabled onclick="askQuick(this)" data-q="Summarise the key points in 3 bullet points.">Summary</button>
+        <button class="qq" disabled onclick="askQuick(this)" data-q="What are the most important rules or requirements mentioned?">Key Rules</button>
+        <button class="qq" disabled onclick="askQuick(this)" data-q="What actions or steps are described?">Actions/Steps</button>
+      </div>
+      <div class="chat-msgs" id="chat-msgs">
+        <div class="cmsg system">Load a document on the left to begin querying it.</div>
+      </div>
+      <div class="chat-input-row">
+        <input class="chat-input" id="chat-input" type="text" placeholder="Load a document first, then ask anything..." disabled maxlength="500"/>
+        <button class="send-btn" id="send-btn" disabled onclick="sendMessage()">Ask →</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- CHUNKS VIEWER -->
+  <div class="chunks-section" id="chunks-section" style="display:none">
+    <div class="chunks-header" onclick="toggleChunks()">
+      <span class="chunks-title">Document Chunks — <span id="chunks-label">0 chunks indexed</span></span>
+      <span class="chunks-toggle" id="chunks-toggle-label">Show ▼</span>
+    </div>
+    <div class="chunks-body" id="chunks-body"></div>
+  </div>
+
+  <!-- HOW IT WORKS -->
+  <div class="how-section">
+    <div class="how-step"><div class="how-num">STEP 01</div><div class="how-icon">📄</div><div class="how-title">Document Ingestion</div><p class="how-desc">Your document is parsed and cleaned entirely in your browser. Nothing is uploaded to any server at this stage.</p></div>
+    <div class="how-step"><div class="how-num">STEP 02</div><div class="how-icon">✂️</div><div class="how-title">Chunking & Indexing</div><p class="how-desc">The text is split into overlapping 500-character chunks with context preservation. Each chunk is indexed for fast retrieval.</p></div>
+    <div class="how-step"><div class="how-num">STEP 03</div><div class="how-icon">🎯</div><div class="how-title">Retrieval & Generation</div><p class="how-desc">Your question retrieves the most relevant chunks. Claude generates an answer grounded strictly in your document content.</p></div>
+  </div>
+
+  <!-- PRIVACY BAR -->
+  <div class="privacy-bar">
+    <span class="privacy-icon">🛡️</span>
+    <div class="privacy-text"><strong>Zero Data Retention — POPIA Compliant.</strong> Your document exists only in your browser's memory during this session. No document content is stored, logged, or transmitted to Mahlo AI Consulting's servers. The only external call made is to the Claude API to generate your answer — and only the relevant extracted chunks (not your full document) are sent. When you close this tab, everything is gone. <a href="/privacy.html" style="color:var(--ibm-l)">Read the full privacy policy →</a></div>
+  </div>
+
+  <!-- BOTTOM CTA -->
+  <div class="bottom-cta">
+    <div class="cta-title">Deploy This for Your Business</div>
+    <p class="cta-sub">This demo shows what's possible in a browser. The enterprise version uses LangChain + FAISS + IBM Granite with local embeddings — your documents never touch the internet at all. Deployable in your private cloud, on-premise, or in a POPIA-compliant SA data centre.</p>
+    <a href="https://wa.me/27736464935?text=Hi%20Mahlo%2C%20I%20tried%20the%20RAG%20Document%20Agent%20demo%20and%20would%20like%20to%20deploy%20it%20for%20my%20business" class="cta-btn">WhatsApp to Deploy This →</a>
+  </div>
+
+  <div class="foot-note">
+    <a href="/">← Mahlo AI Consulting</a> · 
+    <a href="/chatbot_demo.html">AI Chatbot Demo</a> · 
+    <a href="/summarizer_demo.html">Document Summarizer</a> · 
+    IBM AI Ethics Aligned · POPIA Compliant · Zero Data Retention
+  </div>
+</div>
+
+<script>
+// ─── SAMPLE DOCUMENTS ───
+const SAMPLES = {
+  hr: `ZENITH MANUFACTURING — EMPLOYEE HANDBOOK (Excerpt)
+Effective Date: 1 January 2025
+
+SECTION 3 — LEAVE POLICY
+
+3.1 Annual Leave
+All permanent employees are entitled to 21 working days of annual leave per calendar year. Employees in management grades (M1-M4) receive 25 working days. Leave must be applied for at least 5 working days in advance using the HR portal. Unused leave may be carried over for a maximum of 10 days into the following year, after which it lapses.
+
+3.2 Sick Leave
+During every sick leave cycle of 36 months, an employee is entitled to an amount of paid sick leave equal to the number of days the employee would normally work during a period of six weeks. During the first 6 months of employment, employees are entitled to 1 day paid sick leave for every 26 days worked.
+
+3.3 Maternity and Parental Leave
+Female employees are entitled to 4 consecutive months of maternity leave. The first 2 months are paid at 60% of basic salary if the employee has been employed for more than 12 months. Male employees and co-parents receive 10 working days of paid parental leave.
+
+3.4 Family Responsibility Leave
+Employees are entitled to 3 days per year of paid family responsibility leave for the following: birth of a child, illness or death of a spouse, partner, parent, child or sibling.
+
+SECTION 4 — CODE OF CONDUCT
+
+4.1 Workplace Behaviour
+All employees are expected to maintain professional conduct at all times. Harassment of any kind, including sexual, racial, or workplace bullying, will result in immediate disciplinary action up to and including dismissal. All incidents must be reported to HR within 48 hours.
+
+4.2 Conflict of Interest
+Employees must disclose any financial interest in suppliers, clients, or competitors within 30 days of such interest arising. Failure to disclose constitutes grounds for disciplinary action.
+
+4.3 Social Media Policy
+Employees may not post content that could bring Zenith Manufacturing into disrepute. References to clients, financial performance, or internal operations on social media are strictly prohibited without written approval from the Communications Manager.
+
+SECTION 5 — REMUNERATION AND BENEFITS
+
+5.1 Salary Review
+Salary reviews are conducted annually in March. Performance ratings determine the increase percentage: Outstanding (4.1-5.0) — 8-10%, Exceeds Expectations (3.1-4.0) — 5-7%, Meets Expectations (2.1-3.0) — 2-4%, Below Expectations (1.0-2.0) — 0%.
+
+5.2 Medical Aid
+The company contributes 60% of the medical aid premium for the employee and 40% for dependants. The Discovery Keycare Plus plan is the default option. Employees must join within 30 days of commencement.
+
+5.3 Provident Fund
+The company contributes 7.5% of basic salary to the company provident fund. The employee contributes a minimum of 7.5%. Employees are vested after 3 years of service.`,
+
+  financial: `MERIDIAN PROPERTY GROUP — Q2 2025 FINANCIAL REPORT (Summary)
+Period: April 1 — June 30, 2025
+
+EXECUTIVE SUMMARY
+Meridian Property Group delivered strong Q2 performance with revenue up 18% year-on-year, driven primarily by new commercial lettings in Sandton and Rosebank. EBITDA margin improved by 2.3 percentage points to 34.7%. Vacancy rates across the residential portfolio fell to a 3-year low of 6.2%.
+
+REVENUE BREAKDOWN
+Total Revenue: R47.8 million (Q2 2025) vs R40.5 million (Q2 2024)
+— Residential Lettings: R18.2m (38% of revenue) — up 12% YoY
+— Commercial Lettings: R22.4m (47% of revenue) — up 26% YoY  
+— Property Management Fees: R4.6m (10% of revenue) — up 8% YoY
+— Facilities Services: R2.6m (5% of revenue) — down 3% YoY
+
+KEY PERFORMANCE INDICATORS
+— Properties Under Management: 847 (up from 791 in Q1)
+— Average Commercial Occupancy Rate: 87.4% (Q1: 83.1%)
+— Average Residential Occupancy Rate: 93.8% (Q1: 91.2%)
+— New Leases Signed: 124 (Q1: 98)
+— Lease Renewals: 211 (Q1: 189), renewal rate 91%
+— Average Lease Duration (Commercial): 3.4 years
+— Net Promoter Score (Tenants): 62 (Q1: 57)
+
+OPERATING EXPENSES
+Total Opex: R31.2 million
+— Staff Costs: R14.8m (47% of opex) — up 9% due to 12 new hires
+— Property Maintenance: R8.7m (28%) — higher than target due to 3 major repairs
+— Marketing and Leasing: R2.9m (9%) — new digital campaign launched
+— IT and Technology: R1.8m (6%) — CRM upgrade completed
+— Admin and General: R3.0m (10%)
+
+EBITDA: R16.6 million (34.7% margin) vs R13.0 million (32.1%) in Q2 2024
+
+BALANCE SHEET HIGHLIGHTS
+— Cash and Equivalents: R22.4m
+— Total Debt: R180m (LTV ratio: 42%)
+— Portfolio Valuation: R428m (independent valuation, May 2025)
+— Debt Service Coverage Ratio: 2.1x (covenant minimum: 1.3x)
+
+OUTLOOK
+Q3 2025 guidance: Revenue R50-53m, EBITDA margin 35-36%. Two new commercial properties (combined 4,200 sqm) are scheduled to transfer in July. The residential expansion into Centurion is on track for Q4 delivery.`,
+
+  contract: `PROFESSIONAL SERVICES AGREEMENT
+Between: Kgotla AI (Pty) Ltd ("Service Provider") and NovaBridge Logistics (Pty) Ltd ("Client")
+Date: 15 February 2025
+
+1. SCOPE OF SERVICES
+The Service Provider shall deliver the following AI automation services:
+(a) AI Recruitment Screening System — automated candidate CV processing, scoring, and shortlisting using Claude AI. Deliverables include: configured Make.com workflow, Notion candidate database, scoring rubric, and 90-day support.
+(b) Operations Knowledge Base — a Notion-based internal wiki with RAG-powered Q&A layer covering logistics SOPs, client onboarding, and HR procedures. Deliverables include: fully populated Notion workspace, 50 base documents, and Make.com integration for updates.
+(c) Monthly Analytics Reports — AI-generated operational performance reports from NovaBridge's existing data sources. Deliverables: 3 report templates, 6 months of monthly delivery.
+
+2. FEES AND PAYMENT
+Phase 1 (Recruitment System): R18,500 — due on project commencement
+Phase 2 (Knowledge Base): R12,000 — due on delivery of completed workspace
+Phase 3 (Analytics Retainer): R3,500/month — invoiced monthly, payable within 14 days
+Total Project Value: R51,500 plus monthly retainer
+
+3. TIMELINE
+Phase 1: 14 calendar days from commencement
+Phase 2: 21 calendar days from Phase 1 sign-off
+Phase 3: Commences month following Phase 2 sign-off
+
+4. INTELLECTUAL PROPERTY AND OWNERSHIP
+All systems, workflows, templates, and documentation delivered under this Agreement become the sole property of the Client upon full payment of the applicable phase fee. The Service Provider retains no ongoing rights to the Client's data, systems, or custom configurations. The Client shall be provided with all login credentials, API keys, and documentation within 5 business days of final payment.
+
+5. CONFIDENTIALITY AND DATA PROTECTION
+Both parties agree to comply with the Protection of Personal Information Act 4 of 2013 (POPIA). The Service Provider shall process Client data only as strictly necessary to deliver the services. No Client data shall be stored beyond the engagement period or shared with third parties without written consent.
+
+6. LIMITATION OF LIABILITY
+The Service Provider's total liability under this Agreement shall not exceed the total fees paid in the 12 months preceding the claim. Neither party shall be liable for indirect, consequential, or punitive damages.
+
+7. TERMINATION
+Either party may terminate with 30 days written notice. Upon termination, all Client-owned deliverables shall be transferred within 5 business days. Outstanding fees for work completed remain payable.`,
+
+  compliance: `POPIA COMPLIANCE STANDARD OPERATING PROCEDURE
+Prepared by: Mahlo AI Consulting for Internal Use
+Version: 2.1 | Last Reviewed: March 2025
+
+SECTION 1 — PURPOSE AND SCOPE
+This SOP establishes procedures for compliance with the Protection of Personal Information Act 4 of 2013 (POPIA) and the General Data Protection Regulation (GDPR) where applicable. It applies to all personal information processed by the organisation in the course of its business operations, including client data, employee data, and supplier data.
+
+SECTION 2 — DATA CLASSIFICATION
+All personal information must be classified as follows:
+Category A (Highly Sensitive): Identity numbers, biometric data, health records, financial account details, criminal records. Storage: Encrypted at rest and in transit. Access: Senior management only. Retention: Minimum required by law.
+Category B (Sensitive): Contact details, salary information, employment history, home addresses. Storage: Password-protected systems only. Access: Role-based, need-to-know basis. Retention: Duration of relationship plus 5 years.
+Category C (Standard): Business contact information, public professional profiles. Storage: Standard business systems. Access: General staff with business need.
+
+SECTION 3 — LAWFUL BASIS FOR PROCESSING
+Personal information may only be processed if one of the following grounds exists: (a) the data subject has given consent, (b) processing is necessary for performance of a contract, (c) processing is required by law, (d) processing protects a legitimate interest of the data subject, (e) processing is necessary for the exercise of public interest functions. Consent must be freely given, specific, and documented. Consent may be withdrawn at any time.
+
+SECTION 4 — DATA SUBJECT RIGHTS
+Data subjects have the right to: access their personal information within 30 days of request; correct inaccurate information within 15 days; object to processing; request erasure where legally permissible; lodge a complaint with the Information Regulator. All requests must be logged in the Data Subject Request Register and responded to within the statutory timeframe.
+
+SECTION 5 — DATA BREACH PROCEDURE
+In the event of a data breach: (1) Contain the breach within 1 hour of discovery. (2) Assess severity and scope within 4 hours. (3) Notify the Information Regulator within 72 hours if there is a risk to data subjects. (4) Notify affected data subjects if there is a real risk of harm. (5) Document the incident in the Breach Register. (6) Conduct root cause analysis within 5 business days.
+
+SECTION 6 — THIRD PARTY PROCESSORS
+All third-party processors must sign a Processing Agreement before receiving any personal information. Processors must demonstrate adequate technical and organisational security measures. Annual processor audits are required for processors handling Category A or B data.`
+};
+
+// ─── STATE ───
+let chunks = [];
+let docLoaded = false;
+let isProcessing = false;
+
+// ─── TABS ───
+function switchTab(tab) {
+  document.querySelectorAll('.dtab').forEach(t => t.classList.remove('active'));
+  event.target.classList.add('active');
+  document.getElementById('tab-paste').style.display = tab === 'paste' ? 'block' : 'none';
+  document.getElementById('tab-sample').style.display = tab === 'sample' ? 'block' : 'none';
+}
+
+function loadSample(key) {
+  switchTab('paste');
+  document.querySelectorAll('.dtab')[0].classList.add('active');
+  document.querySelectorAll('.dtab')[1].classList.remove('active');
+  document.getElementById('tab-paste').style.display = 'block';
+  document.getElementById('tab-sample').style.display = 'none';
+  document.getElementById('doc-input').value = SAMPLES[key];
+  updateCounts();
+  processDocument();
+}
+
+// ─── CHAR COUNT ───
+document.getElementById('doc-input').addEventListener('input', updateCounts);
+function updateCounts() {
+  const val = document.getElementById('doc-input').value;
+  document.getElementById('char-count').textContent = val.length.toLocaleString();
+}
+
+// ─── CHUNKING ───
+function chunkText(text, chunkSize = 500, overlap = 80) {
+  text = text.trim();
+  if (text.length < 50) return [];
+  const results = [];
+  let start = 0;
+  while (start < text.length) {
+    let end = Math.min(start + chunkSize, text.length);
+    // Try to break at sentence boundary
+    if (end < text.length) {
+      const boundary = text.lastIndexOf('.', end);
+      if (boundary > start + chunkSize * 0.6) end = boundary + 1;
+    }
+    results.push({ id: results.length + 1, text: text.slice(start, end).trim() });
+    start = end - overlap;
+    if (start >= text.length) break;
+  }
+  return results;
+}
+
+function simpleScore(chunk, query) {
+  const qWords = query.toLowerCase().split(/\s+/).filter(w => w.length > 3);
+  const chunkLower = chunk.text.toLowerCase();
+  let score = 0;
+  qWords.forEach(w => { if (chunkLower.includes(w)) score += 1; });
+  return score;
+}
+
+function getTopChunks(query, k = 4) {
+  if (!chunks.length) return [];
+  const scored = chunks.map(c => ({ ...c, score: simpleScore(c, query) }));
+  scored.sort((a, b) => b.score - a.score);
+  // Always include first chunk for context, plus top k
+  const top = scored.slice(0, k);
+  if (!top.find(c => c.id === 1) && chunks.length > 0) top[top.length - 1] = { ...chunks[0], score: 0 };
+  return [...new Set(top.map(c => c.id))].map(id => chunks.find(c => c.id === id)).filter(Boolean).sort((a, b) => a.id - b.id);
+}
+
+// ─── PROCESS DOCUMENT ───
+async function processDocument() {
+  const text = document.getElementById('doc-input').value.trim();
+  if (text.length < 100) { addMsg('system', 'Document too short. Please paste at least 100 characters.'); return; }
+  if (text.length > 15000) { addMsg('system', 'Document too long. Please keep it under 15,000 characters.'); return; }
+
+  // Show process bar
+  const bar = document.getElementById('process-bar');
+  bar.classList.add('show');
+  
+  await stepProcess('ps1', 400);
+  await stepProcess('ps2', 500);
+  chunks = chunkText(text);
+  document.getElementById('chunk-count').textContent = chunks.length;
+  await stepProcess('ps3', 400);
+  
+  // Done
+  setTimeout(() => { bar.classList.remove('show'); resetSteps(); }, 800);
+
+  // Show chunks viewer
+  const cs = document.getElementById('chunks-section');
+  cs.style.display = 'block';
+  document.getElementById('chunks-label').textContent = chunks.length + ' chunks indexed';
+  const body = document.getElementById('chunks-body');
+  body.innerHTML = chunks.map(c => `<div class="chunk"><div class="chunk-num">CHUNK ${c.id} / ${chunks.length}</div>${escHtml(c.text)}</div>`).join('');
+
+  // Enable chat
+  docLoaded = true;
+  document.getElementById('chat-input').disabled = false;
+  document.getElementById('send-btn').disabled = false;
+  document.getElementById('chat-input').placeholder = 'Ask anything about your document...';
+  document.querySelectorAll('.qq').forEach(q => q.disabled = false);
+
+  // Clear and add system msg
+  const msgs = document.getElementById('chat-msgs');
+  msgs.innerHTML = '';
+  addMsg('system', `✓ Document processed — ${chunks.length} chunks indexed. ${text.length.toLocaleString()} characters. Ready for questions.`);
+  document.getElementById('chat-input').focus();
+}
+
+async function stepProcess(id, delay) {
+  const el = document.getElementById(id);
+  el.classList.add('active');
+  el.querySelector('.pstep-dot').classList.add('active');
+  el.querySelector('.pstep-label').style.color = 'var(--aws)';
+  await sleep(delay);
+  el.classList.remove('active');
+  el.classList.add('done');
+  el.querySelector('.pstep-dot').classList.remove('active');
+  el.querySelector('.pstep-dot').classList.add('done');
+  el.querySelector('.pstep-label').style.color = 'var(--green)';
+}
+
+function resetSteps() {
+  ['ps1','ps2','ps3','ps4','ps5'].forEach(id => {
+    const el = document.getElementById(id);
+    el.classList.remove('active','done');
+    el.querySelector('.pstep-dot').className = 'pstep-dot';
+    el.querySelector('.pstep-label').style.color = '';
+  });
+}
+
+function sleep(ms) { return new Promise(r => setTimeout(r, ms)); }
+
+// ─── CHAT ───
+function askQuick(btn) { document.getElementById('chat-input').value = btn.dataset.q; sendMessage(); }
+document.getElementById('chat-input').addEventListener('keydown', e => { if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); sendMessage(); } });
+
+async function sendMessage() {
+  if (!docLoaded || isProcessing) return;
+  const inp = document.getElementById('chat-input');
+  const q = inp.value.trim();
+  if (!q) return;
+  inp.value = '';
+  isProcessing = true;
+  document.getElementById('send-btn').disabled = true;
+  inp.disabled = true;
+
+  addMsg('user', q);
+
+  // Show retrieval steps
+  const bar = document.getElementById('process-bar');
+  bar.classList.add('show');
+  resetSteps();
+  await stepProcess('ps4', 300);
+
+  const relevant = getTopChunks(q, 4);
+  const context = relevant.map((c, i) => `[Chunk ${c.id}]: ${c.text}`).join('
+
+');
+
+  await stepProcess('ps5', 200);
+
+  // Show typing
+  const msgs = document.getElementById('chat-msgs');
+  const typing = document.createElement('div');
+  typing.className = 'typing-indicator';
+  typing.id = 'typing';
+  typing.innerHTML = '<div class="tdot"></div><div class="tdot"></div><div class="tdot"></div>';
+  msgs.appendChild(typing);
+  msgs.scrollTop = msgs.scrollHeight;
+
+  try {
+    const sysPrompt = `You are a precise document analysis assistant. You answer questions STRICTLY based on the document context provided. 
+
+RULES:
+- Answer ONLY from the provided document chunks. Do not use outside knowledge.
+- If the answer is not in the document, say: "This information is not found in the provided document."
+- Be concise and accurate. Quote specific parts of the document when helpful.
+- Format your answer clearly. Use bullet points for lists if appropriate.
+- Never fabricate information or fill gaps with assumptions.`;
+
+    const userMsg = `Document context (retrieved chunks):
+
+${context}
+
+---
+
+Question: ${q}`;
+
+    const res = await fetch('https://api.anthropic.com/v1/messages', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ model: 'claude-sonnet-4-20250514', max_tokens: 1000, system: sysPrompt, messages: [{ role: 'user', content: userMsg }] })
+    });
+    const data = await res.json();
+    const answer = data.content && data.content[0] ? data.content[0].text : 'Error connecting to Claude API. Please try again.';
+    document.getElementById('typing').remove();
+    bar.classList.remove('show');
+    resetSteps();
+    addMsg('bot', answer);
+  } catch (e) {
+    document.getElementById('typing').remove();
+    bar.classList.remove('show');
+    resetSteps();
+    addMsg('bot', 'Connection error. Please check your connection and try again.');
+  }
+
+  isProcessing = false;
+  document.getElementById('send-btn').disabled = false;
+  inp.disabled = false;
+  inp.focus();
+}
+
+function addMsg(type, text) {
+  const msgs = document.getElementById('chat-msgs');
+  const div = document.createElement('div');
+  div.className = 'cmsg ' + type;
+  if (type === 'user') { div.innerHTML = '<div class="cmsg-role">You</div>' + escHtml(text); }
+  else if (type === 'bot') { div.innerHTML = '<div class="cmsg-role">Kgotla AI</div>' + formatAnswer(text); }
+  else { div.textContent = text; }
+  msgs.appendChild(div);
+  msgs.scrollTop = msgs.scrollHeight;
+}
+
+function formatAnswer(text) {
+  text = escHtml(text);
+  text = text.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
+  text = text.replace(/
+- /g, '
+• ');
+  text = text.replace(/
+/g, '<br/>');
+  return text;
+}
+
+function escHtml(t) {
+  return t.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+
+function toggleChunks() {
+  const body = document.getElementById('chunks-body');
+  const label = document.getElementById('chunks-toggle-label');
+  body.classList.toggle('show');
+  label.textContent = body.classList.contains('show') ? 'Hide ▲' : 'Show ▼';
+}
+</script>
+</body>
+</html>
