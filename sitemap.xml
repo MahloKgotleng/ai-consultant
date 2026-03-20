@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <url><loc>https://mahlokgotleng.github.io/ai-consultant/</loc><lastmod>2026-02-20</lastmod><changefreq>weekly</changefreq><priority>1.0</priority></url>
-  <url><loc>https://mahlokgotleng.github.io/ai-consultant/chatbot_demo.html</loc><lastmod>2026-02-20</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
-  <url><loc>https://mahlokgotleng.github.io/ai-consultant/summarizer_demo.html</loc><lastmod>2026-02-20</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
-  <url><loc>https://mahlokgotleng.github.io/ai-consultant/ethics.html</loc><lastmod>2026-02-20</lastmod><changefreq>monthly</changefreq><priority>0.7</priority></url>
-  <url><loc>https://mahlokgotleng.github.io/ai-consultant/privacy.html</loc><lastmod>2026-02-20</lastmod><changefreq>monthly</changefreq><priority>0.7</priority></url>
-  <url><loc>https://mahlokgotleng.github.io/ai-consultant/terms.html</loc><lastmod>2026-02-20</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://kgotlaai.co.za/</loc><lastmod>2026-03-20</lastmod><changefreq>weekly</changefreq><priority>1.0</priority></url>
+  <url><loc>https://kgotlaai.co.za/chatbot_demo.html</loc><lastmod>2026-03-20</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://kgotlaai.co.za/summarizer_demo.html</loc><lastmod>2026-03-20</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://kgotlaai.co.za/rag_demo.html</loc><lastmod>2026-03-20</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://kgotlaai.co.za/ethics.html</loc><lastmod>2026-03-20</lastmod><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://kgotlaai.co.za/privacy.html</loc><lastmod>2026-03-20</lastmod><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://kgotlaai.co.za/terms.html</loc><lastmod>2026-03-20</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
 </urlset>
