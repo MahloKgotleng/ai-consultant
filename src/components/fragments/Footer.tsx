@@ -1,6 +1,6 @@
 'use client'
 
-import { Linkedin, Twitter, Github, Mail, MessageCircle } from 'lucide-react'
+import { Linkedin,Facebook, Github, Mail, MessageCircle } from 'lucide-react'
 
 const footerLinks = {
   solutions: [
@@ -23,7 +23,7 @@ const footerLinks = {
 
 const socialLinks = [
   { icon: Linkedin, href: 'https://linkedin.com/company/kgotla-ai', label: 'LinkedIn' },
-  { icon: Twitter, href: 'https://twitter.com/kgotlaai', label: 'Twitter' },
+  { icon: Facebook, href: 'https://facebook.com/kgotlaai', label: 'Twitter' },
   { icon: Github, href: 'https://github.com/kgotla-ai', label: 'GitHub' },
   { icon: Mail, href: 'mailto:mahlo@kgotlaai.co.za', label: 'Email' },
 ]
@@ -45,10 +45,10 @@ export default function Footer() {
             </div>
             <p className="text-slate-400 mb-6 max-w-sm">
               Transforming South Africa's largest enterprises with production-ready AI. 
-              IBM Partner Plus registered. PoCs delivered in 72 hours.
+              IBM Partner Plus registered.Demos Coming Shortly.
             </p>
             <div className="flex flex-col gap-3 mb-6">
-              <a href="tel:+27736464935" className="text-sm text-slate-400 hover:text-white transition-colors">Phone: 073 646 4935</a>
+              <a href="tel:+27736464935" className="text-sm text-slate-400 hover:text-white transition-colors">Whatsapp: 073 646 4935</a>
               <a href="tel:+27626698650" className="text-sm text-slate-400 hover:text-white transition-colors">Cell: 062 669 8650</a>
               <a href="mailto:mahlo@kgotlaai.co.za" className="text-sm text-slate-400 hover:text-white transition-colors">mahlo@kgotlaai.co.za</a>
             </div>
