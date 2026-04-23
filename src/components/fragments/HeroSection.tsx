@@ -56,3 +56,25 @@ export default function HeroSection() {
               </div>
             </motion.div>
           </div>
+
+          <motion.div initial={{ opacity: 0, scale: 0.95 }} animate={{ opacity: 1, scale: 1 }} transition={{ duration: 0.6, delay: 0.2 }} className="relative">
+            <div className="grid grid-cols-2 gap-4">
+              {stats.map((stat, index) => (
+                <motion.div key={stat.label} initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5, delay: 0.3 + index * 0.1 }} className="bg-white/80 backdrop-blur-sm p-8 rounded-2xl border border-slate-200 shadow-lg shadow-slate-200/50">
+                  <div className="text-4xl font-bold gradient-text mb-2">{stat.value}</div>
+                  <div className="text-sm font-medium text-slate-600">{stat.label}</div>
+                </motion.div>
+              ))}
+            </div>
+
+            <motion.div animate={{ y: [0, -10, 0] }} transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }} className="absolute -bottom-6 -left-6 bg-slate-900 text-white p-6 rounded-2xl shadow-2xl">
+              <div className="text-sm text-slate-400 mb-1">Focus</div>
+              <div className="text-2xl font-bold">SA Enterprise</div>
+              <div className="text-sm text-slate-400 mt-1">& Mining Sector</div>
+            </motion.div>
+          </motion.div>
+        </div>
+      </div>
+    </section>
+  )
+}
