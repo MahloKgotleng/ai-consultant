@@ -5,12 +5,12 @@ import '../styles/globals.css'
 const inter = Inter({ subsets: ['latin'], variable: '--font-inter' })
 
 export const metadata: Metadata = {
-  title: 'Kgotla AI | Enterprise AI Solutions for South Africa Top 40',
-  description: 'Transforming South Africa\'s largest enterprises with production-ready AI. IBM Partner Plus registered. Proofs of concept delivered in days, not months.',
-  keywords: 'AI consulting, enterprise AI, South Africa, JSE Top 40, IBM Partner, AI solutions, digital transformation',
+  title: 'Kgotla AI | Enterprise AI Solutions · South Africa',
+  description: 'South African AI consultancy designing rapid pilots and automation demos for enterprise. IBM Partner Plus registered. Built for the constraints of African infrastructure.',
+  keywords: 'AI consulting, enterprise AI, South Africa, IBM Partner Plus, AI pilot, automation demo, AI proof of concept, intelligent automation',
   openGraph: {
     title: 'Kgotla AI | Enterprise AI Solutions',
-    description: 'Production-ready AI for South Africa\'s largest enterprises',
+    description: 'Rapid AI pilots and automation demos for South African enterprise. IBM Partner Plus registered.',
     type: 'website',
   },
 }
