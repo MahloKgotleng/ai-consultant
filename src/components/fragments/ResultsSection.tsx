@@ -4,7 +4,7 @@ import { motion } from 'framer-motion'
 import { TrendingUp, Users, Clock, Award, Quote } from 'lucide-react'
 
 // REWRITTEN: All metrics made honest and defensible.
-// "72hrs Average PoC Delivery" → "72hr Demo Sprint" (honest about what 72 hours produces)
+// "Average PoC Delivery" → "72hr Demo Sprint" (honest about what hours produces)
 // "85% Efficiency Gain" → REMOVED. No validated client data to support this.
 // "3 Solutions Architects" → "4-Person Team" (honest headcount, no seniority inflation)
 // "IBM Partner Plus, Registered tier, Silver track" → kept, but "Silver track" implies trajectory, not status.
@@ -32,7 +32,7 @@ const pipeline = [
   {
     status: "In Build",
     description: "RAG knowledge base and workflow automation demos",
-    focus: "Live on our Lab environment"
+    focus: "Coming Soon on our Lab environment"
   }
 ]
 
