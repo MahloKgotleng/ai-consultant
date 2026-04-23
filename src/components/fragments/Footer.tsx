@@ -22,7 +22,7 @@ const footerLinks = {
 }
 
 const socialLinks = [
-  { icon: Linkedin, href: 'https://linkedin.com/company/kgotla-ai', label: 'LinkedIn' },
+  { icon: Linkedin, href: 'https://linkedin.com/mahlo-kgotleng', label: 'LinkedIn' },
   { icon: Facebook, href: 'https://facebook.com/kgotlaai', label: 'Twitter' },
   { icon: Github, href: 'https://github.com/kgotla-ai', label: 'GitHub' },
   { icon: Mail, href: 'mailto:mahlo@kgotlaai.co.za', label: 'Email' },
