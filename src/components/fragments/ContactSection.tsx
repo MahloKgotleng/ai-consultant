@@ -28,7 +28,7 @@ export default function ContactSection() {
           <div>
             <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="inline-flex items-center gap-2 px-4 py-2 bg-primary-50 border border-primary-200 rounded-full mb-6">
               <Send className="w-4 h-4 text-primary-600" />
-              <span className="text-sm font-semibold text-primary-700">Start Your PoC</span>
+              <span className="text-sm font-semibold text-primary-700">Start Your Demo</span>
             </motion.div>
 
             <motion.h2 initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: 0.1 }} className="text-4xl sm:text-5xl font-bold text-slate-900 mb-6">
@@ -36,7 +36,7 @@ export default function ContactSection() {
             </motion.h2>
 
             <motion.p initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: 0.2 }} className="text-xl text-slate-600 mb-12">
-              Tell us about your highest-impact use case. We'll respond within 4 hours with a concrete PoC plan and timeline.
+              Tell us about your highest-impact use case. We'll respond within 4 hours with a concrete Demo plan and timeline.
             </motion.p>
 
             <div className="space-y-6">
@@ -88,7 +88,7 @@ export default function ContactSection() {
                 <span className="font-semibold text-slate-900">Executive Promise</span>
               </div>
               <p className="text-sm text-slate-600">
-                No cost discovery call. Fixed-price PoC options. If we don't deliver measurable value in 72 hours, you don't pay.
+                No cost discovery call. Fixed-price Demo options. If we don't deliver measurable value in 72 hours, you don't pay.
               </p>
               <p className="text-xs text-slate-500 mt-2 italic">Ubuntu. Innovation. Collective Intelligence.</p>
             </motion.div>
@@ -101,7 +101,7 @@ export default function ContactSection() {
                   <CheckCircle className="w-8 h-8 text-accent-emerald" />
                 </div>
                 <h3 className="text-2xl font-bold text-slate-900 mb-2">Message Sent!</h3>
-                <p className="text-slate-600">Mahlo will be in touch within 4 hours with your PoC plan.</p>
+                <p className="text-slate-600">Mahlo will be in touch within 4 hours with your Demo plan.</p>
                 <p className="text-sm text-slate-500 mt-2">Prefer faster? WhatsApp us at 073 646 4935</p>
               </div>
             ) : (
