@@ -8,7 +8,6 @@ import ResultsSection from '@/components/fragments/ResultsSection'
 import PartnersSection from '@/components/fragments/PartnersSection'
 import ContactSection from '@/components/fragments/ContactSection'
 import Footer from '@/components/fragments/Footer'
-import ChatBot from '@/components/fragments/ChatBot'
 
 export default function Home() {
   return (
@@ -23,7 +22,6 @@ export default function Home() {
       <PartnersSection />
       <ContactSection />
       <Footer />
-      <ChatBot />
     </main>
   )
 }
