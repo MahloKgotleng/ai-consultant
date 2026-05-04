@@ -1,0 +1,477 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Real-time safety incident tracking and heatmap for mining operations. MHSA compliant safety management.">
+    <title>Safety Incident Heatmap | Kgotla AI Mining</title>
+    
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="assets/css/mining-styles.css">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="assets/images/favicon.png">
+    
+    <style>
+        .heatmap-grid {
+            display: grid;
+            grid-template-columns: repeat(10, 1fr);
+            gap: 4px;
+            margin: 2rem 0;
+        }
+        
+        .heatmap-cell {
+            aspect-ratio: 1;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+        
+        .heatmap-cell:hover {
+            transform: scale(1.1);
+            box-shadow: 0 4px 6px rgba(0,0,0,0.2);
+        }
+        
+        .heat-0 { background: #d1fae5; color: #065f46; }
+        .heat-1 { background: #fef3c7; color: #92400e; }
+        .heat-2 { background: #fed7aa; color: #9a3412; }
+        .heat-3 { background: #fecaca; color: #991b1b; }
+        .heat-4 { background: #dc2626; color: white; }
+        
+        .incident-timeline {
+            position: relative;
+            padding-left: 2rem;
+        }
+        
+        .timeline-item {
+            position: relative;
+            padding-bottom: 2rem;
+            border-left: 2px solid var(--border-color);
+            padding-left: 2rem;
+        }
+        
+        .timeline-item:last-child {
+            border-left: none;
+        }
+        
+        .timeline-dot {
+            position: absolute;
+            left: -9px;
+            top: 0;
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            border: 2px solid white;
+        }
+        
+        .timeline-dot-critical { background: var(--status-critical); }
+        .timeline-dot-warning { background: var(--status-warning); }
+        .timeline-dot-ok { background: var(--status-ok); }
+    </style>
+</head>
+<body>
+    
+    <!-- HEADER -->
+    <section class="hero" style="padding: 2rem 0;">
+        <div class="container hero-content">
+            <h1 style="font-size: 2.5rem;">Safety Incident Heatmap</h1>
+            <p style="font-size: 1.125rem;">Real-time safety tracking and predictive risk analysis</p>
+            <p style="font-size: 0.875rem; margin-top: 1rem;">
+                <a href="mining-operations.html" style="color: white; text-decoration: underline;">← Back to main page</a>
+            </p>
+        </div>
+    </section>
+    
+    <!-- SAFETY DASHBOARD -->
+    <section class="section">
+        <div class="container">
+            <div class="dashboard">
+                <div class="dashboard-header">
+                    <h2 style="margin: 0;">Safety Management Dashboard</h2>
+                    <span class="status-badge status-ok">MHSA COMPLIANT</span>
+                </div>
+                
+                <!-- SAFETY METRICS -->
+                <div class="stats-grid mb-4">
+                    <div class="stat-card">
+                        <div class="stat-value" style="color: var(--success-color);">92</div>
+                        <div class="stat-label">Safety Score</div>
+                    </div>
+                    
+                    <div class="stat-card">
+                        <div class="stat-value" style="color: var(--status-warning);">23</div>
+                        <div class="stat-label">Incidents (MTD)</div>
+                    </div>
+                    
+                    <div class="stat-card">
+                        <div class="stat-value" style="color: var(--success-color);">847</div>
+                        <div class="stat-label">Days Since LTI</div>
+                    </div>
+                    
+                    <div class="stat-card">
+                        <div class="stat-value" style="color: var(--status-info);">3</div>
+                        <div class="stat-label">High Risk Areas</div>
+                    </div>
+                </div>
+                
+                <!-- MINE LAYOUT HEATMAP -->
+                <div class="card mb-4">
+                    <h3 style="margin-bottom: 1rem;">🗺️ Mine Safety Heatmap - Last 30 Days</h3>
+                    <p style="font-size: 0.875rem; color: var(--text-light); margin-bottom: 1.5rem;">
+                        Each cell represents a 100m² section of the mine. Color indicates incident frequency.
+                    </p>
+                    
+                    <div class="heatmap-grid" id="safetyHeatmap">
+                        <!-- Generated by JavaScript -->
+                    </div>
+                    
+                    <div style="display: flex; justify-content: center; gap: 2rem; margin-top: 1.5rem; flex-wrap: wrap;">
+                        <div style="display: flex; align-items: center; gap: 0.5rem;">
+                            <div style="width: 20px; height: 20px; background: #d1fae5; border-radius: 4px;"></div>
+                            <span style="font-size: 0.875rem;">0 incidents</span>
+                        </div>
+                        <div style="display: flex; align-items: center; gap: 0.5rem;">
+                            <div style="width: 20px; height: 20px; background: #fef3c7; border-radius: 4px;"></div>
+                            <span style="font-size: 0.875rem;">1-2 incidents</span>
+                        </div>
+                        <div style="display: flex; align-items: center; gap: 0.5rem;">
+                            <div style="width: 20px; height: 20px; background: #fed7aa; border-radius: 4px;"></div>
+                            <span style="font-size: 0.875rem;">3-4 incidents</span>
+                        </div>
+                        <div style="display: flex; align-items: center; gap: 0.5rem;">
+                            <div style="width: 20px; height: 20px; background: #fecaca; border-radius: 4px;"></div>
+                            <span style="font-size: 0.875rem;">5-6 incidents</span>
+                        </div>
+                        <div style="display: flex; align-items: center; gap: 0.5rem;">
+                            <div style="width: 20px; height: 20px; background: #dc2626; border-radius: 4px;"></div>
+                            <span style="font-size: 0.875rem;">7+ incidents</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- HIGH RISK AREAS -->
+                <div class="grid grid-2 mb-4">
+                    <div class="card">
+                        <h3 style="color: var(--status-critical); margin-bottom: 1.5rem;">🚨 High Risk Areas</h3>
+                        
+                        <div class="alert-card" style="border-left-color: var(--status-critical); margin-bottom: 1rem;">
+                            <div class="alert-header">
+                                <h4 class="alert-title">Shaft 3, Level 42</h4>
+                                <span class="status-badge status-critical">CRITICAL</span>
+                            </div>
+                            <p class="alert-description">
+                                <strong>7 incidents in 30 days</strong><br>
+                                Primary issues: Equipment failures, ventilation concerns<br>
+                                <strong>Action Required:</strong> Enhanced safety protocols, equipment inspection
+                            </p>
+                        </div>
+                        
+                        <div class="alert-card" style="border-left-color: var(--status-warning); margin-bottom: 1rem;">
+                            <div class="alert-header">
+                                <h4 class="alert-title">Shaft 2, Level 38</h4>
+                                <span class="status-badge status-warning">WARNING</span>
+                            </div>
+                            <p class="alert-description">
+                                <strong>5 incidents in 30 days</strong><br>
+                                Primary issues: Slip/trip hazards, lighting<br>
+                                <strong>Action Required:</strong> Housekeeping improvement, lighting upgrade
+                            </p>
+                        </div>
+                        
+                        <div class="alert-card" style="border-left-color: var(--status-warning);">
+                            <div class="alert-header">
+                                <h4 class="alert-title">Surface Operations</h4>
+                                <span class="status-badge status-warning">WARNING</span>
+                            </div>
+                            <p class="alert-description">
+                                <strong>4 incidents in 30 days</strong><br>
+                                Primary issues: Vehicle movements, loading operations<br>
+                                <strong>Action Required:</strong> Traffic management review
+                            </p>
+                        </div>
+                    </div>
+                    
+                    <!-- INCIDENT TIMELINE -->
+                    <div class="card">
+                        <h3 style="margin-bottom: 1.5rem;">📅 Recent Incidents</h3>
+                        
+                        <div class="incident-timeline">
+                            <div class="timeline-item">
+                                <div class="timeline-dot timeline-dot-critical"></div>
+                                <div>
+                                    <strong>Equipment Failure - Shaft 3</strong>
+                                    <p style="font-size: 0.875rem; color: var(--text-light); margin: 0.25rem 0;">
+                                        2 hours ago | Reported by: Thabo Mokoena
+                                    </p>
+                                    <p style="font-size: 0.875rem; color: var(--text-light);">
+                                        Hydraulic failure on DRILL-RIG-001. No injuries. Equipment isolated.
+                                    </p>
+                                </div>
+                            </div>
+                            
+                            <div class="timeline-item">
+                                <div class="timeline-dot timeline-dot-warning"></div>
+                                <div>
+                                    <strong>Near Miss - Shaft 2</strong>
+                                    <p style="font-size: 0.875rem; color: var(--text-light); margin: 0.25rem 0;">
+                                        1 day ago | Reported by: Sarah van der Merwe
+                                    </p>
+                                    <p style="font-size: 0.875rem; color: var(--text-light);">
+                                        Worker nearly struck by moving equipment. Additional signage installed.
+                                    </p>
+                                </div>
+                            </div>
+                            
+                            <div class="timeline-item">
+                                <div class="timeline-dot timeline-dot-warning"></div>
+                                <div>
+                                    <strong>Slip Hazard - Level 38</strong>
+                                    <p style="font-size: 0.875rem; color: var(--text-light); margin: 0.25rem 0;">
+                                        2 days ago | Reported by: John Ndlovu
+                                    </p>
+                                    <p style="font-size: 0.875rem; color: var(--text-light);">
+                                        Water accumulation on walkway. Drainage improved, warning signs placed.
+                                    </p>
+                                </div>
+                            </div>
+                            
+                            <div class="timeline-item">
+                                <div class="timeline-dot timeline-dot-ok"></div>
+                                <div>
+                                    <strong>Safety Observation - Surface</strong>
+                                    <p style="font-size: 0.875rem; color: var(--text-light); margin: 0.25rem 0;">
+                                        3 days ago | Reported by: Lerato Khumalo
+                                    </p>
+                                    <p style="font-size: 0.875rem; color: var(--text-light);">
+                                        Positive safety behavior observed. Worker commended for proper PPE use.
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- PREDICTIVE SAFETY ANALYSIS -->
+                <div class="card">
+                    <h3 style="margin-bottom: 1.5rem;">🔮 Predictive Safety Analysis</h3>
+                    
+                    <div class="grid grid-3">
+                        <div class="card" style="background: linear-gradient(135deg, #fee2e2 0%, #fecaca 100%); border: 2px solid var(--status-critical);">
+                            <h4 style="color: var(--status-critical);">High Risk Prediction</h4>
+                            <p style="font-size: 2rem; font-weight: 700; color: var(--status-critical); margin: 1rem 0;">78%</p>
+                            <p style="font-size: 0.875rem; color: var(--text-dark);">
+                                <strong>Shaft 3, Level 42</strong><br>
+                                Probability of incident in next 7 days based on equipment condition and historical patterns.
+                            </p>
+                            <button class="btn btn-primary btn-block mt-3" onclick="alert('Enhanced safety protocols activated for Shaft 3')">
+                                Activate Enhanced Protocols
+                            </button>
+                        </div>
+                        
+                        <div class="card" style="background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%); border: 2px solid var(--status-warning);">
+                            <h4 style="color: var(--status-warning);">Medium Risk Prediction</h4>
+                            <p style="font-size: 2rem; font-weight: 700; color: var(--status-warning); margin: 1rem 0;">45%</p>
+                            <p style="font-size: 0.875rem; color: var(--text-dark);">
+                                <strong>Shaft 2, Level 38</strong><br>
+                                Elevated risk due to recent near-miss incidents and equipment age.
+                            </p>
+                            <button class="btn btn-outline btn-block mt-3" onclick="alert('Additional safety briefing scheduled')">
+                                Schedule Safety Briefing
+                            </button>
+                        </div>
+                        
+                        <div class="card" style="background: linear-gradient(135deg, #d1fae5 0%, #a7f3d0 100%); border: 2px solid var(--success-color);">
+                            <h4 style="color: var(--success-color);">Low Risk Areas</h4>
+                            <p style="font-size: 2rem; font-weight: 700; color: var(--success-color); margin: 1rem 0;">12%</p>
+                            <p style="font-size: 0.875rem; color: var(--text-dark);">
+                                <strong>Shaft 1, Level 35</strong><br>
+                                Excellent safety record, well-maintained equipment, strong safety culture.
+                            </p>
+                            <button class="btn btn-success btn-block mt-3" onclick="alert('Best practices documented for replication')">
+                                Document Best Practices
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- SAFETY BENEFITS -->
+    <section class="section section-alt">
+        <div class="container">
+            <h2 class="text-center mb-5">How AI-Powered Safety Management Saves Lives & Money</h2>
+            
+            <div class="grid grid-3">
+                <div class="card text-center">
+                    <div style="font-size: 3rem; margin-bottom: 1rem;">🛡️</div>
+                    <h3>Predictive Prevention</h3>
+                    <p>Identify high-risk areas before incidents occur. AI analyzes patterns humans miss.</p>
+                    <ul style="text-align: left; margin-left: 1.5rem; color: var(--text-light);">
+                        <li>78% accuracy in incident prediction</li>
+                        <li>7-day advance warning</li>
+                        <li>Prevent 60% of incidents</li>
+                    </ul>
+                </div>
+                
+                <div class="card text-center">
+                    <div style="font-size: 3rem; margin-bottom: 1rem;">📱</div>
+                    <h3>Real-Time Reporting</h3>
+                    <p>Workers report incidents via WhatsApp instantly. No paperwork delays.</p>
+                    <ul style="text-align: left; margin-left: 1.5rem; color: var(--text-light);">
+                        <li>30-second incident logging</li>
+                        <li>Automatic MHSA compliance</li>
+                        <li>Immediate management alerts</li>
+                    </ul>
+                </div>
+                
+                <div class="card text-center">
+                    <div style="font-size: 3rem; margin-bottom: 1rem;">📊</div>
+                    <h3>Automated Compliance</h3>
+                    <p>MHSA and DMRE reports generated automatically. Always audit-ready.</p>
+                    <ul style="text-align: left; margin-left: 1.5rem; color: var(--text-light);">
+                        <li>24-hour incident reporting</li>
+                        <li>Complete audit trails</li>
+                        <li>Regulatory submission ready</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="card mt-5" style="background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%); border: 2px solid var(--primary-color);">
+                <h3 style="color: var(--primary-color); text-align: center; margin-bottom: 1.5rem;">ROI Impact</h3>
+                
+                <div class="grid grid-2">
+                    <div>
+                        <h4>Safety Improvements</h4>
+                        <div class="result-row">
+                            <span class="result-label">Incident Reduction:</span>
+                            <span class="result-value"><strong>60%</strong></span>
+                        </div>
+                        <div class="result-row">
+                            <span class="result-label">Near-Miss Reporting:</span>
+                            <span class="result-value"><strong>+250%</strong></span>
+                        </div>
+                        <div class="result-row">
+                            <span class="result-label">Safety Score:</span>
+                            <span class="result-value"><strong>92/100</strong></span>
+                        </div>
+                        <div class="result-row">
+                            <span class="result-label">Days Since LTI:</span>
+                            <span class="result-value"><strong>847 days</strong></span>
+                        </div>
+                    </div>
+                    
+                    <div>
+                        <h4>Financial Impact</h4>
+                        <div class="result-row">
+                            <span class="result-label">Incident Cost Savings:</span>
+                            <span class="result-value"><strong>R8.5M/year</strong></span>
+                        </div>
+                        <div class="result-row">
+                            <span class="result-label">Insurance Premium Reduction:</span>
+                            <span class="result-value"><strong>R2.1M/year</strong></span>
+                        </div>
+                        <div class="result-row">
+                            <span class="result-label">Compliance Fines Avoided:</span>
+                            <span class="result-value"><strong>R1.8M/year</strong></span>
+                        </div>
+                        <div class="result-row">
+                            <span class="result-label">Total Annual Savings:</span>
+                            <span class="result-value"><strong>R12.4M</strong></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- CTA -->
+    <section class="section" style="background: linear-gradient(135deg, #d97706 0%, #b45309 100%); color: white;">
+        <div class="container text-center">
+            <h2 style="color: white; font-size: 2.5rem; margin-bottom: 1rem;">
+                Prevent Incidents Before They Happen
+            </h2>
+            <p style="font-size: 1.25rem; color: rgba(255,255,255,0.95); margin-bottom: 2rem;">
+                Deploy AI-powered safety management and save R12.4M annually
+            </p>
+            
+            <div>
+                <a href="mining-operations.html#contact" class="btn btn-large" style="background: white; color: var(--primary-color); margin-right: 1rem;">
+                    Book Executive Demo
+                </a>
+                <a href="mining-operations.html" class="btn btn-outline btn-large" style="border-color: white; color: white;">
+                    Learn More
+                </a>
+            </div>
+        </div>
+    </section>
+    
+    <!-- FOOTER -->
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2026 Kgotla AI. All rights reserved.</p>
+            <p style="margin-top: 0.5rem;">
+                <a href="mailto:mahlo@kgotlaai.co.za">mahlo@kgotlaai.co.za</a> • 
+                <a href="tel:+27626698650">062 669 8650</a> • 
+                <a href="https://wa.me/27736464935">WhatsApp: 073 646 4935</a>
+            </p>
+        </div>
+    </footer>
+    
+    <!-- JavaScript -->
+    <script src="assets/js/mining-app.js"></script>
+    <script>
+        // Generate heatmap on page load
+        document.addEventListener('DOMContentLoaded', () => {
+            generateHeatmap();
+        });
+        
+        function generateHeatmap() {
+            const heatmap = document.getElementById('safetyHeatmap');
+            const hotspots = [
+                {row: 4, col: 2, level: 4}, // Shaft 3, Level 42
+                {row: 4, col: 3, level: 3},
+                {row: 3, col: 2, level: 3},
+                {row: 6, col: 5, level: 3}, // Shaft 2, Level 38
+                {row: 6, col: 6, level: 2},
+                {row: 7, col: 5, level: 2},
+                {row: 1, col: 8, level: 2}, // Surface operations
+                {row: 2, col: 8, level: 2},
+            ];
+            
+            for (let i = 0; i < 100; i++) {
+                const row = Math.floor(i / 10);
+                const col = i % 10;
+                
+                // Check if this cell is a hotspot
+                const hotspot = hotspots.find(h => h.row === row && h.col === col);
+                const level = hotspot ? hotspot.level : (Math.random() < 0.7 ? 0 : Math.random() < 0.5 ? 1 : 0);
+                
+                const cell = document.createElement('div');
+                cell.className = `heatmap-cell heat-${level}`;
+                cell.textContent = level > 0 ? level : '';
+                cell.title = `Section ${row}-${col}: ${level} incidents`;
+                
+                cell.addEventListener('click', () => {
+                    alert(`Section ${row}-${col}\nIncidents: ${level}\nLocation: ${getLocationName(row, col)}`);
+                });
+                
+                heatmap.appendChild(cell);
+            }
+        }
+        
+        function getLocationName(row, col) {
+            if (row >= 3 && row <= 5 && col >= 1 && col <= 3) return 'Shaft 3, Level 42';
+            if (row >= 5 && row <= 7 && col >= 4 && col <= 6) return 'Shaft 2, Level 38';
+            if (row >= 0 && row <= 2 && col >= 7 && col <= 9) return 'Surface Operations';
+            if (row >= 7 && row <= 9 && col >= 0 && col <= 2) return 'Shaft 1, Level 35';
+            return 'General Mining Area';
+        }
+    </script>
+</body>
+</html>

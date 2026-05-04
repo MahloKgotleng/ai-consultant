@@ -1,0 +1,552 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="AI-powered production optimization for mining operations. Maximize output, minimize costs.">
+    <title>Production Optimizer | Kgotla AI Mining</title>
+    
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="assets/css/mining-styles.css">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="assets/images/favicon.png">
+    
+    <style>
+        .production-chart {
+            background: white;
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin: 1rem 0;
+        }
+        
+        .chart-bar {
+            display: flex;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+        
+        .chart-label {
+            width: 120px;
+            font-size: 0.875rem;
+            font-weight: 600;
+        }
+        
+        .chart-bar-container {
+            flex: 1;
+            height: 30px;
+            background: var(--bg-light);
+            border-radius: 4px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .chart-bar-fill {
+            height: 100%;
+            border-radius: 4px;
+            transition: width 1s ease;
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            padding-right: 0.5rem;
+            color: white;
+            font-weight: 600;
+            font-size: 0.875rem;
+        }
+        
+        .optimization-card {
+            background: white;
+            border-radius: 8px;
+            padding: 1.5rem;
+            border-left: 4px solid var(--primary-color);
+            margin-bottom: 1rem;
+        }
+        
+        .optimization-card h4 {
+            color: var(--primary-color);
+            margin-bottom: 0.5rem;
+        }
+        
+        .metric-comparison {
+            display: grid;
+            grid-template-columns: 1fr auto 1fr;
+            gap: 1rem;
+            align-items: center;
+            margin: 1rem 0;
+        }
+        
+        .metric-box {
+            text-align: center;
+            padding: 1rem;
+            border-radius: 8px;
+        }
+        
+        .metric-box-before {
+            background: #fee2e2;
+            border: 2px solid #dc2626;
+        }
+        
+        .metric-box-after {
+            background: #d1fae5;
+            border: 2px solid #059669;
+        }
+        
+        .metric-arrow {
+            font-size: 2rem;
+            color: var(--success-color);
+        }
+        
+        .live-indicator {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.25rem 0.75rem;
+            background: var(--status-critical);
+            color: white;
+            border-radius: 20px;
+            font-size: 0.875rem;
+            font-weight: 600;
+        }
+        
+        .live-dot {
+            width: 8px;
+            height: 8px;
+            background: white;
+            border-radius: 50%;
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.3; }
+        }
+        
+        .shift-schedule {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1rem;
+            margin: 1rem 0;
+        }
+        
+        .shift-card {
+            background: white;
+            border-radius: 8px;
+            padding: 1rem;
+            border: 2px solid var(--border-color);
+        }
+        
+        .shift-card.active {
+            border-color: var(--primary-color);
+            background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
+        }
+    </style>
+</head>
+<body>
+    
+    <!-- HEADER -->
+    <section class="hero" style="padding: 2rem 0;">
+        <div class="container hero-content">
+            <h1 style="font-size: 2.5rem;">Production Optimization Dashboard</h1>
+            <p style="font-size: 1.125rem;">AI-powered insights to maximize output and minimize costs</p>
+            <p style="font-size: 0.875rem; margin-top: 1rem;">
+                <a href="mining-operations.html" style="color: white; text-decoration: underline;">← Back to main page</a>
+            </p>
+        </div>
+    </section>
+    
+    <!-- PRODUCTION DASHBOARD -->
+    <section class="section">
+        <div class="container">
+            <div class="dashboard">
+                <div class="dashboard-header">
+                    <h2 style="margin: 0;">Real-Time Production Monitoring</h2>
+                    <span class="live-indicator">
+                        <span class="live-dot"></span>
+                        LIVE
+                    </span>
+                </div>
+                
+                <!-- CURRENT PRODUCTION METRICS -->
+                <div class="stats-grid mb-4">
+                    <div class="stat-card">
+                        <div class="stat-value" style="color: var(--primary-color);">2,847</div>
+                        <div class="stat-label">Tonnes Today</div>
+                        <div style="font-size: 0.875rem; color: var(--success-color); margin-top: 0.5rem;">
+                            ↑ 12% vs target
+                        </div>
+                    </div>
+                    
+                    <div class="stat-card">
+                        <div class="stat-value" style="color: var(--success-color);">94.2%</div>
+                        <div class="stat-label">Equipment Efficiency</div>
+                        <div style="font-size: 0.875rem; color: var(--success-color); margin-top: 0.5rem;">
+                            ↑ 8.5% vs last month
+                        </div>
+                    </div>
+                    
+                    <div class="stat-card">
+                        <div class="stat-value" style="color: var(--status-info);">R847</div>
+                        <div class="stat-label">Cost per Tonne</div>
+                        <div style="font-size: 0.875rem; color: var(--success-color); margin-top: 0.5rem;">
+                            ↓ R153 vs baseline
+                        </div>
+                    </div>
+                    
+                    <div class="stat-card">
+                        <div class="stat-value" style="color: var(--primary-color);">R2.4M</div>
+                        <div class="stat-label">Revenue Today</div>
+                        <div style="font-size: 0.875rem; color: var(--success-color); margin-top: 0.5rem;">
+                            ↑ R287K vs forecast
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- PRODUCTION BY SHAFT -->
+                <div class="card mb-4">
+                    <h3 style="margin-bottom: 1.5rem;">📊 Production by Shaft - Current Shift</h3>
+                    
+                    <div class="production-chart">
+                        <div class="chart-bar">
+                            <div class="chart-label">Shaft 1</div>
+                            <div class="chart-bar-container">
+                                <div class="chart-bar-fill" style="width: 92%; background: linear-gradient(90deg, #059669 0%, #10b981 100%);">
+                                    1,104 tonnes
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="chart-bar">
+                            <div class="chart-label">Shaft 2</div>
+                            <div class="chart-bar-container">
+                                <div class="chart-bar-fill" style="width: 88%; background: linear-gradient(90deg, #0891b2 0%, #06b6d4 100%);">
+                                    1,056 tonnes
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="chart-bar">
+                            <div class="chart-label">Shaft 3</div>
+                            <div class="chart-bar-container">
+                                <div class="chart-bar-fill" style="width: 57%; background: linear-gradient(90deg, #dc2626 0%, #ef4444 100%);">
+                                    687 tonnes
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="alert-card" style="border-left-color: var(--status-warning); margin-top: 1rem;">
+                        <div class="alert-header">
+                            <h4 class="alert-title">⚠️ Shaft 3 Underperforming</h4>
+                            <span class="status-badge status-warning">ACTION REQUIRED</span>
+                        </div>
+                        <p class="alert-description">
+                            <strong>Current: 687 tonnes (57% of target)</strong><br>
+                            AI Analysis: Equipment DRILL-RIG-003 operating at 68% efficiency due to hydraulic pressure fluctuations.<br>
+                            <strong>Recommended Action:</strong> Schedule maintenance during next shift change. Estimated recovery: +380 tonnes/day.
+                        </p>
+                    </div>
+                </div>
+                
+                <!-- AI OPTIMIZATION RECOMMENDATIONS -->
+                <div class="card mb-4">
+                    <h3 style="margin-bottom: 1.5rem;">🤖 AI Optimization Recommendations</h3>
+                    
+                    <div class="optimization-card">
+                        <h4>1. Shift Schedule Optimization</h4>
+                        <p style="color: var(--text-light); margin-bottom: 1rem;">
+                            AI has identified optimal crew allocation based on equipment availability and ore grade distribution.
+                        </p>
+                        
+                        <div class="metric-comparison">
+                            <div class="metric-box metric-box-before">
+                                <div style="font-size: 0.875rem; font-weight: 600; margin-bottom: 0.5rem;">Current Schedule</div>
+                                <div style="font-size: 1.5rem; font-weight: 700; color: #dc2626;">2,540 t/day</div>
+                            </div>
+                            <div class="metric-arrow">→</div>
+                            <div class="metric-box metric-box-after">
+                                <div style="font-size: 0.875rem; font-weight: 600; margin-bottom: 0.5rem;">Optimized Schedule</div>
+                                <div style="font-size: 1.5rem; font-weight: 700; color: #059669;">3,180 t/day</div>
+                            </div>
+                        </div>
+                        
+                        <p style="font-size: 0.875rem; color: var(--text-light);">
+                            <strong>Impact:</strong> +640 tonnes/day (+25%) | <strong>Revenue Impact:</strong> +R512K/day
+                        </p>
+                        
+                        <button class="btn btn-primary mt-3" onclick="alert('Optimization plan sent to shift managers for review')">
+                            Apply Optimization
+                        </button>
+                    </div>
+                    
+                    <div class="optimization-card">
+                        <h4>2. Equipment Utilization Improvement</h4>
+                        <p style="color: var(--text-light); margin-bottom: 1rem;">
+                            DRILL-RIG-002 and LOADER-004 have 23% idle time. AI suggests reallocation to high-grade zones.
+                        </p>
+                        
+                        <div class="metric-comparison">
+                            <div class="metric-box metric-box-before">
+                                <div style="font-size: 0.875rem; font-weight: 600; margin-bottom: 0.5rem;">Current Utilization</div>
+                                <div style="font-size: 1.5rem; font-weight: 700; color: #dc2626;">77%</div>
+                            </div>
+                            <div class="metric-arrow">→</div>
+                            <div class="metric-box metric-box-after">
+                                <div style="font-size: 0.875rem; font-weight: 600; margin-bottom: 0.5rem;">Optimized Utilization</div>
+                                <div style="font-size: 1.5rem; font-weight: 700; color: #059669;">94%</div>
+                            </div>
+                        </div>
+                        
+                        <p style="font-size: 0.875rem; color: var(--text-light);">
+                            <strong>Impact:</strong> +430 tonnes/day (+17%) | <strong>Revenue Impact:</strong> +R344K/day
+                        </p>
+                        
+                        <button class="btn btn-primary mt-3" onclick="alert('Equipment reallocation plan generated')">
+                            View Reallocation Plan
+                        </button>
+                    </div>
+                    
+                    <div class="optimization-card">
+                        <h4>3. Ore Grade Targeting</h4>
+                        <p style="color: var(--text-light); margin-bottom: 1rem;">
+                            AI geological analysis identifies high-grade zones in Shaft 1, Level 35 with 18% higher gold content.
+                        </p>
+                        
+                        <div class="metric-comparison">
+                            <div class="metric-box metric-box-before">
+                                <div style="font-size: 0.875rem; font-weight: 600; margin-bottom: 0.5rem;">Current Avg Grade</div>
+                                <div style="font-size: 1.5rem; font-weight: 700; color: #dc2626;">4.2 g/t</div>
+                            </div>
+                            <div class="metric-arrow">→</div>
+                            <div class="metric-box metric-box-after">
+                                <div style="font-size: 0.875rem; font-weight: 600; margin-bottom: 0.5rem;">Optimized Avg Grade</div>
+                                <div style="font-size: 1.5rem; font-weight: 700; color: #059669;">5.8 g/t</div>
+                            </div>
+                        </div>
+                        
+                        <p style="font-size: 0.875rem; color: var(--text-light);">
+                            <strong>Impact:</strong> +38% revenue per tonne | <strong>Revenue Impact:</strong> +R912K/day
+                        </p>
+                        
+                        <button class="btn btn-primary mt-3" onclick="alert('High-grade zone coordinates sent to mining engineers')">
+                            View Zone Map
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- SHIFT PERFORMANCE -->
+                <div class="card mb-4">
+                    <h3 style="margin-bottom: 1.5rem;">⏰ Shift Performance Analysis</h3>
+                    
+                    <div class="shift-schedule">
+                        <div class="shift-card">
+                            <h4 style="color: var(--text-dark);">Night Shift</h4>
+                            <p style="font-size: 0.875rem; color: var(--text-light); margin: 0.5rem 0;">22:00 - 06:00</p>
+                            <div style="font-size: 1.75rem; font-weight: 700; color: var(--success-color); margin: 1rem 0;">
+                                1,124 t
+                            </div>
+                            <div style="font-size: 0.875rem; color: var(--success-color);">
+                                ↑ 8% vs target
+                            </div>
+                        </div>
+                        
+                        <div class="shift-card active">
+                            <h4 style="color: var(--primary-color);">Day Shift (Current)</h4>
+                            <p style="font-size: 0.875rem; color: var(--text-light); margin: 0.5rem 0;">06:00 - 14:00</p>
+                            <div style="font-size: 1.75rem; font-weight: 700; color: var(--primary-color); margin: 1rem 0;">
+                                1,036 t
+                            </div>
+                            <div style="font-size: 0.875rem; color: var(--success-color);">
+                                ↑ 12% vs target (in progress)
+                            </div>
+                        </div>
+                        
+                        <div class="shift-card">
+                            <h4 style="color: var(--text-dark);">Afternoon Shift</h4>
+                            <p style="font-size: 0.875rem; color: var(--text-light); margin: 0.5rem 0;">14:00 - 22:00</p>
+                            <div style="font-size: 1.75rem; font-weight: 700; color: var(--text-light); margin: 1rem 0;">
+                                Forecast: 987 t
+                            </div>
+                            <div style="font-size: 0.875rem; color: var(--text-light);">
+                                Based on AI prediction
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="alert-card" style="border-left-color: var(--status-info); margin-top: 1rem;">
+                        <div class="alert-header">
+                            <h4 class="alert-title">💡 AI Insight</h4>
+                            <span class="status-badge status-info">RECOMMENDATION</span>
+                        </div>
+                        <p class="alert-description">
+                            Night shift consistently outperforms other shifts by 8-12%. Analysis shows optimal equipment temperature and crew experience levels.<br>
+                            <strong>Recommendation:</strong> Replicate night shift crew composition and procedures across all shifts for +R1.2M monthly revenue increase.
+                        </p>
+                    </div>
+                </div>
+                
+                <!-- COST OPTIMIZATION -->
+                <div class="grid grid-2">
+                    <div class="card">
+                        <h3 style="margin-bottom: 1.5rem;">💰 Cost Optimization</h3>
+                        
+                        <div style="margin-bottom: 1.5rem;">
+                            <h4 style="font-size: 1rem; margin-bottom: 0.5rem;">Energy Consumption</h4>
+                            <div class="result-row">
+                                <span class="result-label">Current Usage:</span>
+                                <span class="result-value">2,847 kWh</span>
+                            </div>
+                            <div class="result-row">
+                                <span class="result-label">AI Optimized:</span>
+                                <span class="result-value" style="color: var(--success-color);">2,194 kWh (-23%)</span>
+                            </div>
+                            <div class="result-row">
+                                <span class="result-label">Daily Savings:</span>
+                                <span class="result-value" style="color: var(--success-color);"><strong>R14,782</strong></span>
+                            </div>
+                        </div>
+                        
+                        <div style="margin-bottom: 1.5rem;">
+                            <h4 style="font-size: 1rem; margin-bottom: 0.5rem;">Fuel Consumption</h4>
+                            <div class="result-row">
+                                <span class="result-label">Current Usage:</span>
+                                <span class="result-value">1,847 L</span>
+                            </div>
+                            <div class="result-row">
+                                <span class="result-label">AI Optimized:</span>
+                                <span class="result-value" style="color: var(--success-color);">1,478 L (-20%)</span>
+                            </div>
+                            <div class="result-row">
+                                <span class="result-label">Daily Savings:</span>
+                                <span class="result-value" style="color: var(--success-color);"><strong>R8,538</strong></span>
+                            </div>
+                        </div>
+                        
+                        <div style="background: var(--bg-light); padding: 1rem; border-radius: 8px;">
+                            <div class="result-row">
+                                <span class="result-label"><strong>Total Daily Savings:</strong></span>
+                                <span class="result-value" style="color: var(--success-color); font-size: 1.25rem;"><strong>R23,320</strong></span>
+                            </div>
+                            <div class="result-row">
+                                <span class="result-label"><strong>Annual Savings:</strong></span>
+                                <span class="result-value" style="color: var(--success-color); font-size: 1.25rem;"><strong>R8.5M</strong></span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="card">
+                        <h3 style="margin-bottom: 1.5rem;">📈 Revenue Optimization</h3>
+                        
+                        <div style="margin-bottom: 1.5rem;">
+                            <h4 style="font-size: 1rem; margin-bottom: 0.5rem;">Production Increase</h4>
+                            <div class="result-row">
+                                <span class="result-label">Current Output:</span>
+                                <span class="result-value">2,540 t/day</span>
+                            </div>
+                            <div class="result-row">
+                                <span class="result-label">AI Optimized:</span>
+                                <span class="result-value" style="color: var(--success-color);">3,180 t/day (+25%)</span>
+                            </div>
+                            <div class="result-row">
+                                <span class="result-label">Additional Revenue:</span>
+                                <span class="result-value" style="color: var(--success-color);"><strong>R512K/day</strong></span>
+                            </div>
+                        </div>
+                        
+                        <div style="margin-bottom: 1.5rem;">
+                            <h4 style="font-size: 1rem; margin-bottom: 0.5rem;">Grade Optimization</h4>
+                            <div class="result-row">
+                                <span class="result-label">Current Avg Grade:</span>
+                                <span class="result-value">4.2 g/t</span>
+                            </div>
+                            <div class="result-row">
+                                <span class="result-label">AI Optimized:</span>
+                                <span class="result-value" style="color: var(--success-color);">5.8 g/t (+38%)</span>
+                            </div>
+                            <div class="result-row">
+                                <span class="result-label">Additional Revenue:</span>
+                                <span class="result-value" style="color: var(--success-color);"><strong>R912K/day</strong></span>
+                            </div>
+                        </div>
+                        
+                        <div style="background: var(--bg-light); padding: 1rem; border-radius: 8px;">
+                            <div class="result-row">
+                                <span class="result-label"><strong>Total Daily Revenue Increase:</strong></span>
+                                <span class="result-value" style="color: var(--success-color); font-size: 1.25rem;"><strong>R1.42M</strong></span>
+                            </div>
+                            <div class="result-row">
+                                <span class="result-label"><strong>Annual Revenue Increase:</strong></span>
+                                <span class="result-value" style="color: var(--success-color); font-size: 1.25rem;"><strong>R518M</strong></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- TOTAL ROI IMPACT -->
+    <section class="section section-alt">
+        <div class="container">
+            <div class="card" style="background: linear-gradient(135deg, #d97706 0%, #b45309 100%); color: white; border: none;">
+                <h2 style="color: white; text-align: center; margin-bottom: 2rem;">Combined Optimization Impact</h2>
+                
+                <div class="grid grid-3">
+                    <div style="text-align: center;">
+                        <div style="font-size: 3rem; font-weight: 700; margin-bottom: 0.5rem;">+25%</div>
+                        <div style="font-size: 1.125rem;">Production Increase</div>
+                    </div>
+                    
+                    <div style="text-align: center;">
+                        <div style="font-size: 3rem; font-weight: 700; margin-bottom: 0.5rem;">-23%</div>
+                        <div style="font-size: 1.125rem;">Operating Costs</div>
+                    </div>
+                    
+                    <div style="text-align: center;">
+                        <div style="font-size: 3rem; font-weight: 700; margin-bottom: 0.5rem;">R526M</div>
+                        <div style="font-size: 1.125rem;">Annual Impact</div>
+                    </div>
+                </div>
+                
+                <div style="text-align: center; margin-top: 2rem; padding-top: 2rem; border-top: 2px solid rgba(255,255,255,0.3);">
+                    <p style="font-size: 1.25rem; margin-bottom: 1rem;">
+                        Deploy AI optimization and transform your mining operation
+                    </p>
+                    <a href="mining-operations.html#contact" class="btn btn-large" style="background: white; color: var(--primary-color);">
+                        Book Executive Demo
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- FOOTER -->
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2026 Kgotla AI. All rights reserved.</p>
+            <p style="margin-top: 0.5rem;">
+                <a href="mailto:mahlo@kgotlaai.co.za">mahlo@kgotlaai.co.za</a> • 
+                <a href="tel:+27626698650">062 669 8650</a> • 
+                <a href="https://wa.me/27736464935">WhatsApp: 073 646 4935</a>
+            </p>
+        </div>
+    </footer>
+    
+    <!-- JavaScript -->
+    <script src="assets/js/mining-app.js"></script>
+    <script>
+        // Animate production bars on page load
+        document.addEventListener('DOMContentLoaded', () => {
+            setTimeout(() => {
+                const bars = document.querySelectorAll('.chart-bar-fill');
+                bars.forEach(bar => {
+                    const width = bar.style.width;
+                    bar.style.width = '0%';
+                    setTimeout(() => {
+                        bar.style.width = width;
+                    }, 100);
+                });
+            }, 500);
+        });
+    </script>
+</body>
+</html>
