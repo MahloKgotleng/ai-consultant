@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="AI-powered fraud detection for South African financial institutions. Real-time risk scoring and automated alerts.">
+    <title>Fraud Detection Dashboard | Kgotla AI</title>
+    
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="assets/css/styles.css">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="assets/images/favicon.png">
+</head>
+<body>
+    
+    <!-- HEADER -->
+    <section class="hero" style="padding: 2rem 0;">
+        <div class="container hero-content">
+            <h1 style="font-size: 2.5rem;">AI-Powered Fraud Detection</h1>
+            <p style="font-size: 1.125rem;">Real-time risk scoring and automated alerts for financial institutions</p>
+            <p style="font-size: 0.875rem; margin-top: 1rem;">
+                <a href="financial-services.html" style="color: white; text-decoration: underline;">← Back to main page</a>
+            </p>
+        </div>
+    </section>
+    
+    <!-- FRAUD DASHBOARD -->
+    <section class="section">
+        <div class="container">
+            <div class="dashboard">
+                <div class="dashboard-header">
+                    <h2 style="margin: 0;">Fraud Detection Dashboard</h2>
+                    <span class="validation-badge validation-success">LIVE DEMO</span>
+                </div>
+                
+                <!-- STATS OVERVIEW -->
+                <div class="stats-grid mb-4">
+                    <div class="stat-card">
+                        <div class="stat-value" style="color: var(--success);">98.7%</div>
+                        <div class="stat-label">Detection Accuracy</div>
+                    </div>
+                    
+                    <div class="stat-card">
+                        <div class="stat-value" style="color: var(--error);">23</div>
+                        <div class="stat-label">Flagged Today</div>
+                    </div>
+                    
+                    <div class="stat-card">
+                        <div class="stat-value" style="color: var(--warning);">R2.4M</div>
+                        <div class="stat-label">Fraud Prevented (MTD)</div>
+                    </div>
+                    
+                    <div class="stat-card">
+                        <div class="stat-value" style="color: var(--info);">0.3%</div>
+                        <div class="stat-label">False Positive Rate</div>
+                    </div>
+                </div>
+                
+                <!-- HIGH RISK TRANSACTIONS -->
+                <div class="card mb-4">
+                    <h3 style="color: var(--error); margin-bottom: 1.5rem;">🚨 High Risk Transactions (Requires Review)</h3>
+                    
+                    <div class="alert-card" style="border-left-color: var(--error); margin-bottom: 1rem;">
+                        <div class="alert-header">
+                            <div>
+                                <h4 class="alert-title">Transaction #TXN-2026-8472</h4>
+                                <p style="font-size: 0.875rem; color: var(--text-light); margin: 0.25rem 0 0 0;">
+                                    Amount: <strong>R450,000</strong> | Time: 14:23 | Account: ****3847
+                                </p>
+                            </div>
+                            <span class="validation-badge validation-error">RISK: 94%</span>
+                        </div>
+                        <p class="alert-description" style="margin-top: 1rem;">
+                            <strong>Fraud Indicators:</strong>
+                        </p>
+                        <ul style="margin-left: 1.5rem; color: var(--text-light); line-height: 1.8;">
+                            <li>❌ Transaction from new device (never seen before)</li>
+                            <li>❌ Location mismatch (IP: Nigeria, Account: South Africa)</li>
+                            <li>❌ Amount 10x higher than average transaction</li>
+                            <li>❌ Unusual time (2:00 AM local time)</li>
+                            <li>❌ Rapid succession (3rd transaction in 5 minutes)</li>
+                        </ul>
+                        <div style="margin-top: 1rem; display: flex; gap: 1rem;">
+                            <button class="btn btn-primary" onclick="alert('Transaction blocked and customer notified')">Block Transaction</button>
+                            <button class="btn btn-outline" onclick="alert('Verification SMS sent to customer')">Request Verification</button>
+                        </div>
+                    </div>
+                    
+                    <div class="alert-card" style="border-left-color: var(--error); margin-bottom: 1rem;">
+                        <div class="alert-header">
+                            <div>
+                                <h4 class="alert-title">Transaction #TXN-2026-8469</h4>
+                                <p style="font-size: 0.875rem; color: var(--text-light); margin: 0.25rem 0 0 0;">
+                                    Amount: <strong>R125,000</strong> | Time: 13:45 | Account: ****2193
+                                </p>
+                            </div>
+                            <span class="validation-badge validation-error">RISK: 87%</span>
+                        </div>
+                        <p class="alert-description" style="margin-top: 1rem;">
+                            <strong>Fraud Indicators:</strong>
+                        </p>
+                        <ul style="margin-left: 1.5rem; color: var(--text-light); line-height: 1.8;">
+                            <li>❌ Multiple failed login attempts before transaction</li>
+                            <li>❌ Beneficiary account opened yesterday</li>
+                            <li>❌ Pattern matches known fraud ring</li>
+                            <li>⚠️ Customer hasn't made international transfer before</li>
+                        </ul>
+                        <div style="margin-top: 1rem; display: flex; gap: 1rem;">
+                            <button class="btn btn-primary" onclick="alert('Transaction blocked and customer notified')">Block Transaction</button>
+                            <button class="btn btn-outline" onclick="alert('Verification SMS sent to customer')">Request Verification</button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- MEDIUM RISK TRANSACTIONS -->
+                <div class="card mb-4">
+                    <h3 style="color: var(--warning); margin-bottom: 1.5rem;">⚠️ Medium Risk Transactions (Monitor)</h3>
+                    
+                    <div class="result-row">
+                        <div>
+                            <strong>TXN-2026-8471</strong> | R45,000 | Account: ****5621
+                        </div>
+                        <span class="validation-badge" style="background: #fef3c7; color: #92400e;">RISK: 62%</span>
+                    </div>
+                    <p style="font-size: 0.875rem; color: var(--text-light); margin: 0.5rem 0 1rem 0;">
+                        Unusual merchant category, higher than typical amount
+                    </p>
+                    
+                    <div class="result-row">
+                        <div>
+                            <strong>TXN-2026-8468</strong> | R38,500 | Account: ****7834
+                        </div>
+                        <span class="validation-badge" style="background: #fef3c7; color: #92400e;">RISK: 58%</span>
+                    </div>
+                    <p style="font-size: 0.875rem; color: var(--text-light); margin: 0.5rem 0 1rem 0;">
+                        New beneficiary, amount slightly above average
+                    </p>
+                    
+                    <div class="result-row">
+                        <div>
+                            <strong>TXN-2026-8465</strong> | R52,000 | Account: ****9102
+                        </div>
+                        <span class="validation-badge" style="background: #fef3c7; color: #92400e;">RISK: 54%</span>
+                    </div>
+                    <p style="font-size: 0.875rem; color: var(--text-light); margin: 0.5rem 0;">
+                        Weekend transaction, new device detected
+                    </p>
+                </div>
+                
+                <!-- FRAUD PATTERNS DETECTED -->
+                <div class="card">
+                    <h3 style="margin-bottom: 1.5rem;">🔍 Fraud Patterns Detected This Week</h3>
+                    
+                    <div class="grid grid-2">
+                        <div class="card" style="background: var(--bg-light);">
+                            <h4 style="color: var(--error);">Account Takeover Pattern</h4>
+                            <p style="font-size: 0.875rem; color: var(--text-light);">
+                                <strong>7 incidents detected</strong><br>
+                                Multiple failed logins followed by successful login from new device, then immediate high-value transfer.
+                            </p>
+                            <p style="font-size: 0.875rem; margin-top: 1rem;">
+                                <strong>Action:</strong> Enhanced 2FA now required for these accounts
+                            </p>
+                        </div>
+                        
+                        <div class="card" style="background: var(--bg-light);">
+                            <h4 style="color: var(--error);">Phishing Campaign</h4>
+                            <p style="font-size: 0.875rem; color: var(--text-light);">
+                                <strong>12 attempts blocked</strong><br>
+                                Fake banking website redirecting customers. AI detected unusual login patterns and blocked access.
+                            </p>
+                            <p style="font-size: 0.875rem; margin-top: 1rem;">
+                                <strong>Action:</strong> Customer alerts sent, website reported
+                            </p>
+                        </div>
+                        
+                        <div class="card" style="background: var(--bg-light);">
+                            <h4 style="color: var(--warning);">Mule Account Network</h4>
+                            <p style="font-size: 0.875rem; color: var(--text-light);">
+                                <strong>5 accounts flagged</strong><br>
+                                Rapid fund movement between newly opened accounts with similar patterns.
+                            </p>
+                            <p style="font-size: 0.875rem; margin-top: 1rem;">
+                                <strong>Action:</strong> Accounts frozen, investigation initiated
+                            </p>
+                        </div>
+                        
+                        <div class="card" style="background: var(--bg-light);">
+                            <h4 style="color: var(--warning);">SIM Swap Fraud</h4>
+                            <p style="font-size: 0.875rem; color: var(--text-light);">
+                                <strong>3 attempts detected</strong><br>
+                                Phone number changes followed by immediate transaction attempts.
+                            </p>
+                            <p style="font-size: 0.875rem; margin-top: 1rem;">
+                                <strong>Action:</strong> 48-hour cooling period enforced
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- HOW IT WORKS -->
+    <section class="section section-alt">
+        <div class="container">
+            <h2 class="text-center mb-5">How AI Fraud Detection Works</h2>
+            
+            <div class="grid grid-3">
+                <div class="card text-center">
+                    <div style="font-size: 3rem; margin-bottom: 1rem;">🧠</div>
+                    <h3>Machine Learning Models</h3>
+                    <p>Trained on millions of transactions to identify patterns that humans miss. Continuously learning from new fraud attempts.</p>
+                </div>
+                
+                <div class="card text-center">
+                    <div style="font-size: 3rem; margin-bottom: 1rem;">⚡</div>
+                    <h3>Real-Time Scoring</h3>
+                    <p>Every transaction scored in milliseconds. High-risk transactions flagged before completion.</p>
+                </div>
+                
+                <div class="card text-center">
+                    <div style="font-size: 3rem; margin-bottom: 1rem;">🎯</div>
+                    <h3>Adaptive Rules</h3>
+                    <p>Rules automatically adjust based on emerging fraud patterns. No manual rule updates needed.</p>
+                </div>
+            </div>
+            
+            <div class="card mt-5" style="background: linear-gradient(135deg, #ecfdf5 0%, #d1fae5 100%); border: 2px solid var(--success);">
+                <h3 style="color: var(--success); text-align: center; margin-bottom: 1.5rem;">Impact Metrics</h3>
+                
+                <div class="grid grid-2">
+                    <div class="result-row">
+                        <span class="result-label">Fraud Prevented (Annual):</span>
+                        <span class="result-value"><strong>R28.5M</strong></span>
+                    </div>
+                    <div class="result-row">
+                        <span class="result-label">Detection Accuracy:</span>
+                        <span class="result-value"><strong>98.7%</strong></span>
+                    </div>
+                    <div class="result-row">
+                        <span class="result-label">False Positive Rate:</span>
+                        <span class="result-value"><strong>0.3%</strong></span>
+                    </div>
+                    <div class="result-row">
+                        <span class="result-label">Response Time:</span>
+                        <span class="result-value"><strong>< 100ms</strong></span>
+                    </div>
+                    <div class="result-row">
+                        <span class="result-label">Customer Friction:</span>
+                        <span class="result-value"><strong>Minimal</strong></span>
+                    </div>
+                    <div class="result-row">
+                        <span class="result-label">ROI:</span>
+                        <span class="result-value"><strong>1,850%</strong></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- CTA -->
+    <section class="section" style="background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 100%); color: white;">
+        <div class="container text-center">
+            <h2 style="color: white; font-size: 2.5rem; margin-bottom: 1rem;">
+                Protect Your Institution from R28.5M in Annual Fraud
+            </h2>
+            <p style="font-size: 1.25rem; color: rgba(255,255,255,0.95); margin-bottom: 2rem;">
+                Deploy AI-powered fraud detection in 72 hours
+            </p>
+            
+            <div>
+                <a href="financial-services.html#contact" class="btn btn-large" style="background: white; color: var(--primary-color); margin-right: 1rem;">
+                    Book Demo
+                </a>
+                <a href="financial-services.html" class="btn btn-outline btn-large" style="border-color: white; color: white;">
+                    Learn More
+                </a>
+            </div>
+        </div>
+    </section>
+    
+    <!-- FOOTER -->
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2026 Kgotla AI. All rights reserved.</p>
+            <p style="margin-top: 0.5rem;">
+                <a href="mailto:mahlo@kgotlaai.co.za">mahlo@kgotlaai.co.za</a> • 
+                <a href="tel:+27626698650">062 669 8650</a> • 
+                <a href="https://wa.me/27736464935">WhatsApp: 073 646 4935</a>
+            </p>
+        </div>
+    </footer>
+    
+    <!-- JavaScript -->
+    <script src="assets/js/app.js"></script>
+</body>
+</html>

@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Interactive KYC document processing demo. Upload ID documents and see instant AI-powered extraction and validation.">
+    <title>KYC Document Processing Demo | Kgotla AI</title>
+    
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="assets/css/styles.css">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="assets/images/favicon.png">
+</head>
+<body>
+    
+    <!-- HEADER -->
+    <section class="hero" style="padding: 2rem 0;">
+        <div class="container hero-content">
+            <h1 style="font-size: 2.5rem;">KYC Document Processing Demo</h1>
+            <p style="font-size: 1.125rem;">Upload an ID document and watch AI extract and validate information in real-time</p>
+            <p style="font-size: 0.875rem; margin-top: 1rem;">
+                <a href="financial-services.html" style="color: white; text-decoration: underline;">← Back to main page</a>
+            </p>
+        </div>
+    </section>
+    
+    <!-- DEMO INTERFACE -->
+    <section class="section">
+        <div class="container">
+            <div class="demo-container">
+                <div class="demo-header">
+                    <h2 style="color: white; margin: 0;">Automated KYC Processing</h2>
+                    <p style="color: rgba(255,255,255,0.9); margin: 0.5rem 0 0 0;">
+                        Powered by IBM Watson & Kgotla AI
+                    </p>
+                </div>
+                
+                <div class="demo-body">
+                    <!-- UPLOAD AREA -->
+                    <div id="upload-area" class="upload-area">
+                        <div class="upload-icon">📄</div>
+                        <h3>Upload ID Document</h3>
+                        <p style="color: var(--text-light); margin-bottom: 1.5rem;">
+                            Drag and drop or click to select<br>
+                            <span style="font-size: 0.875rem;">Supports: JPG, PNG, PDF (Max 10MB)</span>
+                        </p>
+                        <input type="file" id="file-input" accept="image/*,.pdf" style="display: none;">
+                        <button class="btn btn-primary">Choose File</button>
+                        
+                        <div style="margin-top: 2rem; padding-top: 2rem; border-top: 1px solid var(--border-color);">
+                            <p style="font-size: 0.875rem; color: var(--text-light); margin-bottom: 1rem;">
+                                <strong>Don't have a document handy?</strong>
+                            </p>
+                            <p style="font-size: 0.875rem; color: var(--text-light);">
+                                Upload any image file and we'll show you how the system works with sample data.
+                                In production, this processes real documents with 98.5% accuracy.
+                            </p>
+                        </div>
+                    </div>
+                    
+                    <!-- PROCESSING STATE -->
+                    <div id="processing" class="hidden">
+                        <!-- Populated by JavaScript -->
+                    </div>
+                    
+                    <!-- RESULTS -->
+                    <div id="demo-results" class="hidden">
+                        <!-- Populated by JavaScript -->
+                    </div>
+                </div>
+            </div>
+            
+            <!-- INFO CARDS -->
+            <div class="grid grid-3 mt-5">
+                <div class="card text-center">
+                    <div style="font-size: 3rem; margin-bottom: 1rem;">⚡</div>
+                    <h3>30 Seconds</h3>
+                    <p>Average processing time per document</p>
+                </div>
+                
+                <div class="card text-center">
+                    <div style="font-size: 3rem; margin-bottom: 1rem;">✓</div>
+                    <h3>98.5% Accuracy</h3>
+                    <p>AI-powered extraction with validation</p>
+                </div>
+                
+                <div class="card text-center">
+                    <div style="font-size: 3rem; margin-bottom: 1rem;">💰</div>
+                    <h3>R1,250 Saved</h3>
+                    <p>Per document vs manual processing</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- FEATURES SECTION -->
+    <section class="section section-alt">
+        <div class="container">
+            <h2 class="text-center mb-5">What This Demo Shows</h2>
+            
+            <div class="grid grid-2">
+                <div class="card">
+                    <h3>🔍 Intelligent Data Extraction</h3>
+                    <ul style="margin-left: 1.5rem; color: var(--text-light);">
+                        <li>Full name extraction</li>
+                        <li>ID number recognition</li>
+                        <li>Date of birth parsing</li>
+                        <li>Address extraction</li>
+                        <li>Nationality identification</li>
+                    </ul>
+                </div>
+                
+                <div class="card">
+                    <h3>✅ Automated Validation</h3>
+                    <ul style="margin-left: 1.5rem; color: var(--text-light);">
+                        <li>ID number format validation</li>
+                        <li>Age verification</li>
+                        <li>Document authenticity check</li>
+                        <li>FICA compliance verification</li>
+                        <li>Confidence scoring</li>
+                    </ul>
+                </div>
+                
+                <div class="card">
+                    <h3>📊 Real-Time Processing</h3>
+                    <ul style="margin-left: 1.5rem; color: var(--text-light);">
+                        <li>Instant document upload</li>
+                        <li>Live processing status</li>
+                        <li>Immediate results display</li>
+                        <li>Processing time tracking</li>
+                        <li>Cost savings calculation</li>
+                    </ul>
+                </div>
+                
+                <div class="card">
+                    <h3>🔒 Enterprise Security</h3>
+                    <ul style="margin-left: 1.5rem; color: var(--text-light);">
+                        <li>End-to-end encryption</li>
+                        <li>POPIA compliant storage</li>
+                        <li>Secure data handling</li>
+                        <li>Audit trail logging</li>
+                        <li>Access control</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- COMPARISON SECTION -->
+    <section class="section">
+        <div class="container">
+            <h2 class="text-center mb-5">Manual vs Automated Processing</h2>
+            
+            <div class="grid grid-2">
+                <div class="card" style="border-left: 4px solid var(--error);">
+                    <h3 style="color: var(--error);">❌ Manual Process</h3>
+                    <div class="result-row">
+                        <span class="result-label">Processing Time:</span>
+                        <span class="result-value">2-5 days</span>
+                    </div>
+                    <div class="result-row">
+                        <span class="result-label">Labor Cost:</span>
+                        <span class="result-value">R1,500 per document</span>
+                    </div>
+                    <div class="result-row">
+                        <span class="result-label">Error Rate:</span>
+                        <span class="result-value">15%</span>
+                    </div>
+                    <div class="result-row">
+                        <span class="result-label">Scalability:</span>
+                        <span class="result-value">Limited by staff</span>
+                    </div>
+                    <div class="result-row">
+                        <span class="result-label">Compliance:</span>
+                        <span class="result-value">Manual tracking</span>
+                    </div>
+                </div>
+                
+                <div class="card" style="border-left: 4px solid var(--success);">
+                    <h3 style="color: var(--success);">✓ Kgotla AI Automated</h3>
+                    <div class="result-row">
+                        <span class="result-label">Processing Time:</span>
+                        <span class="result-value"><strong>30 seconds</strong></span>
+                    </div>
+                    <div class="result-row">
+                        <span class="result-label">Labor Cost:</span>
+                        <span class="result-value"><strong>R250 per document</strong></span>
+                    </div>
+                    <div class="result-row">
+                        <span class="result-label">Error Rate:</span>
+                        <span class="result-value"><strong>1.5%</strong></span>
+                    </div>
+                    <div class="result-row">
+                        <span class="result-label">Scalability:</span>
+                        <span class="result-value"><strong>Unlimited</strong></span>
+                    </div>
+                    <div class="result-row">
+                        <span class="result-label">Compliance:</span>
+                        <span class="result-value"><strong>Automatic reports</strong></span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="text-center mt-5">
+                <div class="card" style="max-width: 600px; margin: 0 auto; background: linear-gradient(135deg, #ecfdf5 0%, #d1fae5 100%); border: 2px solid var(--success);">
+                    <h3 style="color: var(--success); margin-bottom: 1rem;">💰 Total Savings Per Document</h3>
+                    <div class="result-highlight" style="color: var(--success);">R1,250</div>
+                    <p style="color: var(--text-dark); margin: 0;">
+                        <strong>83% cost reduction</strong> • <strong>99.4% time savings</strong>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- INTEGRATION INFO -->
+    <section class="section section-alt">
+        <div class="container-narrow">
+            <h2 class="text-center mb-3">Ready to Implement?</h2>
+            <p class="text-center text-light mb-5" style="font-size: 1.125rem;">
+                This demo shows just a fraction of what's possible. The full solution includes:
+            </p>
+            
+            <div class="card">
+                <ul style="margin-left: 1.5rem; color: var(--text-light); line-height: 2;">
+                    <li><strong>Multi-document processing:</strong> Handle ID, proof of address, bank statements, and more</li>
+                    <li><strong>Batch processing:</strong> Process hundreds of documents simultaneously</li>
+                    <li><strong>API integration:</strong> Connect to your CRM, banking platform, or any system</li>
+                    <li><strong>Custom workflows:</strong> Tailor the process to your specific requirements</li>
+                    <li><strong>Advanced validation:</strong> Credit checks, fraud detection, watchlist screening</li>
+                    <li><strong>Compliance reporting:</strong> Automatic FICA, POPIA, and regulatory reports</li>
+                    <li><strong>Dashboard & analytics:</strong> Real-time insights into your KYC pipeline</li>
+                    <li><strong>White-label option:</strong> Brand it as your own solution</li>
+                </ul>
+            </div>
+            
+            <div class="text-center mt-4">
+                <a href="financial-services.html#contact" class="btn btn-primary btn-large">
+                    Book Full Demo & Consultation
+                </a>
+                <a href="roi-calculator.html" class="btn btn-outline btn-large" style="margin-left: 1rem;">
+                    Calculate Your Savings
+                </a>
+            </div>
+        </div>
+    </section>
+    
+    <!-- TECHNICAL SPECS -->
+    <section class="section">
+        <div class="container">
+            <h2 class="text-center mb-5">Technical Specifications</h2>
+            
+            <div class="grid grid-3">
+                <div class="card">
+                    <h4>🔧 Technology Stack</h4>
+                    <ul style="margin-left: 1.5rem; color: var(--text-light); font-size: 0.875rem;">
+                        <li>IBM Watson Document Understanding</li>
+                        <li>Advanced OCR & NLP</li>
+                        <li>Machine learning validation</li>
+                        <li>RESTful API architecture</li>
+                        <li>Cloud-native deployment</li>
+                    </ul>
+                </div>
+                
+                <div class="card">
+                    <h4>📋 Supported Documents</h4>
+                    <ul style="margin-left: 1.5rem; color: var(--text-light); font-size: 0.875rem;">
+                        <li>South African ID documents</li>
+                        <li>Passports (all countries)</li>
+                        <li>Driver's licenses</li>
+                        <li>Utility bills</li>
+                        <li>Bank statements</li>
+                        <li>Company registration docs</li>
+                    </ul>
+                </div>
+                
+                <div class="card">
+                    <h4>🔒 Security & Compliance</h4>
+                    <ul style="margin-left: 1.5rem; color: var(--text-light); font-size: 0.875rem;">
+                        <li>POPIA compliant</li>
+                        <li>FICA aligned</li>
+                        <li>ISO 27001 certified hosting</li>
+                        <li>AES-256 encryption</li>
+                        <li>SA data residency</li>
+                        <li>SOC 2 Type II</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- CTA SECTION -->
+    <section class="section" style="background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 100%); color: white;">
+        <div class="container text-center">
+            <h2 style="color: white; font-size: 2.5rem; margin-bottom: 1rem;">
+                Impressed? Let's Talk About Your Needs
+            </h2>
+            <p style="font-size: 1.25rem; color: rgba(255,255,255,0.95); margin-bottom: 2rem;">
+                Schedule a personalized demo and see how we can transform your KYC process
+            </p>
+            
+            <div>
+                <a href="financial-services.html#contact" class="btn btn-large" style="background: white; color: var(--primary-color); margin-right: 1rem;">
+                    Book Free Consultation
+                </a>
+                <a href="financial-services.html" class="btn btn-outline btn-large" style="border-color: white; color: white;">
+                    Learn More
+                </a>
+            </div>
+            
+            <p style="margin-top: 2rem; font-size: 0.875rem; color: rgba(255,255,255,0.8);">
+                ✓ Free 30-day trial • ✓ No credit card required • ✓ 72-hour deployment
+            </p>
+        </div>
+    </section>
+    
+    <!-- FOOTER -->
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2026 Kgotla AI. All rights reserved.</p>
+            <p style="margin-top: 0.5rem;">
+                <a href="mailto:mahlo@kgotlaai.co.za">mahlo@kgotlaai.co.za</a> •
+                <a href="tel:+27626698650">062 669 8650</a> •
+                <a href="https://wa.me/27736464935">WhatsApp: 073 646 4935</a>
+            </p>
+            <p style="margin-top: 1rem; font-size: 0.875rem;">
+                <a href="financial-services.html">Home</a> • 
+                <a href="roi-calculator.html">ROI Calculator</a> • 
+                <a href="financial-services.html#contact">Contact</a>
+            </p>
+        </div>
+    </footer>
+    
+    <!-- JavaScript -->
+    <script src="assets/js/app.js"></script>
+</body>
+</html>

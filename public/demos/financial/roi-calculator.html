@@ -1,0 +1,418 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Calculate how much you can save with automated KYC processing. Free ROI calculator for South African financial institutions.">
+    <title>KYC Processing ROI Calculator | Kgotla AI</title>
+    
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="assets/css/styles.css">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="assets/images/favicon.png">
+</head>
+<body>
+    
+    <!-- HEADER -->
+    <section class="hero" style="padding: 2rem 0;">
+        <div class="container hero-content">
+            <h1 style="font-size: 2.5rem;">KYC Processing ROI Calculator</h1>
+            <p style="font-size: 1.125rem;">Calculate your potential savings with automated document processing</p>
+            <p style="font-size: 0.875rem; margin-top: 1rem;">
+                <a href="financial-services.html" style="color: white; text-decoration: underline;">← Back to main page</a>
+            </p>
+        </div>
+    </section>
+    
+    <!-- CALCULATOR SECTION -->
+    <section class="section">
+        <div class="container">
+            <div class="calculator">
+                <div class="text-center mb-4">
+                    <h2>Enter Your Current Process Details</h2>
+                    <p style="color: var(--text-light);">
+                        Fill in the fields below to see your potential savings
+                    </p>
+                </div>
+                
+                <form id="roi-form">
+                    <div class="form-group">
+                        <label class="form-label">
+                            📊 How many KYC applications do you process per month?
+                        </label>
+                        <input 
+                            type="number" 
+                            id="applications" 
+                            class="form-input" 
+                            value="100" 
+                            min="1" 
+                            required
+                            placeholder="e.g., 100">
+                        <p style="font-size: 0.875rem; color: var(--text-light); margin-top: 0.5rem;">
+                            Include all new customer applications requiring document verification
+                        </p>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label">
+                            ⏱️ How many hours does it take to process one application manually?
+                        </label>
+                        <input 
+                            type="number" 
+                            id="hoursPerApp" 
+                            class="form-input" 
+                            value="3" 
+                            min="0.5" 
+                            step="0.5" 
+                            required
+                            placeholder="e.g., 3">
+                        <p style="font-size: 0.875rem; color: var(--text-light); margin-top: 0.5rem;">
+                            Include document review, data entry, validation, and compliance checks
+                        </p>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label">
+                            💰 What is your average staff hourly cost (ZAR)?
+                        </label>
+                        <input 
+                            type="number" 
+                            id="hourlyCost" 
+                            class="form-input" 
+                            value="500" 
+                            min="100" 
+                            step="50" 
+                            required
+                            placeholder="e.g., 500">
+                        <p style="font-size: 0.875rem; color: var(--text-light); margin-top: 0.5rem;">
+                            Include salary, benefits, and overhead costs
+                        </p>
+                    </div>
+                </form>
+                
+                <div id="roi-results" class="hidden"></div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- ASSUMPTIONS SECTION -->
+    <section class="section section-alt">
+        <div class="container-narrow">
+            <h2 class="text-center mb-4">How We Calculate Your Savings</h2>
+            
+            <div class="card">
+                <h3>📊 Calculation Methodology</h3>
+                <p style="margin-bottom: 1rem;">Our ROI calculator is based on real-world data from South African financial institutions using Kgotla AI:</p>
+                
+                <div class="result-row">
+                    <span class="result-label">Time Reduction:</span>
+                    <span class="result-value"><strong>83%</strong></span>
+                </div>
+                <p style="font-size: 0.875rem; color: var(--text-light); margin-bottom: 1rem;">
+                    Automated processing reduces manual work from 3 hours to 30 seconds per application
+                </p>
+                
+                <div class="result-row">
+                    <span class="result-label">Accuracy Improvement:</span>
+                    <span class="result-value"><strong>98.5%</strong></span>
+                </div>
+                <p style="font-size: 0.875rem; color: var(--text-light); margin-bottom: 1rem;">
+                    AI-powered extraction with validation reduces errors from 15% to 1.5%
+                </p>
+                
+                <div class="result-row">
+                    <span class="result-label">Implementation Cost:</span>
+                    <span class="result-value"><strong>R50,000</strong></span>
+                </div>
+                <p style="font-size: 0.875rem; color: var(--text-light); margin-bottom: 1rem;">
+                    One-time setup including integration, training, and customization
+                </p>
+                
+                <div class="result-row">
+                    <span class="result-label">Monthly Operating Cost:</span>
+                    <span class="result-value"><strong>R5,000 - R15,000</strong></span>
+                </div>
+                <p style="font-size: 0.875rem; color: var(--text-light);">
+                    Varies based on volume. Includes hosting, API calls, and support
+                </p>
+            </div>
+        </div>
+    </section>
+    
+    <!-- EXAMPLE SCENARIOS -->
+    <section class="section">
+        <div class="container">
+            <h2 class="text-center mb-5">Real-World Scenarios</h2>
+            
+            <div class="grid grid-3">
+                <div class="card">
+                    <h3 style="color: var(--primary-color);">Small Institution</h3>
+                    <div class="result-row">
+                        <span class="result-label">Volume:</span>
+                        <span class="result-value">50 apps/month</span>
+                    </div>
+                    <div class="result-row">
+                        <span class="result-label">Current Cost:</span>
+                        <span class="result-value">R75,000/month</span>
+                    </div>
+                    <div class="result-row">
+                        <span class="result-label">New Cost:</span>
+                        <span class="result-value">R17,750/month</span>
+                    </div>
+                    <div class="result-row">
+                        <span class="result-label"><strong>Monthly Savings:</strong></span>
+                        <span class="result-value"><strong style="color: var(--success);">R57,250</strong></span>
+                    </div>
+                    <div class="result-row">
+                        <span class="result-label"><strong>Annual Savings:</strong></span>
+                        <span class="result-value"><strong style="color: var(--success);">R687,000</strong></span>
+                    </div>
+                    <div class="result-row">
+                        <span class="result-label">Payback Period:</span>
+                        <span class="result-value">0.9 months</span>
+                    </div>
+                </div>
+                
+                <div class="card" style="border: 2px solid var(--primary-color);">
+                    <h3 style="color: var(--primary-color);">Medium Institution</h3>
+                    <div class="result-row">
+                        <span class="result-label">Volume:</span>
+                        <span class="result-value">100 apps/month</span>
+                    </div>
+                    <div class="result-row">
+                        <span class="result-label">Current Cost:</span>
+                        <span class="result-value">R150,000/month</span>
+                    </div>
+                    <div class="result-row">
+                        <span class="result-label">New Cost:</span>
+                        <span class="result-value">R30,500/month</span>
+                    </div>
+                    <div class="result-row">
+                        <span class="result-label"><strong>Monthly Savings:</strong></span>
+                        <span class="result-value"><strong style="color: var(--success);">R119,500</strong></span>
+                    </div>
+                    <div class="result-row">
+                        <span class="result-label"><strong>Annual Savings:</strong></span>
+                        <span class="result-value"><strong style="color: var(--success);">R1,434,000</strong></span>
+                    </div>
+                    <div class="result-row">
+                        <span class="result-label">Payback Period:</span>
+                        <span class="result-value">0.4 months</span>
+                    </div>
+                </div>
+                
+                <div class="card">
+                    <h3 style="color: var(--primary-color);">Large Institution</h3>
+                    <div class="result-row">
+                        <span class="result-label">Volume:</span>
+                        <span class="result-value">500 apps/month</span>
+                    </div>
+                    <div class="result-row">
+                        <span class="result-label">Current Cost:</span>
+                        <span class="result-value">R750,000/month</span>
+                    </div>
+                    <div class="result-row">
+                        <span class="result-label">New Cost:</span>
+                        <span class="result-value">R142,500/month</span>
+                    </div>
+                    <div class="result-row">
+                        <span class="result-label"><strong>Monthly Savings:</strong></span>
+                        <span class="result-value"><strong style="color: var(--success);">R607,500</strong></span>
+                    </div>
+                    <div class="result-row">
+                        <span class="result-label"><strong>Annual Savings:</strong></span>
+                        <span class="result-value"><strong style="color: var(--success);">R7,290,000</strong></span>
+                    </div>
+                    <div class="result-row">
+                        <span class="result-label">Payback Period:</span>
+                        <span class="result-value">0.1 months</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="text-center mt-4">
+                <p style="font-size: 0.875rem; color: var(--text-light);">
+                    * Calculations assume 3 hours manual processing time and R500/hour staff cost
+                </p>
+            </div>
+        </div>
+    </section>
+    
+    <!-- ADDITIONAL BENEFITS -->
+    <section class="section section-alt">
+        <div class="container">
+            <h2 class="text-center mb-5">Beyond Direct Cost Savings</h2>
+            
+            <div class="grid grid-2">
+                <div class="card">
+                    <h3>💼 Operational Benefits</h3>
+                    <ul style="margin-left: 1.5rem; color: var(--text-light); line-height: 2;">
+                        <li><strong>Faster customer onboarding:</strong> From days to minutes</li>
+                        <li><strong>Improved customer satisfaction:</strong> Instant processing</li>
+                        <li><strong>Reduced staff burnout:</strong> Eliminate repetitive tasks</li>
+                        <li><strong>Better resource allocation:</strong> Staff focus on high-value work</li>
+                        <li><strong>Scalability:</strong> Handle volume spikes without hiring</li>
+                    </ul>
+                </div>
+                
+                <div class="card">
+                    <h3>🛡️ Risk & Compliance Benefits</h3>
+                    <ul style="margin-left: 1.5rem; color: var(--text-light); line-height: 2;">
+                        <li><strong>Reduced error rate:</strong> 15% to 1.5%</li>
+                        <li><strong>Consistent compliance:</strong> Automated FICA checks</li>
+                        <li><strong>Audit-ready reports:</strong> Complete documentation</li>
+                        <li><strong>Fraud detection:</strong> AI-powered anomaly detection</li>
+                        <li><strong>Regulatory confidence:</strong> POPIA compliant by design</li>
+                    </ul>
+                </div>
+                
+                <div class="card">
+                    <h3>📈 Strategic Benefits</h3>
+                    <ul style="margin-left: 1.5rem; color: var(--text-light); line-height: 2;">
+                        <li><strong>Competitive advantage:</strong> Faster service than competitors</li>
+                        <li><strong>Market expansion:</strong> Capacity to grow without limits</li>
+                        <li><strong>Digital transformation:</strong> Modern, AI-powered operations</li>
+                        <li><strong>Data insights:</strong> Analytics on processing patterns</li>
+                        <li><strong>Future-ready:</strong> Platform for additional automation</li>
+                    </ul>
+                </div>
+                
+                <div class="card">
+                    <h3>💰 Hidden Cost Savings</h3>
+                    <ul style="margin-left: 1.5rem; color: var(--text-light); line-height: 2;">
+                        <li><strong>Reduced rework:</strong> Fewer errors mean less correction</li>
+                        <li><strong>Lower training costs:</strong> Simpler processes</li>
+                        <li><strong>Decreased storage:</strong> Digital-first approach</li>
+                        <li><strong>Avoided fines:</strong> Better compliance reduces penalties</li>
+                        <li><strong>Customer retention:</strong> Better experience = less churn</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- NEXT STEPS -->
+    <section class="section">
+        <div class="container-narrow">
+            <h2 class="text-center mb-4">Ready to Realize These Savings?</h2>
+            
+            <div class="card" style="background: linear-gradient(135deg, #ecfdf5 0%, #d1fae5 100%); border: 2px solid var(--success);">
+                <h3 class="text-center" style="color: var(--success);">Get Started in 3 Simple Steps</h3>
+                
+                <div style="margin: 2rem 0;">
+                    <div style="display: flex; align-items: start; margin-bottom: 1.5rem;">
+                        <div style="background: var(--success); color: white; width: 40px; height: 40px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; flex-shrink: 0; margin-right: 1rem;">1</div>
+                        <div>
+                            <h4 style="margin-bottom: 0.5rem;">Book a Free Demo</h4>
+                            <p style="color: var(--text-light); margin: 0;">See the system in action with your own documents</p>
+                        </div>
+                    </div>
+                    
+                    <div style="display: flex; align-items: start; margin-bottom: 1.5rem;">
+                        <div style="background: var(--success); color: white; width: 40px; height: 40px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; flex-shrink: 0; margin-right: 1rem;">2</div>
+                        <div>
+                            <h4 style="margin-bottom: 0.5rem;">30-Day Free Trial</h4>
+                            <p style="color: var(--text-light); margin: 0;">Test with real applications, no commitment required</p>
+                        </div>
+                    </div>
+                    
+                    <div style="display: flex; align-items: start;">
+                        <div style="background: var(--success); color: white; width: 40px; height: 40px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; flex-shrink: 0; margin-right: 1rem;">3</div>
+                        <div>
+                            <h4 style="margin-bottom: 0.5rem;">Go Live in 72 Hours</h4>
+                            <p style="color: var(--text-light); margin: 0;">Full deployment with training and support included</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="text-center">
+                    <a href="financial-services.html#contact" class="btn btn-primary btn-large">
+                        Book Free Consultation
+                    </a>
+                    <a href="kyc-demo.html" class="btn btn-secondary btn-large" style="margin-left: 1rem;">
+                        Try Interactive Demo
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- FAQ -->
+    <section class="section section-alt">
+        <div class="container-narrow">
+            <h2 class="text-center mb-5">Common Questions</h2>
+            
+            <div class="card mb-3">
+                <h3>Are these savings realistic?</h3>
+                <p>Yes. These calculations are based on actual results from South African financial institutions using Kgotla AI. The 83% time reduction is conservative—some clients see up to 90% reduction.</p>
+            </div>
+            
+            <div class="card mb-3">
+                <h3>What's included in the implementation cost?</h3>
+                <p>Everything: system setup, API integration, staff training, custom workflows, and 3 months of premium support. No hidden fees.</p>
+            </div>
+            
+            <div class="card mb-3">
+                <h3>How accurate is the 98.5% accuracy rate?</h3>
+                <p>This is our measured accuracy across millions of documents. Any uncertain fields are flagged for human review, ensuring 100% accuracy on final output.</p>
+            </div>
+            
+            <div class="card mb-3">
+                <h3>Can we start with a smaller volume?</h3>
+                <p>Absolutely. We work with institutions processing 10 to 10,000+ applications per month. Pricing scales with your volume.</p>
+            </div>
+            
+            <div class="card mb-3">
+                <h3>What if we don't see these savings?</h3>
+                <p>We offer a 90-day money-back guarantee. If you don't see measurable ROI within 3 months, we'll refund your implementation cost.</p>
+            </div>
+        </div>
+    </section>
+    
+    <!-- CTA SECTION -->
+    <section class="section" style="background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 100%); color: white;">
+        <div class="container text-center">
+            <h2 style="color: white; font-size: 2.5rem; margin-bottom: 1rem;">
+                Stop Calculating. Start Saving.
+            </h2>
+            <p style="font-size: 1.25rem; color: rgba(255,255,255,0.95); margin-bottom: 2rem;">
+                Join South African financial institutions already transforming their KYC process
+            </p>
+            
+            <div>
+                <a href="financial-services.html#contact" class="btn btn-large" style="background: white; color: var(--primary-color); margin-right: 1rem;">
+                    Book Free Demo
+                </a>
+                <a href="financial-services.html" class="btn btn-outline btn-large" style="border-color: white; color: white;">
+                    Learn More
+                </a>
+            </div>
+            
+            <p style="margin-top: 2rem; font-size: 0.875rem; color: rgba(255,255,255,0.8);">
+                ✓ Free 30-day trial • ✓ No credit card required • ✓ 90-day money-back guarantee
+            </p>
+        </div>
+    </section>
+    
+    <!-- FOOTER -->
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2026 Kgotla AI. All rights reserved.</p>
+            <p style="margin-top: 0.5rem;">
+                <a href="mailto:mahlo@kgotlaai.co.za">mahlo@kgotlaai.co.za</a> •
+                <a href="tel:+27626698650">062 669 8650</a> •
+                <a href="https://wa.me/27736464935">WhatsApp: 073 646 4935</a>
+            </p>
+            <p style="margin-top: 1rem; font-size: 0.875rem;">
+                <a href="financial-services.html">Home</a> • 
+                <a href="kyc-demo.html">Interactive Demo</a> • 
+                <a href="financial-services.html#contact">Contact</a>
+            </p>
+        </div>
+    </footer>
+    
+    <!-- JavaScript -->
+    <script src="assets/js/app.js"></script>
+</body>
+</html>

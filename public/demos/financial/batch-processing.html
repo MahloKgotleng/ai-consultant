@@ -1,0 +1,559 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Batch process hundreds of KYC documents simultaneously. AI-powered automation for South African financial institutions.">
+    <title>Batch Document Processing | Kgotla AI</title>
+    
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="assets/css/styles.css">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="assets/images/favicon.png">
+    
+    <style>
+        .progress-bar {
+            width: 100%;
+            height: 30px;
+            background: #e5e7eb;
+            border-radius: 15px;
+            overflow: hidden;
+            position: relative;
+        }
+        
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #10b981 0%, #059669 100%);
+            transition: width 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 600;
+            font-size: 0.875rem;
+        }
+        
+        .batch-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem;
+            border-bottom: 1px solid var(--border-color);
+            transition: background 0.3s ease;
+        }
+        
+        .batch-item:hover {
+            background: var(--bg-light);
+        }
+        
+        .batch-item:last-child {
+            border-bottom: none;
+        }
+        
+        .status-icon {
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.875rem;
+        }
+        
+        .status-processing {
+            background: #dbeafe;
+            color: #1e40af;
+        }
+        
+        .status-complete {
+            background: #d1fae5;
+            color: #065f46;
+        }
+        
+        .status-error {
+            background: #fee2e2;
+            color: #991b1b;
+        }
+        
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+        
+        .spinner-small {
+            width: 16px;
+            height: 16px;
+            border: 2px solid #e5e7eb;
+            border-top-color: #3b82f6;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+    </style>
+</head>
+<body>
+    
+    <!-- HEADER -->
+    <section class="hero" style="padding: 2rem 0;">
+        <div class="container hero-content">
+            <h1 style="font-size: 2.5rem;">Batch Document Processing</h1>
+            <p style="font-size: 1.125rem;">Process hundreds of KYC documents simultaneously with AI automation</p>
+            <p style="font-size: 0.875rem; margin-top: 1rem;">
+                <a href="financial-services.html" style="color: white; text-decoration: underline;">← Back to main page</a>
+            </p>
+        </div>
+    </section>
+    
+    <!-- BATCH PROCESSING DEMO -->
+    <section class="section">
+        <div class="container">
+            <div class="dashboard">
+                <div class="dashboard-header">
+                    <h2 style="margin: 0;">Batch Processing Dashboard</h2>
+                    <button class="btn btn-primary" onclick="startBatchProcessing()" id="startBtn">
+                        Start Batch Processing
+                    </button>
+                </div>
+                
+                <!-- OVERVIEW STATS -->
+                <div class="stats-grid mb-4">
+                    <div class="stat-card">
+                        <div class="stat-value" id="totalDocs">250</div>
+                        <div class="stat-label">Total Documents</div>
+                    </div>
+                    
+                    <div class="stat-card">
+                        <div class="stat-value" style="color: var(--success);" id="processedDocs">0</div>
+                        <div class="stat-label">Processed</div>
+                    </div>
+                    
+                    <div class="stat-card">
+                        <div class="stat-value" style="color: var(--info);" id="processingDocs">0</div>
+                        <div class="stat-label">Processing</div>
+                    </div>
+                    
+                    <div class="stat-card">
+                        <div class="stat-value" style="color: var(--error);" id="errorDocs">0</div>
+                        <div class="stat-label">Errors</div>
+                    </div>
+                </div>
+                
+                <!-- PROGRESS BAR -->
+                <div class="card mb-4">
+                    <h3 style="margin-bottom: 1rem;">Overall Progress</h3>
+                    <div class="progress-bar">
+                        <div class="progress-fill" id="progressBar" style="width: 0%;">
+                            <span id="progressText">0%</span>
+                        </div>
+                    </div>
+                    <div style="display: flex; justify-content: space-between; margin-top: 1rem; font-size: 0.875rem; color: var(--text-light);">
+                        <span>Estimated Time Remaining: <strong id="timeRemaining">--</strong></span>
+                        <span>Processing Speed: <strong id="processingSpeed">-- docs/min</strong></span>
+                    </div>
+                </div>
+                
+                <!-- BATCH QUEUES -->
+                <div class="grid grid-2">
+                    <!-- PROCESSING QUEUE -->
+                    <div class="card">
+                        <h3 style="margin-bottom: 1rem;">🔄 Currently Processing</h3>
+                        <div id="processingQueue" style="max-height: 400px; overflow-y: auto;">
+                            <p style="text-align: center; color: var(--text-light); padding: 2rem;">
+                                Click "Start Batch Processing" to begin
+                            </p>
+                        </div>
+                    </div>
+                    
+                    <!-- COMPLETED QUEUE -->
+                    <div class="card">
+                        <h3 style="margin-bottom: 1rem;">✅ Recently Completed</h3>
+                        <div id="completedQueue" style="max-height: 400px; overflow-y: auto;">
+                            <p style="text-align: center; color: var(--text-light); padding: 2rem;">
+                                Completed documents will appear here
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- RESULTS SUMMARY -->
+                <div class="card mt-4" id="resultsSummary" style="display: none;">
+                    <h3 style="color: var(--success); margin-bottom: 1.5rem;">📊 Batch Processing Complete!</h3>
+                    
+                    <div class="grid grid-2">
+                        <div>
+                            <h4>Processing Summary</h4>
+                            <div class="result-row">
+                                <span class="result-label">Total Documents:</span>
+                                <span class="result-value"><strong>250</strong></span>
+                            </div>
+                            <div class="result-row">
+                                <span class="result-label">Successfully Processed:</span>
+                                <span class="result-value"><strong style="color: var(--success);">242 (96.8%)</strong></span>
+                            </div>
+                            <div class="result-row">
+                                <span class="result-label">Errors/Manual Review:</span>
+                                <span class="result-value"><strong style="color: var(--warning);">8 (3.2%)</strong></span>
+                            </div>
+                            <div class="result-row">
+                                <span class="result-label">Total Processing Time:</span>
+                                <span class="result-value"><strong>4 minutes 23 seconds</strong></span>
+                            </div>
+                        </div>
+                        
+                        <div>
+                            <h4>Time & Cost Savings</h4>
+                            <div class="result-row">
+                                <span class="result-label">Manual Processing Time:</span>
+                                <span class="result-value">750 hours (3 hours/doc)</span>
+                            </div>
+                            <div class="result-row">
+                                <span class="result-label">AI Processing Time:</span>
+                                <span class="result-value"><strong style="color: var(--success);">4.4 minutes</strong></span>
+                            </div>
+                            <div class="result-row">
+                                <span class="result-label">Time Saved:</span>
+                                <span class="result-value"><strong style="color: var(--success);">749.9 hours (99.99%)</strong></span>
+                            </div>
+                            <div class="result-row">
+                                <span class="result-label">Cost Saved:</span>
+                                <span class="result-value"><strong style="color: var(--success);">R374,950</strong></span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div style="margin-top: 2rem; text-align: center;">
+                        <button class="btn btn-primary" onclick="downloadReport()">
+                            Download Processing Report
+                        </button>
+                        <button class="btn btn-outline" onclick="resetDemo()" style="margin-left: 1rem;">
+                            Run Another Batch
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- BATCH PROCESSING BENEFITS -->
+    <section class="section section-alt">
+        <div class="container">
+            <h2 class="text-center mb-5">Why Batch Processing Changes Everything</h2>
+            
+            <div class="grid grid-3">
+                <div class="card text-center">
+                    <div style="font-size: 3rem; margin-bottom: 1rem;">⚡</div>
+                    <h3>Massive Scale</h3>
+                    <p>Process thousands of documents overnight. Handle month-end volumes without hiring temporary staff.</p>
+                </div>
+                
+                <div class="card text-center">
+                    <div style="font-size: 3rem; margin-bottom: 1rem;">💰</div>
+                    <h3>Cost Efficiency</h3>
+                    <p>99.99% time reduction means 99.99% cost reduction. Process 250 documents for the cost of processing 1 manually.</p>
+                </div>
+                
+                <div class="card text-center">
+                    <div style="font-size: 3rem; margin-bottom: 1rem;">🎯</div>
+                    <h3>Consistent Quality</h3>
+                    <p>96.8% success rate with consistent accuracy. No human fatigue, no errors from repetitive work.</p>
+                </div>
+            </div>
+            
+            <div class="card mt-5" style="background: linear-gradient(135deg, #ecfdf5 0%, #d1fae5 100%); border: 2px solid var(--success);">
+                <h3 style="color: var(--success); text-align: center; margin-bottom: 1.5rem;">Real-World Impact</h3>
+                
+                <div class="grid grid-2">
+                    <div>
+                        <h4>Before Kgotla AI</h4>
+                        <ul style="margin-left: 1.5rem; color: var(--text-light); line-height: 2;">
+                            <li>250 documents = 750 hours of work</li>
+                            <li>Requires 15 staff members working 2 days</li>
+                            <li>Cost: R375,000 in labor</li>
+                            <li>Error rate: 15% requiring rework</li>
+                            <li>Customer wait time: 3-5 days</li>
+                        </ul>
+                    </div>
+                    
+                    <div>
+                        <h4>With Kgotla AI</h4>
+                        <ul style="margin-left: 1.5rem; color: var(--success); line-height: 2;">
+                            <li>250 documents = 4.4 minutes</li>
+                            <li>Requires 0 staff (fully automated)</li>
+                            <li>Cost: R50 in compute resources</li>
+                            <li>Error rate: 3.2% flagged for review</li>
+                            <li>Customer wait time: Same day</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- USE CASES -->
+    <section class="section">
+        <div class="container">
+            <h2 class="text-center mb-5">Perfect for High-Volume Scenarios</h2>
+            
+            <div class="grid grid-2">
+                <div class="card">
+                    <h3>📅 Month-End Processing</h3>
+                    <p>Process entire month's applications overnight. No more weekend work or overtime costs.</p>
+                    <ul style="margin-left: 1.5rem; color: var(--text-light); line-height: 1.8;">
+                        <li>Schedule batch jobs for off-peak hours</li>
+                        <li>Automatic retry for failed documents</li>
+                        <li>Email notifications when complete</li>
+                    </ul>
+                </div>
+                
+                <div class="card">
+                    <h3>🏢 New Branch Onboarding</h3>
+                    <p>Process backlog of applications when opening new branches or acquiring other institutions.</p>
+                    <ul style="margin-left: 1.5rem; color: var(--text-light); line-height: 1.8;">
+                        <li>Handle thousands of legacy documents</li>
+                        <li>Standardize data across systems</li>
+                        <li>Accelerate customer migration</li>
+                    </ul>
+                </div>
+                
+                <div class="card">
+                    <h3>📋 Compliance Audits</h3>
+                    <p>Quickly process and validate historical documents for regulatory audits.</p>
+                    <ul style="margin-left: 1.5rem; color: var(--text-light); line-height: 1.8;">
+                        <li>Batch validate compliance status</li>
+                        <li>Generate audit reports automatically</li>
+                        <li>Identify missing documentation</li>
+                    </ul>
+                </div>
+                
+                <div class="card">
+                    <h3>🔄 System Migrations</h3>
+                    <p>Migrate document data between systems with automated processing and validation.</p>
+                    <ul style="margin-left: 1.5rem; color: var(--text-light); line-height: 1.8;">
+                        <li>Extract data from legacy systems</li>
+                        <li>Transform to new format</li>
+                        <li>Validate data integrity</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- CTA -->
+    <section class="section" style="background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 100%); color: white;">
+        <div class="container text-center">
+            <h2 style="color: white; font-size: 2.5rem; margin-bottom: 1rem;">
+                Process 1000s of Documents in Minutes, Not Months
+            </h2>
+            <p style="font-size: 1.25rem; color: rgba(255,255,255,0.95); margin-bottom: 2rem;">
+                Transform your document processing with AI-powered batch automation
+            </p>
+            
+            <div>
+                <a href="financial-services.html#contact" class="btn btn-large" style="background: white; color: var(--primary-color); margin-right: 1rem;">
+                    Book Demo
+                </a>
+                <a href="financial-services.html" class="btn btn-outline btn-large" style="border-color: white; color: white;">
+                    Learn More
+                </a>
+            </div>
+        </div>
+    </section>
+    
+    <!-- FOOTER -->
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2026 Kgotla AI. All rights reserved.</p>
+            <p style="margin-top: 0.5rem;">
+                <a href="mailto:mahlo@kgotlaai.co.za">mahlo@kgotlaai.co.za</a> • 
+                <a href="tel:+27626698650">062 669 8650</a> • 
+                <a href="https://wa.me/27736464935">WhatsApp: 073 646 4935</a>
+            </p>
+        </div>
+    </footer>
+    
+    <!-- JavaScript -->
+    <script src="assets/js/app.js"></script>
+    <script>
+        let batchProcessing = false;
+        let processedCount = 0;
+        let errorCount = 0;
+        let startTime;
+        
+        const documentTypes = [
+            'ID Document', 'Proof of Address', 'Bank Statement', 'Payslip', 
+            'Tax Certificate', 'Company Registration', 'Passport', 'Driver License'
+        ];
+        
+        const customerNames = [
+            'John Smith', 'Sarah Johnson', 'Michael Brown', 'Lisa Davis', 'David Wilson',
+            'Emma Taylor', 'James Anderson', 'Olivia Thomas', 'William Jackson', 'Sophia White'
+        ];
+        
+        function startBatchProcessing() {
+            if (batchProcessing) return;
+            
+            batchProcessing = true;
+            processedCount = 0;
+            errorCount = 0;
+            startTime = Date.now();
+            
+            document.getElementById('startBtn').textContent = 'Processing...';
+            document.getElementById('startBtn').disabled = true;
+            document.getElementById('resultsSummary').style.display = 'none';
+            
+            // Clear queues
+            document.getElementById('processingQueue').innerHTML = '';
+            document.getElementById('completedQueue').innerHTML = '';
+            
+            // Start processing simulation
+            processNextBatch();
+        }
+        
+        function processNextBatch() {
+            if (processedCount >= 250) {
+                completeBatchProcessing();
+                return;
+            }
+            
+            // Process 5-10 documents at a time
+            const batchSize = Math.floor(Math.random() * 6) + 5;
+            const currentBatch = Math.min(batchSize, 250 - processedCount);
+            
+            for (let i = 0; i < currentBatch; i++) {
+                const docId = processedCount + i + 1;
+                addToProcessingQueue(docId);
+                
+                // Simulate processing time (500-2000ms per document)
+                const processingTime = Math.floor(Math.random() * 1500) + 500;
+                
+                setTimeout(() => {
+                    completeDocument(docId, Math.random() > 0.032); // 96.8% success rate
+                }, processingTime);
+            }
+            
+            processedCount += currentBatch;
+            updateStats();
+            
+            // Schedule next batch
+            setTimeout(processNextBatch, 1000);
+        }
+        
+        function addToProcessingQueue(docId) {
+            const docType = documentTypes[Math.floor(Math.random() * documentTypes.length)];
+            const customerName = customerNames[Math.floor(Math.random() * customerNames.length)];
+            
+            const queueItem = document.createElement('div');
+            queueItem.className = 'batch-item';
+            queueItem.id = `processing-${docId}`;
+            queueItem.innerHTML = `
+                <div>
+                    <strong>DOC-${String(docId).padStart(3, '0')}</strong>
+                    <div style="font-size: 0.875rem; color: var(--text-light);">${customerName} - ${docType}</div>
+                </div>
+                <div class="status-icon status-processing">
+                    <div class="spinner-small"></div>
+                </div>
+            `;
+            
+            document.getElementById('processingQueue').appendChild(queueItem);
+        }
+        
+        function completeDocument(docId, success) {
+            const processingItem = document.getElementById(`processing-${docId}`);
+            if (!processingItem) return;
+            
+            // Remove from processing queue
+            processingItem.remove();
+            
+            // Add to completed queue
+            const completedQueue = document.getElementById('completedQueue');
+            const queueItem = document.createElement('div');
+            queueItem.className = 'batch-item';
+            
+            if (success) {
+                queueItem.innerHTML = `
+                    <div>
+                        <strong>DOC-${String(docId).padStart(3, '0')}</strong>
+                        <div style="font-size: 0.875rem; color: var(--success);">✓ Processed successfully</div>
+                    </div>
+                    <div class="status-icon status-complete">✓</div>
+                `;
+            } else {
+                errorCount++;
+                queueItem.innerHTML = `
+                    <div>
+                        <strong>DOC-${String(docId).padStart(3, '0')}</strong>
+                        <div style="font-size: 0.875rem; color: var(--error);">⚠ Requires manual review</div>
+                    </div>
+                    <div class="status-icon status-error">!</div>
+                `;
+            }
+            
+            completedQueue.insertBefore(queueItem, completedQueue.firstChild);
+            
+            // Keep only last 10 items visible
+            while (completedQueue.children.length > 10) {
+                completedQueue.removeChild(completedQueue.lastChild);
+            }
+            
+            updateStats();
+        }
+        
+        function updateStats() {
+            const completed = processedCount - document.getElementById('processingQueue').children.length;
+            const processing = document.getElementById('processingQueue').children.length;
+            const progress = (completed / 250) * 100;
+            
+            document.getElementById('processedDocs').textContent = completed;
+            document.getElementById('processingDocs').textContent = processing;
+            document.getElementById('errorDocs').textContent = errorCount;
+            
+            document.getElementById('progressBar').style.width = progress + '%';
+            document.getElementById('progressText').textContent = Math.round(progress) + '%';
+            
+            // Calculate time remaining
+            if (completed > 0) {
+                const elapsed = (Date.now() - startTime) / 1000;
+                const rate = completed / elapsed;
+                const remaining = (250 - completed) / rate;
+                
+                document.getElementById('timeRemaining').textContent = 
+                    remaining > 60 ? Math.round(remaining / 60) + ' min' : Math.round(remaining) + ' sec';
+                document.getElementById('processingSpeed').textContent = Math.round(rate * 60);
+            }
+        }
+        
+        function completeBatchProcessing() {
+            batchProcessing = false;
+            document.getElementById('startBtn').textContent = 'Start Batch Processing';
+            document.getElementById('startBtn').disabled = false;
+            document.getElementById('resultsSummary').style.display = 'block';
+            
+            // Clear processing queue
+            document.getElementById('processingQueue').innerHTML = 
+                '<p style="text-align: center; color: var(--text-light); padding: 2rem;">All documents processed!</p>';
+        }
+        
+        function downloadReport() {
+            alert('Processing report downloaded! (In production, this would generate a detailed PDF report)');
+        }
+        
+        function resetDemo() {
+            processedCount = 0;
+            errorCount = 0;
+            document.getElementById('processedDocs').textContent = '0';
+            document.getElementById('processingDocs').textContent = '0';
+            document.getElementById('errorDocs').textContent = '0';
+            document.getElementById('progressBar').style.width = '0%';
+            document.getElementById('progressText').textContent = '0%';
+            document.getElementById('timeRemaining').textContent = '--';
+            document.getElementById('processingSpeed').textContent = '-- docs/min';
+            document.getElementById('resultsSummary').style.display = 'none';
+            
+            document.getElementById('processingQueue').innerHTML = 
+                '<p style="text-align: center; color: var(--text-light); padding: 2rem;">Click "Start Batch Processing" to begin</p>';
+            document.getElementById('completedQueue').innerHTML = 
+                '<p style="text-align: center; color: var(--text-light); padding: 2rem;">Completed documents will appear here</p>';
+        }
+    </script>
+</body>
+</html>

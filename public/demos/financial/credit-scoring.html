@@ -1,0 +1,730 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="AI-powered credit scoring and loan approval automation. Instant decisions, reduced risk.">
+    <title>AI Credit Scoring | Kgotla AI Financial Services</title>
+    
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="assets/css/styles.css">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="assets/images/favicon.png">
+    
+    <style>
+        .credit-score-gauge {
+            width: 300px;
+            height: 300px;
+            margin: 2rem auto;
+            position: relative;
+        }
+        
+        .gauge-svg {
+            transform: rotate(-90deg);
+        }
+        
+        .gauge-background {
+            fill: none;
+            stroke: var(--bg-light);
+            stroke-width: 20;
+        }
+        
+        .gauge-progress {
+            fill: none;
+            stroke-width: 20;
+            stroke-linecap: round;
+            transition: stroke-dashoffset 2s ease, stroke 1s ease;
+        }
+        
+        .gauge-text {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+        }
+        
+        .gauge-score {
+            font-size: 4rem;
+            font-weight: 700;
+            line-height: 1;
+        }
+        
+        .gauge-label {
+            font-size: 1rem;
+            color: var(--text-light);
+            margin-top: 0.5rem;
+        }
+        
+        .risk-indicator {
+            display: inline-block;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-weight: 600;
+            font-size: 0.875rem;
+        }
+        
+        .risk-low {
+            background: #d1fae5;
+            color: #065f46;
+        }
+        
+        .risk-medium {
+            background: #fef3c7;
+            color: #92400e;
+        }
+        
+        .risk-high {
+            background: #fee2e2;
+            color: #991b1b;
+        }
+        
+        .application-form {
+            background: white;
+            padding: 2rem;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+        
+        .form-label {
+            display: block;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: var(--text-dark);
+        }
+        
+        .form-input {
+            width: 100%;
+            padding: 0.75rem;
+            border: 2px solid var(--border-color);
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: border-color 0.3s ease;
+        }
+        
+        .form-input:focus {
+            outline: none;
+            border-color: var(--primary-color);
+        }
+        
+        .form-select {
+            width: 100%;
+            padding: 0.75rem;
+            border: 2px solid var(--border-color);
+            border-radius: 8px;
+            font-size: 1rem;
+            background: white;
+            cursor: pointer;
+        }
+        
+        .decision-card {
+            background: white;
+            border-radius: 12px;
+            padding: 2rem;
+            text-align: center;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        
+        .decision-icon {
+            font-size: 5rem;
+            margin-bottom: 1rem;
+        }
+        
+        .decision-title {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+        }
+        
+        .loan-details {
+            background: var(--bg-light);
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin-top: 1.5rem;
+        }
+        
+        .factor-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        
+        .factor-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem;
+            background: white;
+            border-radius: 8px;
+            margin-bottom: 0.5rem;
+        }
+        
+        .factor-name {
+            font-weight: 600;
+        }
+        
+        .factor-impact {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .impact-positive {
+            color: var(--success-color);
+        }
+        
+        .impact-negative {
+            color: var(--status-critical);
+        }
+        
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 1rem;
+        }
+        
+        .comparison-table th,
+        .comparison-table td {
+            padding: 1rem;
+            text-align: left;
+            border-bottom: 1px solid var(--border-color);
+        }
+        
+        .comparison-table th {
+            background: var(--bg-light);
+            font-weight: 600;
+        }
+        
+        .comparison-table tr:hover {
+            background: var(--bg-light);
+        }
+    </style>
+</head>
+<body>
+    
+    <!-- HEADER -->
+    <section class="hero" style="padding: 2rem 0;">
+        <div class="container hero-content">
+            <h1 style="font-size: 2.5rem;">AI Credit Scoring & Loan Approval</h1>
+            <p style="font-size: 1.125rem;">Instant decisions, reduced risk, improved approval rates</p>
+            <p style="font-size: 0.875rem; margin-top: 1rem;">
+                <a href="financial-services.html" style="color: white; text-decoration: underline;">← Back to main page</a>
+            </p>
+        </div>
+    </section>
+    
+    <!-- CREDIT SCORING DEMO -->
+    <section class="section">
+        <div class="container">
+            <!-- PERFORMANCE STATS -->
+            <div class="stats-grid mb-4">
+                <div class="stat-card">
+                    <div class="stat-value" style="color: var(--primary-color);">3.2s</div>
+                    <div class="stat-label">Avg Decision Time</div>
+                    <div style="font-size: 0.875rem; color: var(--success-color); margin-top: 0.5rem;">
+                        vs 3-5 days manual
+                    </div>
+                </div>
+                
+                <div class="stat-card">
+                    <div class="stat-value" style="color: var(--success-color);">87%</div>
+                    <div class="stat-label">Approval Rate</div>
+                    <div style="font-size: 0.875rem; color: var(--success-color); margin-top: 0.5rem;">
+                        +12% vs traditional
+                    </div>
+                </div>
+                
+                <div class="stat-card">
+                    <div class="stat-value" style="color: var(--status-info);">0.8%</div>
+                    <div class="stat-label">Default Rate</div>
+                    <div style="font-size: 0.875rem; color: var(--success-color); margin-top: 0.5rem;">
+                        -2.4% vs industry avg
+                    </div>
+                </div>
+                
+                <div class="stat-card">
+                    <div class="stat-value" style="color: var(--primary-color);">R2.8M</div>
+                    <div class="stat-label">Annual Savings</div>
+                    <div style="font-size: 0.875rem; color: var(--success-color); margin-top: 0.5rem;">
+                        Processing + risk reduction
+                    </div>
+                </div>
+            </div>
+            
+            <!-- INTERACTIVE DEMO -->
+            <div class="grid grid-2">
+                <!-- APPLICATION FORM -->
+                <div class="application-form">
+                    <h3 style="margin-bottom: 1.5rem;">📋 Loan Application Simulator</h3>
+                    <p style="color: var(--text-light); margin-bottom: 1.5rem;">
+                        Fill in the details below to see instant AI credit scoring and loan decision
+                    </p>
+                    
+                    <form id="creditForm">
+                        <div class="form-group">
+                            <label class="form-label">Applicant Name</label>
+                            <input type="text" class="form-input" id="applicantName" value="Thabo Mokoena" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label class="form-label">Monthly Income (R)</label>
+                            <input type="number" class="form-input" id="monthlyIncome" value="45000" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label class="form-label">Loan Amount Requested (R)</label>
+                            <input type="number" class="form-input" id="loanAmount" value="150000" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label class="form-label">Employment Status</label>
+                            <select class="form-select" id="employmentStatus">
+                                <option value="permanent">Permanent Employment</option>
+                                <option value="contract">Contract</option>
+                                <option value="self-employed">Self-Employed</option>
+                                <option value="unemployed">Unemployed</option>
+                            </select>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label class="form-label">Years at Current Job</label>
+                            <input type="number" class="form-input" id="yearsEmployed" value="5" min="0" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label class="form-label">Existing Debt (R)</label>
+                            <input type="number" class="form-input" id="existingDebt" value="25000" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label class="form-label">Credit History</label>
+                            <select class="form-select" id="creditHistory">
+                                <option value="excellent">Excellent (No defaults)</option>
+                                <option value="good">Good (1-2 late payments)</option>
+                                <option value="fair">Fair (3-5 late payments)</option>
+                                <option value="poor">Poor (Defaults/judgements)</option>
+                            </select>
+                        </div>
+                        
+                        <button type="submit" class="btn btn-primary btn-block btn-large">
+                            🤖 Analyze with AI
+                        </button>
+                    </form>
+                </div>
+                
+                <!-- RESULTS PANEL -->
+                <div id="resultsPanel" style="display: none;">
+                    <div class="decision-card">
+                        <div class="decision-icon" id="decisionIcon">✅</div>
+                        <div class="decision-title" id="decisionTitle">Loan Approved!</div>
+                        <p id="decisionMessage" style="color: var(--text-light); font-size: 1.125rem;"></p>
+                        
+                        <!-- CREDIT SCORE GAUGE -->
+                        <div class="credit-score-gauge">
+                            <svg class="gauge-svg" width="300" height="300" viewBox="0 0 300 300">
+                                <circle class="gauge-background" cx="150" cy="150" r="130" />
+                                <circle class="gauge-progress" id="gaugeProgress" cx="150" cy="150" r="130" 
+                                    stroke-dasharray="817" stroke-dashoffset="817" />
+                            </svg>
+                            <div class="gauge-text">
+                                <div class="gauge-score" id="creditScore">0</div>
+                                <div class="gauge-label">Credit Score</div>
+                                <div id="riskBadge" class="risk-indicator" style="margin-top: 1rem;"></div>
+                            </div>
+                        </div>
+                        
+                        <!-- LOAN DETAILS -->
+                        <div class="loan-details" id="loanDetails" style="display: none;">
+                            <h4 style="margin-bottom: 1rem;">Approved Loan Terms</h4>
+                            <div class="result-row">
+                                <span class="result-label">Loan Amount:</span>
+                                <span class="result-value" id="approvedAmount"></span>
+                            </div>
+                            <div class="result-row">
+                                <span class="result-label">Interest Rate:</span>
+                                <span class="result-value" id="interestRate"></span>
+                            </div>
+                            <div class="result-row">
+                                <span class="result-label">Loan Term:</span>
+                                <span class="result-value" id="loanTerm"></span>
+                            </div>
+                            <div class="result-row">
+                                <span class="result-label">Monthly Payment:</span>
+                                <span class="result-value" id="monthlyPayment"></span>
+                            </div>
+                            <button class="btn btn-success btn-block mt-3" onclick="alert('Loan agreement sent to applicant for e-signature')">
+                                📄 Generate Loan Agreement
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- SCORING FACTORS -->
+            <div class="card mt-5" id="factorsPanel" style="display: none;">
+                <h3 style="margin-bottom: 1.5rem;">🔍 AI Scoring Factors Analysis</h3>
+                
+                <ul class="factor-list" id="factorsList">
+                    <!-- Generated by JavaScript -->
+                </ul>
+            </div>
+        </div>
+    </section>
+    
+    <!-- AI ADVANTAGES -->
+    <section class="section section-alt">
+        <div class="container">
+            <h2 class="text-center mb-5">Why AI Credit Scoring Outperforms Traditional Methods</h2>
+            
+            <div class="card">
+                <table class="comparison-table">
+                    <thead>
+                        <tr>
+                            <th>Metric</th>
+                            <th>Traditional Scoring</th>
+                            <th>AI-Powered Scoring</th>
+                            <th>Improvement</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Decision Time</strong></td>
+                            <td>3-5 business days</td>
+                            <td>3.2 seconds</td>
+                            <td style="color: var(--success-color);"><strong>99.9% faster</strong></td>
+                        </tr>
+                        <tr>
+                            <td><strong>Approval Rate</strong></td>
+                            <td>75%</td>
+                            <td>87%</td>
+                            <td style="color: var(--success-color);"><strong>+12%</strong></td>
+                        </tr>
+                        <tr>
+                            <td><strong>Default Rate</strong></td>
+                            <td>3.2%</td>
+                            <td>0.8%</td>
+                            <td style="color: var(--success-color);"><strong>-75%</strong></td>
+                        </tr>
+                        <tr>
+                            <td><strong>Processing Cost</strong></td>
+                            <td>R450 per application</td>
+                            <td>R12 per application</td>
+                            <td style="color: var(--success-color);"><strong>-97%</strong></td>
+                        </tr>
+                        <tr>
+                            <td><strong>Data Points Analyzed</strong></td>
+                            <td>15-20 factors</td>
+                            <td>200+ factors</td>
+                            <td style="color: var(--success-color);"><strong>10x more</strong></td>
+                        </tr>
+                        <tr>
+                            <td><strong>Bias Detection</strong></td>
+                            <td>Manual review</td>
+                            <td>Automated fairness checks</td>
+                            <td style="color: var(--success-color);"><strong>100% coverage</strong></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            
+            <div class="grid grid-3 mt-5">
+                <div class="card text-center">
+                    <div style="font-size: 3rem; margin-bottom: 1rem;">⚡</div>
+                    <h3>Instant Decisions</h3>
+                    <p>AI analyzes 200+ data points in 3.2 seconds. Customers get instant feedback, improving satisfaction and conversion rates.</p>
+                </div>
+                
+                <div class="card text-center">
+                    <div style="font-size: 3rem; margin-bottom: 1rem;">🎯</div>
+                    <h3>Better Risk Assessment</h3>
+                    <p>Machine learning identifies patterns humans miss. 75% reduction in defaults while approving 12% more qualified applicants.</p>
+                </div>
+                
+                <div class="card text-center">
+                    <div style="font-size: 3rem; margin-bottom: 1rem;">⚖️</div>
+                    <h3>Fair & Compliant</h3>
+                    <p>Automated bias detection ensures fair lending. Full audit trails for regulatory compliance and transparency.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- ROI BREAKDOWN -->
+    <section class="section">
+        <div class="container">
+            <div class="card" style="background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%); color: white; border: none;">
+                <h2 style="color: white; text-align: center; margin-bottom: 2rem;">Annual ROI Impact</h2>
+                
+                <div class="grid grid-2">
+                    <div>
+                        <h3 style="color: white; margin-bottom: 1rem;">Cost Savings</h3>
+                        <div class="result-row" style="color: white;">
+                            <span class="result-label">Processing Cost Reduction:</span>
+                            <span class="result-value"><strong>R1.2M/year</strong></span>
+                        </div>
+                        <div class="result-row" style="color: white;">
+                            <span class="result-label">Staff Reallocation:</span>
+                            <span class="result-value"><strong>R850K/year</strong></span>
+                        </div>
+                        <div class="result-row" style="color: white;">
+                            <span class="result-label">Reduced Defaults:</span>
+                            <span class="result-value"><strong>R4.5M/year</strong></span>
+                        </div>
+                    </div>
+                    
+                    <div>
+                        <h3 style="color: white; margin-bottom: 1rem;">Revenue Increase</h3>
+                        <div class="result-row" style="color: white;">
+                            <span class="result-label">Higher Approval Rate:</span>
+                            <span class="result-value"><strong>R3.2M/year</strong></span>
+                        </div>
+                        <div class="result-row" style="color: white;">
+                            <span class="result-label">Faster Processing:</span>
+                            <span class="result-value"><strong>R1.8M/year</strong></span>
+                        </div>
+                        <div class="result-row" style="color: white;">
+                            <span class="result-label">Better Customer Experience:</span>
+                            <span class="result-value"><strong>R950K/year</strong></span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div style="text-align: center; margin-top: 2rem; padding-top: 2rem; border-top: 2px solid rgba(255,255,255,0.3);">
+                    <div style="font-size: 3rem; font-weight: 700; margin-bottom: 0.5rem;">R12.5M</div>
+                    <div style="font-size: 1.25rem; margin-bottom: 2rem;">Total Annual Impact</div>
+                    <a href="financial-services.html#contact" class="btn btn-large" style="background: white; color: var(--primary-color);">
+                        Book Demo
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- FOOTER -->
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2026 Kgotla AI. All rights reserved.</p>
+            <p style="margin-top: 0.5rem;">
+                <a href="mailto:mahlo@kgotlaai.co.za">mahlo@kgotlaai.co.za</a> • 
+                <a href="tel:+27626698650">062 669 8650</a> • 
+                <a href="https://wa.me/27736464935">WhatsApp: 073 646 4935</a>
+            </p>
+        </div>
+    </footer>
+    
+    <!-- JavaScript -->
+    <script src="assets/js/app.js"></script>
+    <script>
+        document.getElementById('creditForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Get form values
+            const name = document.getElementById('applicantName').value;
+            const income = parseInt(document.getElementById('monthlyIncome').value);
+            const loanAmount = parseInt(document.getElementById('loanAmount').value);
+            const employment = document.getElementById('employmentStatus').value;
+            const yearsEmployed = parseInt(document.getElementById('yearsEmployed').value);
+            const debt = parseInt(document.getElementById('existingDebt').value);
+            const creditHistory = document.getElementById('creditHistory').value;
+            
+            // Calculate credit score
+            let score = 300; // Base score
+            
+            // Income factor
+            const debtToIncome = (debt + (loanAmount * 0.1)) / income;
+            if (debtToIncome < 0.3) score += 200;
+            else if (debtToIncome < 0.5) score += 150;
+            else if (debtToIncome < 0.7) score += 100;
+            else score += 50;
+            
+            // Employment factor
+            if (employment === 'permanent') score += 100;
+            else if (employment === 'contract') score += 70;
+            else if (employment === 'self-employed') score += 60;
+            else score += 20;
+            
+            // Years employed factor
+            if (yearsEmployed >= 5) score += 80;
+            else if (yearsEmployed >= 3) score += 60;
+            else if (yearsEmployed >= 1) score += 40;
+            else score += 20;
+            
+            // Credit history factor
+            if (creditHistory === 'excellent') score += 150;
+            else if (creditHistory === 'good') score += 100;
+            else if (creditHistory === 'fair') score += 50;
+            else score += 20;
+            
+            // Loan amount factor
+            const loanToIncome = loanAmount / (income * 12);
+            if (loanToIncome < 2) score += 70;
+            else if (loanToIncome < 3) score += 50;
+            else if (loanToIncome < 4) score += 30;
+            else score += 10;
+            
+            // Cap score at 850
+            score = Math.min(score, 850);
+            
+            // Determine approval
+            const approved = score >= 620;
+            const risk = score >= 720 ? 'low' : score >= 620 ? 'medium' : 'high';
+            
+            // Calculate interest rate
+            let interestRate;
+            if (score >= 750) interestRate = 8.5;
+            else if (score >= 700) interestRate = 9.5;
+            else if (score >= 650) interestRate = 10.5;
+            else if (score >= 620) interestRate = 11.5;
+            else interestRate = 13.5;
+            
+            // Calculate monthly payment
+            const term = 60; // 5 years
+            const monthlyRate = interestRate / 100 / 12;
+            const monthlyPayment = loanAmount * (monthlyRate * Math.pow(1 + monthlyRate, term)) / (Math.pow(1 + monthlyRate, term) - 1);
+            
+            // Show results
+            setTimeout(() => {
+                displayResults(score, approved, risk, loanAmount, interestRate, term, monthlyPayment, {
+                    income, debt, employment, yearsEmployed, creditHistory, debtToIncome
+                });
+            }, 1500);
+        });
+        
+        function displayResults(score, approved, risk, amount, rate, term, payment, factors) {
+            // Show results panel
+            document.getElementById('resultsPanel').style.display = 'block';
+            document.getElementById('factorsPanel').style.display = 'block';
+            
+            // Scroll to results
+            document.getElementById('resultsPanel').scrollIntoView({ behavior: 'smooth', block: 'center' });
+            
+            // Update decision
+            const icon = document.getElementById('decisionIcon');
+            const title = document.getElementById('decisionTitle');
+            const message = document.getElementById('decisionMessage');
+            
+            if (approved) {
+                icon.textContent = '✅';
+                title.textContent = 'Loan Approved!';
+                title.style.color = 'var(--success-color)';
+                message.textContent = 'Congratulations! Your loan application has been approved by our AI system.';
+                document.getElementById('loanDetails').style.display = 'block';
+            } else {
+                icon.textContent = '❌';
+                title.textContent = 'Loan Declined';
+                title.style.color = 'var(--status-critical)';
+                message.textContent = 'Unfortunately, your application does not meet our current lending criteria. Please review the factors below.';
+                document.getElementById('loanDetails').style.display = 'none';
+            }
+            
+            // Animate credit score
+            animateScore(score);
+            
+            // Update gauge color
+            const gauge = document.getElementById('gaugeProgress');
+            if (score >= 720) gauge.style.stroke = '#059669';
+            else if (score >= 620) gauge.style.stroke = '#d97706';
+            else gauge.style.stroke = '#dc2626';
+            
+            // Update risk badge
+            const badge = document.getElementById('riskBadge');
+            badge.className = `risk-indicator risk-${risk}`;
+            badge.textContent = `${risk.toUpperCase()} RISK`;
+            
+            // Update loan details
+            if (approved) {
+                document.getElementById('approvedAmount').textContent = `R${amount.toLocaleString()}`;
+                document.getElementById('interestRate').textContent = `${rate}% per annum`;
+                document.getElementById('loanTerm').textContent = `${term} months`;
+                document.getElementById('monthlyPayment').textContent = `R${Math.round(payment).toLocaleString()}`;
+            }
+            
+            // Display factors
+            displayFactors(factors, score);
+        }
+        
+        function animateScore(targetScore) {
+            const scoreElement = document.getElementById('creditScore');
+            const gauge = document.getElementById('gaugeProgress');
+            const circumference = 817;
+            
+            let currentScore = 0;
+            const duration = 2000;
+            const increment = targetScore / (duration / 16);
+            
+            const animation = setInterval(() => {
+                currentScore += increment;
+                if (currentScore >= targetScore) {
+                    currentScore = targetScore;
+                    clearInterval(animation);
+                }
+                
+                scoreElement.textContent = Math.round(currentScore);
+                
+                // Update gauge
+                const progress = (currentScore / 850) * circumference;
+                gauge.style.strokeDashoffset = circumference - progress;
+            }, 16);
+        }
+        
+        function displayFactors(factors, score) {
+            const factorsList = document.getElementById('factorsList');
+            factorsList.innerHTML = '';
+            
+            const factorData = [
+                {
+                    name: 'Debt-to-Income Ratio',
+                    value: `${(factors.debtToIncome * 100).toFixed(1)}%`,
+                    impact: factors.debtToIncome < 0.3 ? 'positive' : factors.debtToIncome < 0.5 ? 'neutral' : 'negative',
+                    points: factors.debtToIncome < 0.3 ? '+200' : factors.debtToIncome < 0.5 ? '+150' : '-50'
+                },
+                {
+                    name: 'Employment Status',
+                    value: factors.employment.replace('-', ' ').replace(/\b\w/g, l => l.toUpperCase()),
+                    impact: factors.employment === 'permanent' ? 'positive' : 'neutral',
+                    points: factors.employment === 'permanent' ? '+100' : '+60'
+                },
+                {
+                    name: 'Years at Current Job',
+                    value: `${factors.yearsEmployed} years`,
+                    impact: factors.yearsEmployed >= 3 ? 'positive' : 'neutral',
+                    points: factors.yearsEmployed >= 5 ? '+80' : factors.yearsEmployed >= 3 ? '+60' : '+40'
+                },
+                {
+                    name: 'Credit History',
+                    value: factors.creditHistory.charAt(0).toUpperCase() + factors.creditHistory.slice(1),
+                    impact: factors.creditHistory === 'excellent' || factors.creditHistory === 'good' ? 'positive' : 'negative',
+                    points: factors.creditHistory === 'excellent' ? '+150' : factors.creditHistory === 'good' ? '+100' : '-50'
+                },
+                {
+                    name: 'Monthly Income',
+                    value: `R${factors.income.toLocaleString()}`,
+                    impact: factors.income >= 40000 ? 'positive' : 'neutral',
+                    points: factors.income >= 40000 ? '+50' : '+30'
+                }
+            ];
+            
+            factorData.forEach(factor => {
+                const li = document.createElement('li');
+                li.className = 'factor-item';
+                li.innerHTML = `
+                    <div>
+                        <div class="factor-name">${factor.name}</div>
+                        <div style="color: var(--text-light); font-size: 0.875rem;">${factor.value}</div>
+                    </div>
+                    <div class="factor-impact impact-${factor.impact}">
+                        <span style="font-weight: 600;">${factor.points}</span>
+                        <span>${factor.impact === 'positive' ? '↑' : factor.impact === 'negative' ? '↓' : '→'}</span>
+                    </div>
+                `;
+                factorsList.appendChild(li);
+            });
+        }
+    </script>
+</body>
+</html>
