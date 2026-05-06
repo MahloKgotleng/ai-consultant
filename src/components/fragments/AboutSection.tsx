@@ -17,7 +17,7 @@ const values = [
   {
     icon: Users,
     title: 'Lean Team',
-    desc: '4-person team including implementation specialists. IBM Partner Plus registered, Silver tier track. IBM-aligned AI training across fundamentals, generative AI, and enterprise models.'
+    desc: '4-person team including implementation specialists. IBM Partner Plus registered, Silver tier track. IBM-aligned AI training across fundamentals, generative AI and enterprise models.'
   }
 ]
 
@@ -46,7 +46,7 @@ export default function AboutSection() {
           
           <div className="flex items-center">
             <motion.p initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: 0.2 }} className="text-xl text-slate-600 leading-relaxed">
-              Kgotla AI is a Johannesburg-based consultancy designing rapid AI pilots and automation demos for South African enterprise. We are bootstrapped, lean, and focused on one thing — reducing the time from "AI idea" to "working prototype" without skipping governance or scoping.
+              Kgotla AI is a Johannesburg-based consultancy designing rapid AI pilots and automation demos for South African enterprise. We are aligned and focused on one thing — reducing the time from "AI idea" to "working prototype" without skipping governance or scoping.
             </motion.p>
           </div>
         </div>
@@ -92,7 +92,7 @@ export default function AboutSection() {
             </div>
             <div className="text-left">
               <div className="font-bold text-slate-900">Mahlo Kgotleng</div>
-              <div className="text-sm text-slate-500">Founder & AI Strategist, Kgotla AI Pty Ltd</div>
+              <div className="text-sm text-slate-500">Founder & AI Solutions Architect, Kgotla AI Pty Ltd</div>
             </div>
           </div>
         </motion.div>
