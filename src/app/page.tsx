@@ -2,6 +2,7 @@ import Navigation from '@/components/fragments/Navigation'
 import HeroSection from '@/components/fragments/HeroSection'
 import SolutionsSection from '@/components/fragments/SolutionsSection'
 import IndustriesSection from '@/components/fragments/IndustriesSection'
+import DemosSection from '@/components/fragments/DemosSection'
 import ProcessSection from '@/components/fragments/ProcessSection'
 import AboutSection from '@/components/fragments/AboutSection'
 import ResultsSection from '@/components/fragments/ResultsSection'
@@ -16,6 +17,7 @@ export default function Home() {
       <HeroSection />
       <SolutionsSection />
       <IndustriesSection />
+      <DemosSection />
       <ProcessSection />
       <AboutSection />
       <ResultsSection />
