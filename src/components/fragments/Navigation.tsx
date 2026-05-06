@@ -34,10 +34,12 @@ export default function Navigation() {
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 xl:px-12 2xl:px-16">
           <div className="flex items-center justify-between h-20">
-            <a href="/" className="flex items-center gap-3">
-              <div className="w-10 h-10 bg-gradient-to-br from-primary-600 to-primary-800 rounded-lg flex items-center justify-center border-2 border-primary-400 shadow-lg shadow-primary-600/20">
-                <span className="text-white font-bold text-xl">K</span>
-              </div>
+            <a href="/" className="flex items-center gap-2">
+              <img
+                src="/images/kgotla-logo.png"
+                alt="Kgotla AI Logo"
+                className="w-10 h-10 rounded-lg object-cover"
+              />
               <div className="flex flex-col">
                 <span className="font-bold text-slate-900 text-lg leading-tight">Kgotla AI</span>
                 <span className="text-xs text-slate-500">Ubuntu. Innovation. Collective Intelligence.</span>
