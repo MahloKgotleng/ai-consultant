@@ -102,7 +102,7 @@ export default function DemosSection() {
           <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}
             className="inline-flex items-center gap-2 px-4 py-2 bg-white/10 border border-white/20 rounded-full mb-6">
             <Zap className="w-4 h-4 text-yellow-400" />
-            <span className="text-sm font-semibold text-white">16 Live AI Demos — IBM Endorsed</span>
+            <span className="text-sm font-semibold text-white">16 AI Demo Scenarios — IBM Endorsed</span>
           </motion.div>
           <motion.h2 initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: 0.1 }}
             className="text-4xl sm:text-5xl font-bold text-white mb-6">
@@ -110,7 +110,7 @@ export default function DemosSection() {
           </motion.h2>
           <motion.p initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: 0.2 }}
             className="text-xl text-slate-400">
-            Real working demos across 5 industries. R45.8M total ROI modelled. Click any demo to run it live.
+            Real working demos across 5 industries. R45.8M total ROI modelled. Click any demo to explore the scenario.
           </motion.p>
         </div>
 
@@ -149,7 +149,7 @@ export default function DemosSection() {
                 <h3 className="text-lg font-bold text-white mb-2">{demo.title}</h3>
                 <p className="text-sm text-slate-400 mb-6">{demo.desc}</p>
                 <button className={`w-full flex items-center justify-center gap-2 py-3 rounded-xl text-sm font-semibold text-white transition-colors ${colors.btn}`}>
-                  <Play className="w-4 h-4" /> Launch Demo
+                  <Play className="w-4 h-4" /> Explore Scenario
                 </button>
               </motion.div>
             ))}
