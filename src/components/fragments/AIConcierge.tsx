@@ -141,9 +141,9 @@ export default function AIConcierge() {
     if (!started) startChat()
   }
 
-  const modelLabel = model === 'watsonx' ? 'IBM Granite · watsonx.ai' : 'Groq · Llama 3.3'
-  const modelColor = model === 'watsonx' ? 'text-blue-400' : 'text-emerald-400'
-  const dotColor   = model === 'watsonx' ? 'bg-blue-400' : 'bg-emerald-400'
+  const modelLabel = 'IBM Granite · watsonx.ai'
+  const modelColor = 'text-blue-400'
+  const dotColor   = 'bg-blue-400'
 
   return (
     <>

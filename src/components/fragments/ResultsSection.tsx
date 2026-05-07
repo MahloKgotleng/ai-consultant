@@ -121,7 +121,7 @@ export default function ResultsSection() {
                   <div className="flex items-center justify-between">
                     <div>
                       <div className="font-semibold text-white">AI Business Chatbot</div>
-                      <div className="text-sm text-slate-400">Claude API · Zero data retention</div>
+                      <div className="text-sm text-slate-400">IBM watsonx · Zero data retention</div>
                     </div>
                     <span className="text-emerald-400 text-sm font-semibold">Live →</span>
                   </div>

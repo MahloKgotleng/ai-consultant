@@ -216,7 +216,7 @@ export default function ProposalGenerator() {
                 ? <><Loader2 className="w-5 h-5 animate-spin" /> Generating your brief...</>
                 : <><Sparkles className="w-5 h-5" /> Generate My AI Strategy Brief</>}
             </button>
-            <p className="text-xs text-slate-600 text-center">Powered by Llama 3.3 via Groq · Generated in ~10 seconds · No account needed</p>
+            <p className="text-xs text-slate-600 text-center">Powered by IBM watsonx · Generated in ~10 seconds · No account needed</p>
           </div>
 
           {/* Output */}

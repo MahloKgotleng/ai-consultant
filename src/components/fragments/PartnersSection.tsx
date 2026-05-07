@@ -88,10 +88,7 @@ export default function PartnersSection() {
                   including watsonx.governance and Granite models. For clients who need it, we can upgrade 
                   from rapid demos to governed pilots on IBM infrastructure. For everyone else, we keep 
                   costs lean and delivery fast."
-                  
-                  The original implied ALL your PoCs use IBM infrastructure. This is false — you use 
-                  Claude + Make.com for speed, IBM for governance when needed. The new version is honest 
-                  about the dual-track approach. */}
+                  */}
               As an IBM Partner Plus registered member, we have access to IBM's enterprise AI stack 
               including watsonx.governance and Granite models. For clients who need it, we can upgrade 
               from rapid demos to governed pilots on IBM infrastructure. For everyone else, we keep 
