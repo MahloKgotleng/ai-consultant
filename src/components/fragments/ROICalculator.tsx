@@ -214,7 +214,7 @@ export default function ROICalculator() {
 
                 <p className="text-xs text-slate-600 text-center mt-4 flex items-start gap-1 justify-center">
                   <Info className="w-3 h-3 mt-0.5 shrink-0" />
-                  Estimates based on published industry benchmarks. Actual results depend on baseline data quality and implementation scope.
+                  Estimates powered by IBM watsonx · Based on published industry benchmarks. Actual results depend on baseline data quality and implementation scope.
                 </p>
               </motion.div>
             </AnimatePresence>

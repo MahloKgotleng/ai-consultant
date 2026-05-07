@@ -126,7 +126,7 @@ export default function IntelligenceFeed() {
             </motion.h2>
             <motion.p initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: 0.2 }}
               className="text-slate-400 max-w-xl">
-              Our AI swarm monitors mining, financial services, government and energy sectors every 24 hours — surfacing the highest-value AI opportunities for SA enterprise.
+              Our AI swarm monitors mining, financial services, government and energy sectors every 24 hours — surfacing the highest-value AI opportunities for SA enterprise. Powered by IBM watsonx.
             </motion.p>
           </div>
 
