@@ -1,7 +1,7 @@
 'use client'
 
 import { motion } from 'framer-motion'
-import { BadgeCheck, Shield, Cpu, Globe } from 'lucide-react'
+import { BadgeCheck, Shield, Cpu, Globe, Users } from 'lucide-react'
 
 // REWRITTEN: Partners array rebuilt with honest claims only.
 // "Enterprise Ready / SOC 2 Compliant / Security First" = FAKE. You are not SOC 2 certified.
@@ -13,19 +13,20 @@ const partners = [
     tier: 'Partner Plus Registered',
     status: 'Silver Track',
     icon: Cpu,
-    // CHANGED: "Enterprise-grade AI infrastructure and Watson integration" →
-    // "Enterprise AI governance and model access via IBM Partner Plus"
-    // "Watson integration" implies you have built with Watson. You have access, not integration experience yet.
     description: 'Enterprise AI governance and model access via IBM Partner Plus. watsonx.governance and Granite models available for regulated pilots.'
+  },
+  {
+    name: 'Khutlo-Tharo',
+    tier: 'Active Training Partnership',
+    status: '150 Enrolled Learners',
+    icon: Users,
+    description: 'Active cohort partnership delivering AI literacy and skills development across Gauteng. 150 learners currently enrolled in structured AI programmes.'
   },
   {
     name: 'POPIA Aligned',
     tier: 'Privacy by Design',
     status: 'SA Compliant',
     icon: Shield,
-    // CHANGED: "Bank-level security standards and data protection" →
-    // "South African privacy law built into every workflow design"
-    // "Bank-level" = unprovable. "SA privacy law" = specific and honest.
     description: 'South African privacy law built into every workflow design. Data minimisation, purpose limitation, and zero unnecessary retention.'
   },
   {
@@ -33,9 +34,6 @@ const partners = [
     tier: 'Local Operations',
     status: 'SADC Ready',
     icon: Globe,
-    // CHANGED: "Deep understanding of Top 40 business landscape" →
-    // "Built for African infrastructure constraints — load shedding, limited bandwidth, tight budgets"
-    // "Deep understanding" = overclaim. "Built for constraints" = your actual differentiator.
     description: 'Built for African infrastructure constraints — load shedding, limited bandwidth, tight budgets. Maximum performance at minimum overhead.'
   }
 ]
@@ -57,7 +55,7 @@ export default function PartnersSection() {
           </motion.h2>
         </div>
 
-        <div className="grid md:grid-cols-3 gap-8">
+        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
           {partners.map((partner, index) => {
             const Icon = partner.icon
             return (

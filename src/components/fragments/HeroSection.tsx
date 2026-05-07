@@ -5,9 +5,9 @@ import { ArrowRight, Play, Sparkles, Zap, Shield } from 'lucide-react'
 
 const stats = [
   { value: '72hrs', label: 'Demo Sprint' },
-  { value: '4', label: 'Team Members' },
+  { value: '150+', label: 'Learners Trained' },
   { value: 'IBM', label: 'Partner Plus' },
-  { value: 'SA', label: 'Enterprise Focus' },
+  { value: 'Level 1', label: 'B-BBEE Rated' },
 ]
 
 export default function HeroSection() {
@@ -21,9 +21,15 @@ export default function HeroSection() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 xl:px-12 2xl:px-16 w-full">
         <div className="grid lg:grid-cols-2 gap-12 lg:gap-20 items-center">
           <div className="space-y-8">
-            <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }} className="inline-flex items-center gap-2 px-4 py-2 bg-primary-50 border border-primary-200 rounded-full">
-              <Sparkles className="w-4 h-4 text-primary-600" />
-              <span className="text-sm font-semibold text-primary-700">IBM Partner Plus Registered</span>
+            <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }} className="flex flex-wrap gap-3">
+              <div className="inline-flex items-center gap-2 px-4 py-2 bg-primary-50 border border-primary-200 rounded-full">
+                <Sparkles className="w-4 h-4 text-primary-600" />
+                <span className="text-sm font-semibold text-primary-700">IBM Partner Plus Registered</span>
+              </div>
+              <div className="inline-flex items-center gap-2 px-4 py-2 bg-emerald-50 border border-emerald-200 rounded-full">
+                <Shield className="w-4 h-4 text-emerald-600" />
+                <span className="text-sm font-semibold text-emerald-700">B-BBEE Level 1 · 100% Black-Owned</span>
+              </div>
             </motion.div>
 
             <motion.h1 initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5, delay: 0.1 }} className="text-5xl sm:text-6xl lg:text-7xl font-bold text-slate-900 leading-[1.1] tracking-tight">
@@ -68,9 +74,9 @@ export default function HeroSection() {
             </div>
 
             <motion.div animate={{ y: [0, -10, 0] }} transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }} className="absolute -bottom-6 -left-6 bg-slate-900 text-white p-6 rounded-2xl shadow-2xl">
-              <div className="text-sm text-slate-400 mb-1">Focus</div>
-              <div className="text-2xl font-bold">SA Enterprise</div>
-              <div className="text-sm text-slate-400 mt-1">& Mining Sector</div>
+              <div className="text-sm text-slate-400 mb-1">Modelled ROI Across 16 Demos</div>
+              <div className="text-2xl font-bold text-emerald-400">R45.8M</div>
+              <div className="text-sm text-slate-400 mt-1">Mining · Financial Services · Manufacturing</div>
             </motion.div>
           </motion.div>
         </div>

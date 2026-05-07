@@ -2,7 +2,7 @@
 
 import { useState } from 'react'
 import { motion } from 'framer-motion'
-import { Send, Mail, Phone, MapPin, ArrowRight, CheckCircle, MessageCircle } from 'lucide-react'
+import { Send, Mail, Phone, MapPin, ArrowRight, CheckCircle, MessageCircle, Shield, Award } from 'lucide-react'
 
 export default function ContactSection() {
   const [formState, setFormState] = useState({
@@ -30,6 +30,17 @@ export default function ContactSection() {
               <Send className="w-4 h-4 text-primary-600" />
               <span className="text-sm font-semibold text-primary-700">Start Your Demo</span>
             </motion.div>
+
+            <div className="flex flex-wrap gap-3 mb-6">
+              <div className="inline-flex items-center gap-2 px-4 py-2 bg-emerald-50 border border-emerald-200 rounded-full">
+                <Shield className="w-4 h-4 text-emerald-600" />
+                <span className="text-sm font-semibold text-emerald-700">B-BBEE Level 1 · 100% Black-Owned</span>
+              </div>
+              <div className="inline-flex items-center gap-2 px-4 py-2 bg-blue-50 border border-blue-200 rounded-full">
+                <Award className="w-4 h-4 text-blue-600" />
+                <span className="text-sm font-semibold text-blue-700">IBM Partner Plus Registered</span>
+              </div>
+            </div>
 
             <motion.h2 initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: 0.1 }} className="text-4xl sm:text-5xl font-bold text-slate-900 mb-6">
               Ready for your <span className="gradient-text">72-hour transformation</span>?

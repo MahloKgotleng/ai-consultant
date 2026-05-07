@@ -87,12 +87,17 @@ export default function AboutSection() {
             "We don't sell AI slides. We deliver working systems that happen to use AI."
           </blockquote>
           <div className="flex items-center justify-center gap-4">
-            <div className="w-12 h-12 bg-gradient-to-br from-primary-600 to-primary-800 rounded-full flex items-center justify-center text-white font-bold text-lg">
-              M
-            </div>
+            <img
+              src="/images/mahlo-kgotleng.jpg"
+              alt="Mahlo Kgotleng — Founder, Kgotla AI"
+              className="w-16 h-16 rounded-full object-cover object-top border-2 border-primary-400 shadow-lg shadow-primary-600/20"
+            />
             <div className="text-left">
               <div className="font-bold text-slate-900">Mahlo Kgotleng</div>
-              <div className="text-sm text-slate-500">Founder & AI Solutions Architect, Kgotla AI Pty Ltd</div>
+
+
+              <div className="text-sm text-slate-500">Founder & Director, Kgotla AI Consulting Pty Ltd</div>
+              <div className="text-xs text-primary-600 font-semibold mt-0.5">B-BBEE Level 1 · 100% Black-Owned</div>
             </div>
           </div>
         </motion.div>
