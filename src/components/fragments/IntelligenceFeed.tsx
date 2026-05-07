@@ -27,7 +27,7 @@ const FALLBACK: SectorBrief[] = [
     sector: 'Financial Services',
     score: 79,
     headline: 'FSCA sandbox framework opens AI compliance automation window',
-    insight: 'FSCA's regulatory sandbox now accepting AI-based compliance monitoring applications. Window is open for 6 months. Banks are actively seeking B-BBEE Level 1 technology partners for procurement transformation points.',
+    insight: "FSCA's regulatory sandbox now accepting AI-based compliance monitoring applications. Window is open for 6 months. Banks are actively seeking B-BBEE Level 1 technology partners for procurement transformation points.",
     signal: 'bullish',
     updated: 'Today',
   },
