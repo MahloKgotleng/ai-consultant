@@ -2,9 +2,18 @@
 
 import { useState, useRef, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { MessageCircle, X, Send, Bot, ChevronRight, Sparkles } from 'lucide-react'
+import { X, Send, Bot, ChevronRight, Sparkles, TrendingUp } from 'lucide-react'
 
 type Message = { role: 'user' | 'assistant'; content: string }
+
+type ROI = {
+  annualSavings: number
+  monthlySavings: number
+  timeSavedHours: number
+  paybackMonths: number
+  roiPercent: number
+  industry: string
+}
 
 const SYSTEM = `You are Kgotla AI's enterprise discovery assistant. You are concise, sharp, and professional.
 Your job: understand the visitor's industry and challenge in 2-3 questions, then recommend the most relevant Kgotla AI demo scenario and give a specific ZAR ROI estimate.
@@ -16,48 +25,96 @@ Demo scenarios available:
 - Financial: KYC Document Processing (R4.2M), Fraud Detection (R8.1M), Credit Scoring (R3.5M)
 - Manufacturing: Quality Control (R3.2M), Supply Chain Optimisation (R4.5M)
 - Telecoms: Network Optimisation, Customer Service AI
+- Retail: Customer Intelligence, Inventory Optimisation
+- Government: Document Processing, Compliance Automation
 
 Rules:
 - Keep responses to 2-3 sentences max
 - Always end with a specific demo recommendation and rand ROI figure
 - Be direct, not salesy
-- When you recommend a demo, add: [DEMO: demo_name] at the end of your message (hidden tag)
 - First message: introduce yourself briefly and ask their industry + biggest operational challenge in one question`
 
 const QUICK_STARTERS = [
-  'Mining operations',
-  'Financial services',
-  'Manufacturing plant',
-  'Government / Public sector',
+  { label: '⛏️ Mining', value: 'Mining operations' },
+  { label: '🏦 Financial', value: 'Financial services' },
+  { label: '🏭 Manufacturing', value: 'Manufacturing plant' },
+  { label: '🏛️ Government', value: 'Government / Public sector' },
 ]
 
+function formatRand(n: number) {
+  if (n >= 1_000_000) return `R${(n / 1_000_000).toFixed(1)}M`
+  if (n >= 1_000) return `R${(n / 1_000).toFixed(0)}k`
+  return `R${n}`
+}
+
+function ROICard({ roi }: { roi: ROI }) {
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 10 }}
+      animate={{ opacity: 1, y: 0 }}
+      className="mx-2 my-2 rounded-2xl bg-gradient-to-br from-emerald-900/60 to-slate-800 border border-emerald-500/30 p-4"
+    >
+      <div className="flex items-center gap-2 mb-3">
+        <TrendingUp className="w-4 h-4 text-emerald-400" />
+        <span className="text-xs font-bold text-emerald-400 uppercase tracking-wider">Your ROI Estimate · {roi.industry}</span>
+      </div>
+      <div className="grid grid-cols-2 gap-2">
+        <div className="bg-slate-900/60 rounded-xl p-3 text-center">
+          <div className="text-lg font-black text-white">{formatRand(roi.annualSavings)}</div>
+          <div className="text-xs text-slate-400 mt-0.5">Annual savings</div>
+        </div>
+        <div className="bg-slate-900/60 rounded-xl p-3 text-center">
+          <div className="text-lg font-black text-emerald-400">{roi.roiPercent}%</div>
+          <div className="text-xs text-slate-400 mt-0.5">ROI</div>
+        </div>
+        <div className="bg-slate-900/60 rounded-xl p-3 text-center">
+          <div className="text-lg font-black text-white">{roi.timeSavedHours}hrs</div>
+          <div className="text-xs text-slate-400 mt-0.5">Saved / month</div>
+        </div>
+        <div className="bg-slate-900/60 rounded-xl p-3 text-center">
+          <div className="text-lg font-black text-white">{roi.paybackMonths}mo</div>
+          <div className="text-xs text-slate-400 mt-0.5">Payback period</div>
+        </div>
+      </div>
+      <a
+        href="#contact"
+        className="mt-3 w-full flex items-center justify-center gap-2 py-2.5 bg-emerald-500 hover:bg-emerald-400 text-slate-900 font-bold text-sm rounded-xl transition-colors"
+      >
+        Book a demo call <ChevronRight className="w-4 h-4" />
+      </a>
+    </motion.div>
+  )
+}
+
 export default function AIConcierge() {
-  const [open, setOpen]       = useState(false)
+  const [open, setOpen]         = useState(false)
   const [messages, setMessages] = useState<Message[]>([])
-  const [input, setInput]     = useState('')
-  const [loading, setLoading] = useState(false)
-  const [started, setStarted] = useState(false)
-  const bottomRef = useRef<HTMLDivElement>(null)
+  const [input, setInput]       = useState('')
+  const [loading, setLoading]   = useState(false)
+  const [started, setStarted]   = useState(false)
+  const [model, setModel]       = useState<'groq' | 'watsonx'>('groq')
+  const [roi, setRoi]           = useState<ROI | null>(null)
+  const bottomRef               = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
     bottomRef.current?.scrollIntoView({ behavior: 'smooth' })
-  }, [messages])
+  }, [messages, roi])
+
+  const callAI = async (msgs: Message[]) => {
+    const res = await fetch('/api/watsonx', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ system: SYSTEM, messages: msgs }),
+    })
+    return await res.json()
+  }
 
   const startChat = async () => {
     setStarted(true)
     setLoading(true)
-    const res = await fetch('/api/groq', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        system: SYSTEM,
-        messages: [{ role: 'user', content: 'Hello' }],
-        max_tokens: 200,
-      }),
-    })
-    const data = await res.json()
-    const content = data.content?.replace(/\[DEMO:[^\]]+\]/g, '').trim() ?? 
-      "Hi! I'm Kgotla AI's enterprise assistant. What industry are you in and what's your biggest operational challenge?"
+    const data = await callAI([{ role: 'user', content: 'Hello' }])
+    setModel(data.model ?? 'groq')
+    const content = data.content ?? "Hi! I'm Kgotla AI's enterprise assistant. What industry are you in and what's your biggest operational challenge?"
     setMessages([{ role: 'assistant', content }])
     setLoading(false)
   }
@@ -71,19 +128,11 @@ export default function AIConcierge() {
     setMessages(newMessages)
     setLoading(true)
 
-    const res = await fetch('/api/groq', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        system: SYSTEM,
-        messages: newMessages,
-        max_tokens: 300,
-      }),
-    })
-    const data = await res.json()
-    const raw = data.content ?? "Let me connect you with Mahlo directly — mahlo@kgotlaai.co.za"
-    const clean = raw.replace(/\[DEMO:[^\]]+\]/g, '').trim()
-    setMessages([...newMessages, { role: 'assistant', content: clean }])
+    const data = await callAI(newMessages)
+    const content = data.content ?? "Let me connect you with Mahlo — mahlo@kgotlaai.co.za"
+    setModel(data.model ?? 'groq')
+    if (data.roi) setRoi(data.roi)
+    setMessages([...newMessages, { role: 'assistant', content }])
     setLoading(false)
   }
 
@@ -92,9 +141,12 @@ export default function AIConcierge() {
     if (!started) startChat()
   }
 
+  const modelLabel = model === 'watsonx' ? 'IBM Granite · watsonx.ai' : 'Groq · Llama 3.3'
+  const modelColor = model === 'watsonx' ? 'text-blue-400' : 'text-emerald-400'
+  const dotColor   = model === 'watsonx' ? 'bg-blue-400' : 'bg-emerald-400'
+
   return (
     <>
-      {/* Floating Button */}
       <motion.button
         onClick={handleOpen}
         initial={{ scale: 0, opacity: 0 }}
@@ -106,7 +158,6 @@ export default function AIConcierge() {
         <span className="text-sm">Ask Kgotla AI</span>
       </motion.button>
 
-      {/* Chat Panel */}
       <AnimatePresence>
         {open && (
           <motion.div
@@ -114,7 +165,7 @@ export default function AIConcierge() {
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 40, scale: 0.95 }}
             transition={{ type: 'spring', damping: 25 }}
-            className="fixed bottom-24 right-6 z-50 w-[360px] max-h-[520px] flex flex-col bg-slate-900 border border-slate-700 rounded-3xl shadow-2xl overflow-hidden"
+            className="fixed bottom-24 right-6 z-50 w-[370px] max-h-[580px] flex flex-col bg-slate-900 border border-slate-700 rounded-3xl shadow-2xl overflow-hidden"
           >
             {/* Header */}
             <div className="flex items-center justify-between px-5 py-4 border-b border-slate-700 bg-slate-900">
@@ -124,9 +175,9 @@ export default function AIConcierge() {
                 </div>
                 <div>
                   <div className="text-sm font-bold text-white">Kgotla AI Assistant</div>
-                  <div className="text-xs text-emerald-400 flex items-center gap-1">
-                    <span className="w-1.5 h-1.5 bg-emerald-400 rounded-full inline-block animate-pulse" />
-                    Powered by Llama 3.3 · Free
+                  <div className={`text-xs ${modelColor} flex items-center gap-1`}>
+                    <span className={`w-1.5 h-1.5 rounded-full inline-block animate-pulse ${dotColor}`} />
+                    {modelLabel}
                   </div>
                 </div>
               </div>
@@ -136,7 +187,7 @@ export default function AIConcierge() {
             </div>
 
             {/* Messages */}
-            <div className="flex-1 overflow-y-auto px-4 py-4 space-y-3 min-h-[280px]">
+            <div className="flex-1 overflow-y-auto px-4 py-4 space-y-3 min-h-[300px]">
               {messages.length === 0 && loading && (
                 <div className="flex gap-2 items-end">
                   <div className="w-7 h-7 rounded-lg bg-violet-600/20 flex items-center justify-center shrink-0">
@@ -144,8 +195,8 @@ export default function AIConcierge() {
                   </div>
                   <div className="bg-slate-800 rounded-2xl rounded-bl-sm px-4 py-3">
                     <div className="flex gap-1">
-                      {[0,1,2].map(i => (
-                        <motion.div key={i} animate={{ y: [0,-4,0] }} transition={{ duration: 0.6, repeat: Infinity, delay: i*0.15 }}
+                      {[0, 1, 2].map(i => (
+                        <motion.div key={i} animate={{ y: [0, -4, 0] }} transition={{ duration: 0.6, repeat: Infinity, delay: i * 0.15 }}
                           className="w-1.5 h-1.5 bg-violet-400 rounded-full" />
                       ))}
                     </div>
@@ -161,7 +212,7 @@ export default function AIConcierge() {
                       <Bot className="w-4 h-4 text-violet-400" />
                     </div>
                   )}
-                  <div className={`max-w-[80%] px-4 py-3 rounded-2xl text-sm leading-relaxed
+                  <div className={`max-w-[82%] px-4 py-3 rounded-2xl text-sm leading-relaxed
                     ${msg.role === 'user'
                       ? 'bg-violet-600 text-white rounded-br-sm'
                       : 'bg-slate-800 text-slate-200 rounded-bl-sm'}`}>
@@ -177,8 +228,8 @@ export default function AIConcierge() {
                   </div>
                   <div className="bg-slate-800 rounded-2xl rounded-bl-sm px-4 py-3">
                     <div className="flex gap-1">
-                      {[0,1,2].map(i => (
-                        <motion.div key={i} animate={{ y: [0,-4,0] }} transition={{ duration: 0.6, repeat: Infinity, delay: i*0.15 }}
+                      {[0, 1, 2].map(i => (
+                        <motion.div key={i} animate={{ y: [0, -4, 0] }} transition={{ duration: 0.6, repeat: Infinity, delay: i * 0.15 }}
                           className="w-1.5 h-1.5 bg-violet-400 rounded-full" />
                       ))}
                     </div>
@@ -186,17 +237,18 @@ export default function AIConcierge() {
                 </div>
               )}
 
-              {/* Quick start chips — only before first user message */}
               {messages.length === 1 && !loading && (
                 <div className="flex flex-wrap gap-2 pt-1">
                   {QUICK_STARTERS.map(s => (
-                    <button key={s} onClick={() => sendMessage(s)}
+                    <button key={s.value} onClick={() => sendMessage(s.value)}
                       className="px-3 py-1.5 bg-slate-800 border border-slate-600 rounded-full text-xs text-slate-300 hover:border-violet-500 hover:text-violet-300 transition-colors flex items-center gap-1">
-                      {s} <ChevronRight className="w-3 h-3" />
+                      {s.label} <ChevronRight className="w-3 h-3" />
                     </button>
                   ))}
                 </div>
               )}
+
+              {roi && <ROICard roi={roi} />}
               <div ref={bottomRef} />
             </div>
 
@@ -215,7 +267,7 @@ export default function AIConcierge() {
                   <Send className="w-3.5 h-3.5" />
                 </button>
               </div>
-              <p className="text-xs text-slate-600 text-center mt-2">Groq · Llama 3.3 · No data stored</p>
+              <p className="text-xs text-slate-600 text-center mt-2">{modelLabel} · No data stored</p>
             </div>
           </motion.div>
         )}
