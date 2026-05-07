@@ -92,20 +92,24 @@ async function getWatsonxToken(apiKey: string): Promise<string> {
 }
 
 async function callWatsonx(token: string, projectId: string, url: string, messages: {role: string, content: string}[], system: string) {
-  const prompt = `${system}\n\n${messages.map(m => `${m.role === 'user' ? 'Human' : 'Assistant'}: ${m.content}`).join('\n')}\nAssistant:`
+  const baseUrl = url.includes('ml.cloud.ibm.com') ? url : 'https://eu-de.ml.cloud.ibm.com'
   
-  const res = await fetch(`${url}/ml/v1/text/generation?version=2023-05-29`, {
+  const formattedMessages = [
+    { role: 'system', content: system },
+    ...messages
+  ]
+
+  const res = await fetch(`${baseUrl}/ml/v1/text/chat?version=2024-05-13`, {
     method: 'POST',
     headers: {
       'Authorization': `Bearer ${token}`,
       'Content-Type': 'application/json',
     },
     body: JSON.stringify({
-      model_id: 'ibm/granite-13b-chat-v2',
-      input: prompt,
+      model_id: 'meta-llama/llama-3-2-11b-vision-instruct',
       project_id: projectId,
+      messages: formattedMessages,
       parameters: {
-        decoding_method: 'greedy',
         max_new_tokens: 400,
         temperature: 0.7,
         repetition_penalty: 1.1,
@@ -113,7 +117,7 @@ async function callWatsonx(token: string, projectId: string, url: string, messag
     }),
   })
   const data = await res.json()
-  return data?.results?.[0]?.generated_text?.trim() ?? null
+  return data?.choices?.[0]?.message?.content?.trim() ?? null
 }
 
 async function callGroqFallback(messages: {role: string, content: string}[], system: string, apiKey: string) {
