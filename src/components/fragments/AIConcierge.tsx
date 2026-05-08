@@ -6,6 +6,14 @@ import { X, Send, Bot, ChevronRight, Sparkles, TrendingUp } from 'lucide-react'
 
 type Message = { role: 'user' | 'assistant'; content: string }
 
+type ROI = {
+  industry: string
+  annualSavings: number
+  roiPercent: number
+  timeSavedHours: number
+  paybackMonths: number
+}
+
 const SYSTEM = `You are Kgotla AI\'s enterprise discovery assistant. You are concise, sharp, and professional.
 Your job: understand the visitor\'s industry and challenge in 2-3 questions, then recommend the most relevant Kgotla AI demo scenario and give a specific ZAR ROI estimate.
 
@@ -37,13 +45,13 @@ Rules:
 - When recommending a demo add: [DEMO: demo_name] at end (hidden tag)
 - First message: introduce yourself briefly and ask their industry + biggest operational challenge in one question`
 
-const QUICK_STARTERS = [
-  'Mining & resources',
-  'Financial services',
-  'Government & public sector',
-  'Healthcare',
-  'Logistics & transport',
-  'Agriculture',
+const QUICK_STARTERS: { label: string; value: string }[] = [
+  { label: 'Mining & resources',         value: 'Mining & resources' },
+  { label: 'Financial services',         value: 'Financial services' },
+  { label: 'Government & public sector', value: 'Government & public sector' },
+  { label: 'Healthcare',                 value: 'Healthcare' },
+  { label: 'Logistics & transport',      value: 'Logistics & transport' },
+  { label: 'Agriculture',                value: 'Agriculture' },
 ]
 
 function formatRand(n: number) {
