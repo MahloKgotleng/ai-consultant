@@ -5,10 +5,18 @@ import { motion, AnimatePresence } from 'framer-motion'
 import { Calculator, TrendingUp, Zap, ChevronRight, Info } from 'lucide-react'
 
 const industries = [
-  { id: 'mining',    label: 'Mining',             color: 'amber'  },
-  { id: 'financial', label: 'Financial Services',  color: 'emerald'},
-  { id: 'manufacturing', label: 'Manufacturing',   color: 'blue'   },
-  { id: 'telecom',   label: 'Telecommunications',  color: 'violet' },
+  { id: 'mining',        label: 'Mining',               color: 'amber'   },
+  { id: 'financial',     label: 'Financial Services',    color: 'emerald' },
+  { id: 'manufacturing', label: 'Manufacturing',         color: 'blue'    },
+  { id: 'telecom',       label: 'Telecommunications',    color: 'violet'  },
+  { id: 'government',    label: 'Government',            color: 'cyan'    },
+  { id: 'energy',        label: 'Energy & Utilities',    color: 'orange'  },
+  { id: 'retail',        label: 'Retail',                color: 'pink'    },
+  { id: 'agriculture',   label: 'Agriculture',           color: 'lime'    },
+  { id: 'healthcare',    label: 'Healthcare',            color: 'red'     },
+  { id: 'logistics',     label: 'Logistics & Transport', color: 'sky'     },
+  { id: 'education',     label: 'Education & Training',  color: 'indigo'  },
+  { id: 'construction',  label: 'Construction',          color: 'stone'   },
 ]
 
 const sizes = [
@@ -19,32 +27,80 @@ const sizes = [
 
 const challenges: Record<string, { id: string; label: string; baseROI: number; driver: string }[]> = {
   mining: [
-    { id: 'maintenance', label: 'Predictive Maintenance',  baseROI: 12400000, driver: 'Unplanned downtime reduction'   },
-    { id: 'safety',      label: 'Safety & Compliance',     baseROI: 4800000,  driver: 'Incident cost avoidance'         },
-    { id: 'resource',    label: 'Resource Optimisation',   baseROI: 6700000,  driver: 'Extraction yield improvement'    },
+    { id: 'maintenance', label: 'Predictive Maintenance',     baseROI: 12400000, driver: 'Unplanned downtime reduction'       },
+    { id: 'safety',      label: 'Safety & Compliance',        baseROI: 4800000,  driver: 'Incident cost avoidance'             },
+    { id: 'resource',    label: 'Resource Optimisation',      baseROI: 6700000,  driver: 'Extraction yield improvement'        },
   ],
   financial: [
-    { id: 'fraud',  label: 'Fraud Detection',         baseROI: 8100000, driver: 'Transaction loss prevention'    },
-    { id: 'kyc',    label: 'KYC Document Processing', baseROI: 4200000, driver: 'Manual review hour reduction'   },
-    { id: 'credit', label: 'Credit Scoring Engine',   baseROI: 3500000, driver: 'Default rate improvement'       },
+    { id: 'fraud',  label: 'Fraud Detection',           baseROI: 8100000, driver: 'Transaction loss prevention'        },
+    { id: 'kyc',    label: 'KYC Document Processing',   baseROI: 4200000, driver: 'Manual review hour reduction'       },
+    { id: 'credit', label: 'Credit Scoring Engine',     baseROI: 3500000, driver: 'Default rate improvement'           },
   ],
   manufacturing: [
-    { id: 'quality',  label: 'Quality Control AI',         baseROI: 3200000, driver: 'Scrap & rework reduction'      },
-    { id: 'supply',   label: 'Supply Chain Optimisation',  baseROI: 4500000, driver: 'Logistics cost reduction'       },
-    { id: 'production', label: 'Production Optimisation',  baseROI: 5100000, driver: 'OEE improvement'               },
+    { id: 'quality',    label: 'Quality Control AI',          baseROI: 3200000, driver: 'Scrap & rework reduction'         },
+    { id: 'supply',     label: 'Supply Chain Optimisation',   baseROI: 4500000, driver: 'Logistics cost reduction'          },
+    { id: 'production', label: 'Production Optimisation',     baseROI: 5100000, driver: 'OEE improvement'                  },
   ],
   telecom: [
-    { id: 'network',  label: 'Network Optimisation',   baseROI: 7200000, driver: 'Downtime & SLA penalty reduction'},
-    { id: 'churn',    label: 'Customer Churn AI',      baseROI: 3800000, driver: 'Subscriber retention value'      },
-    { id: 'service',  label: 'Customer Service AI',    baseROI: 2900000, driver: 'Call centre cost reduction'      },
+    { id: 'network',  label: 'Network Optimisation',    baseROI: 7200000, driver: 'Downtime & SLA penalty reduction'  },
+    { id: 'churn',    label: 'Customer Churn AI',       baseROI: 3800000, driver: 'Subscriber retention value'        },
+    { id: 'service',  label: 'Customer Service AI',     baseROI: 2900000, driver: 'Call centre cost reduction'        },
+  ],
+  government: [
+    { id: 'documents',  label: 'Document Processing AI',    baseROI: 3100000, driver: 'Manual processing time saved'     },
+    { id: 'citizen',    label: 'Citizen Service Chatbot',   baseROI: 2400000, driver: 'Call centre deflection rate'      },
+    { id: 'compliance', label: 'Compliance Monitoring',     baseROI: 4600000, driver: 'Audit finding reduction'          },
+  ],
+  energy: [
+    { id: 'grid',        label: 'Grid Fault Prediction',        baseROI: 9800000, driver: 'Outage duration & cost reduction'  },
+    { id: 'maintenance', label: 'Asset Predictive Maintenance', baseROI: 7400000, driver: 'Plant downtime prevention'         },
+    { id: 'demand',      label: 'Demand Forecasting AI',        baseROI: 5200000, driver: 'Procurement cost optimisation'     },
+  ],
+  retail: [
+    { id: 'inventory', label: 'Inventory Optimisation',  baseROI: 2800000, driver: 'Overstock & stockout reduction'    },
+    { id: 'customer',  label: 'Customer Analytics AI',   baseROI: 3400000, driver: 'Basket size & retention uplift'    },
+    { id: 'pricing',   label: 'Dynamic Pricing Engine',  baseROI: 4100000, driver: 'Margin improvement per SKU'        },
+  ],
+  agriculture: [
+    { id: 'yield',     label: 'Crop Yield Prediction',    baseROI: 3600000, driver: 'Per-hectare output improvement'   },
+    { id: 'pest',      label: 'Pest & Disease Detection', baseROI: 2200000, driver: 'Early intervention cost saving'   },
+    { id: 'logistics', label: 'Cold Chain Optimisation',  baseROI: 1900000, driver: 'Spoilage & transport reduction'   },
+  ],
+  healthcare: [
+    { id: 'admin',   label: 'Clinical Admin Automation', baseROI: 3300000, driver: 'Admin hour reduction per clinician' },
+    { id: 'readmit', label: 'Readmission Prediction AI', baseROI: 4700000, driver: 'Bed cost & readmission saving'     },
+    { id: 'records', label: 'Medical Records AI',        baseROI: 2600000, driver: 'Documentation time saved'          },
+  ],
+  logistics: [
+    { id: 'routing',   label: 'Route Optimisation AI',         baseROI: 4900000, driver: 'Fuel & time cost reduction'       },
+    { id: 'warehouse', label: 'Warehouse Automation',          baseROI: 3700000, driver: 'Pick accuracy & throughput'       },
+    { id: 'fleet',     label: 'Fleet Predictive Maintenance',  baseROI: 2800000, driver: 'Breakdown & downtime prevention'  },
+  ],
+  education: [
+    { id: 'admin',     label: 'Administrative Automation',     baseROI: 1800000, driver: 'Staff admin hour reduction'       },
+    { id: 'learning',  label: 'Personalised Learning AI',      baseROI: 2400000, driver: 'Learner outcome improvement'      },
+    { id: 'reporting', label: 'SETA / Compliance Reporting',   baseROI: 1400000, driver: 'Reporting time & error reduction' },
+  ],
+  construction: [
+    { id: 'safety',    label: 'Site Safety Monitoring',  baseROI: 5100000, driver: 'Incident & penalty cost avoidance' },
+    { id: 'planning',  label: 'Project Planning AI',     baseROI: 3900000, driver: 'Delay & overrun reduction'         },
+    { id: 'materials', label: 'Materials Forecasting',   baseROI: 2700000, driver: 'Procurement waste reduction'       },
   ],
 }
 
 const colorMap: Record<string, { tab: string; active: string; pill: string; glow: string; num: string }> = {
-  amber:   { tab: 'hover:text-amber-600',   active: 'text-amber-600 border-amber-500',   pill: 'bg-amber-50 text-amber-700 border-amber-200',   glow: 'shadow-amber-500/20',   num: 'text-amber-500'   },
+  amber:   { tab: 'hover:text-amber-600',   active: 'text-amber-600 border-amber-500',     pill: 'bg-amber-50 text-amber-700 border-amber-200',     glow: 'shadow-amber-500/20',   num: 'text-amber-500'   },
   emerald: { tab: 'hover:text-emerald-600', active: 'text-emerald-600 border-emerald-500', pill: 'bg-emerald-50 text-emerald-700 border-emerald-200', glow: 'shadow-emerald-500/20', num: 'text-emerald-400' },
-  blue:    { tab: 'hover:text-blue-600',    active: 'text-blue-600 border-blue-500',     pill: 'bg-blue-50 text-blue-700 border-blue-200',     glow: 'shadow-blue-500/20',    num: 'text-blue-400'    },
-  violet:  { tab: 'hover:text-violet-600',  active: 'text-violet-600 border-violet-500', pill: 'bg-violet-50 text-violet-700 border-violet-200', glow: 'shadow-violet-500/20',  num: 'text-violet-400'  },
+  blue:    { tab: 'hover:text-blue-600',    active: 'text-blue-600 border-blue-500',       pill: 'bg-blue-50 text-blue-700 border-blue-200',         glow: 'shadow-blue-500/20',    num: 'text-blue-400'    },
+  violet:  { tab: 'hover:text-violet-600',  active: 'text-violet-600 border-violet-500',   pill: 'bg-violet-50 text-violet-700 border-violet-200',   glow: 'shadow-violet-500/20',  num: 'text-violet-400'  },
+  cyan:    { tab: 'hover:text-cyan-600',    active: 'text-cyan-600 border-cyan-500',       pill: 'bg-cyan-50 text-cyan-700 border-cyan-200',         glow: 'shadow-cyan-500/20',    num: 'text-cyan-400'    },
+  orange:  { tab: 'hover:text-orange-600',  active: 'text-orange-600 border-orange-500',   pill: 'bg-orange-50 text-orange-700 border-orange-200',   glow: 'shadow-orange-500/20',  num: 'text-orange-400'  },
+  pink:    { tab: 'hover:text-pink-600',    active: 'text-pink-600 border-pink-500',       pill: 'bg-pink-50 text-pink-700 border-pink-200',         glow: 'shadow-pink-500/20',    num: 'text-pink-400'    },
+  lime:    { tab: 'hover:text-lime-600',    active: 'text-lime-600 border-lime-500',       pill: 'bg-lime-50 text-lime-700 border-lime-200',         glow: 'shadow-lime-500/20',    num: 'text-lime-400'    },
+  red:     { tab: 'hover:text-red-600',     active: 'text-red-600 border-red-500',         pill: 'bg-red-50 text-red-700 border-red-200',           glow: 'shadow-red-500/20',     num: 'text-red-400'     },
+  sky:     { tab: 'hover:text-sky-600',     active: 'text-sky-600 border-sky-500',         pill: 'bg-sky-50 text-sky-700 border-sky-200',           glow: 'shadow-sky-500/20',     num: 'text-sky-400'     },
+  indigo:  { tab: 'hover:text-indigo-600',  active: 'text-indigo-600 border-indigo-500',   pill: 'bg-indigo-50 text-indigo-700 border-indigo-200',   glow: 'shadow-indigo-500/20',  num: 'text-indigo-400'  },
+  stone:   { tab: 'hover:text-stone-600',   active: 'text-stone-600 border-stone-500',     pill: 'bg-stone-50 text-stone-700 border-stone-200',     glow: 'shadow-stone-500/20',   num: 'text-stone-400'   },
 }
 
 function formatROI(n: number) {

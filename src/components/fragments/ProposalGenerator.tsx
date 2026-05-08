@@ -13,7 +13,22 @@ type FormData = {
   timeline: string
 }
 
-const INDUSTRIES = ['Mining', 'Financial Services', 'Manufacturing', 'Telecommunications', 'Government / Public Sector', 'Energy & Utilities', 'Retail', 'Other']
+const INDUSTRIES = [
+  'Mining & Resources',
+  'Financial Services',
+  'Manufacturing',
+  'Telecommunications',
+  'Government / Public Sector',
+  'Energy & Utilities',
+  'Retail',
+  'Agriculture & Agri-processing',
+  'Healthcare & Life Sciences',
+  'Logistics & Transport',
+  'Education & Training',
+  'Construction & Infrastructure',
+  'Legal & Professional Services',
+  'Hospitality & Tourism',
+]
 const SIZES      = ['50–200', '200–500', '500–2 000', '2 000–10 000', '10 000+']
 const TIMELINES  = ['ASAP (within 30 days)', 'Q3 2026', 'Q4 2026', '2027 planning cycle']
 

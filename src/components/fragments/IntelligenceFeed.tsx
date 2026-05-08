@@ -27,7 +27,7 @@ const FALLBACK: SectorBrief[] = [
     sector: 'Financial Services',
     score: 79,
     headline: 'FSCA sandbox framework opens AI compliance automation window',
-    insight: "FSCA's regulatory sandbox now accepting AI-based compliance monitoring applications. Window is open for 6 months. Banks are actively seeking B-BBEE Level 1 technology partners for procurement transformation points.",
+    insight: 'FSCA regulatory sandbox now accepting AI-based compliance monitoring applications. Banks are actively seeking B-BBEE Level 1 technology partners for procurement transformation scoring.',
     signal: 'bullish',
     updated: 'Today',
   },
@@ -35,7 +35,7 @@ const FALLBACK: SectorBrief[] = [
     sector: 'Government & Public Sector',
     score: 64,
     headline: 'SITA tender pipeline opens R2.1B AI modernisation track',
-    insight: 'State IT Agency is pre-qualifying vendors for the 2026-2027 AI modernisation programme. Preference scoring heavily weighted toward B-BBEE Level 1 and locally-owned providers.',
+    insight: 'State IT Agency pre-qualifying vendors for the 2026-2027 AI modernisation programme. Preference scoring heavily weighted toward B-BBEE Level 1 and locally-owned providers.',
     signal: 'caution',
     updated: 'Today',
   },
@@ -43,7 +43,39 @@ const FALLBACK: SectorBrief[] = [
     sector: 'Energy & Utilities',
     score: 91,
     headline: 'Eskom AI integration programme accepting pilot applications',
-    insight: 'Eskom Generation division is piloting AI predictive maintenance on 4 power stations. Integration partners must hold IBM or equivalent enterprise AI certification. Window closes Q3 2026.',
+    insight: 'Eskom Generation division piloting AI predictive maintenance on 4 power stations. Integration partners must hold IBM or equivalent enterprise AI certification. Window closes Q3 2026.',
+    signal: 'bullish',
+    updated: 'Today',
+  },
+  {
+    sector: 'Healthcare & Life Sciences',
+    score: 72,
+    headline: 'NHI rollout creating urgent demand for clinical admin AI',
+    insight: 'National Health Insurance implementation is forcing public hospitals to digitise patient records and automate administrative workflows. AI vendors with POPIA-compliant architectures have a clear entry point.',
+    signal: 'bullish',
+    updated: 'Today',
+  },
+  {
+    sector: 'Agriculture & Agri-processing',
+    score: 68,
+    headline: 'Drought risk pushing precision agriculture AI uptake in Limpopo and Free State',
+    insight: 'Commercial farmers facing water restrictions are piloting AI-driven irrigation and crop yield prediction models. AgriSETA and DALRRD are co-funding qualifying technology deployments.',
+    signal: 'caution',
+    updated: 'Today',
+  },
+  {
+    sector: 'Retail & Consumer',
+    score: 75,
+    headline: 'Shoprite and Checkers AI inventory pilots signal sector-wide shift',
+    insight: 'South Africa\'s top retailers are deploying AI-based demand forecasting to combat shrinkage and overstock losses. Smaller retail chains are now seeking affordable AI pilots to stay competitive.',
+    signal: 'bullish',
+    updated: 'Today',
+  },
+  {
+    sector: 'Logistics & Transport',
+    score: 81,
+    headline: 'Transnet corridor delays creating R4.8B AI route optimisation opportunity',
+    insight: 'Ongoing Transnet disruptions have accelerated road logistics growth, creating urgent demand for AI-based fleet and route optimisation tools across SA\'s freight sector.',
     signal: 'bullish',
     updated: 'Today',
   },
@@ -71,10 +103,11 @@ function ScoreRing({ score, color }: { score: number; color: string }) {
 }
 
 export default function IntelligenceFeed() {
-  const [briefs, setBriefs]     = useState<SectorBrief[]>(FALLBACK)
-  const [loading, setLoading]   = useState(true)
+  const [briefs, setBriefs]       = useState<SectorBrief[]>(FALLBACK)
+  const [loading, setLoading]     = useState(true)
   const [lastFetch, setLastFetch] = useState<string>('')
-  const [live, setLive]         = useState(false)
+  const [live, setLive]           = useState(false)
+  const [showAll, setShowAll]     = useState(false)
 
   const fetchBriefs = async () => {
     setLoading(true)
@@ -142,7 +175,7 @@ export default function IntelligenceFeed() {
 
         {/* Brief Cards */}
         <div className="grid sm:grid-cols-2 gap-6">
-          {briefs.map((brief, i) => {
+          {briefs.slice(0, showAll ? briefs.length : 4).map((brief, i) => {
             const sig = signalConfig[brief.signal]
             const SigIcon = sig.icon
             return (
@@ -177,6 +210,16 @@ export default function IntelligenceFeed() {
             )
           })}
         </div>
+
+        {/* Show More / Less toggle */}
+        {briefs.length > 4 && (
+          <div className="flex justify-center mt-8">
+            <button onClick={() => setShowAll(p => !p)}
+              className="flex items-center gap-2 px-6 py-3 bg-white/10 border border-white/20 text-white text-sm font-semibold rounded-xl hover:bg-white/20 transition-colors">
+              {showAll ? 'Show fewer sectors ↑' : `Show all ${briefs.length} sectors ↓`}
+            </button>
+          </div>
+        )}
 
         {/* CTA */}
         <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}
