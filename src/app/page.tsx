@@ -8,7 +8,6 @@ import IntelligenceFeed from '@/components/fragments/IntelligenceFeed'
 import ProposalGenerator from '@/components/fragments/ProposalGenerator'
 import ProcessSection from '@/components/fragments/ProcessSection'
 import AboutSection from '@/components/fragments/AboutSection'
-import ResultsSection from '@/components/fragments/ResultsSection'
 import PartnersSection from '@/components/fragments/PartnersSection'
 import ContactSection from '@/components/fragments/ContactSection'
 import Footer from '@/components/fragments/Footer'
@@ -27,7 +26,6 @@ export default function Home() {
       <ProposalGenerator />
       <ProcessSection />
       <AboutSection />
-      <ResultsSection />
       <PartnersSection />
       <ContactSection />
       <Footer />
