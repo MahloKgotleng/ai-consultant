@@ -1,7 +1,7 @@
 'use client'
 
 import { motion } from 'framer-motion'
-import { BadgeCheck, Shield, Cpu, Globe, Users } from 'lucide-react'
+import { BadgeCheck, Shield, Cpu, Globe } from 'lucide-react'
 
 // REWRITTEN: Partners array rebuilt with honest claims only.
 // "Enterprise Ready / SOC 2 Compliant / Security First" = FAKE. You are not SOC 2 certified.
@@ -10,17 +10,10 @@ import { BadgeCheck, Shield, Cpu, Globe, Users } from 'lucide-react'
 const partners = [
   {
     name: 'IBM',
-    tier: 'Partner Plus Registered',
-    status: 'Silver Track',
+    tier: 'Partner Plus · Silver Tier',
+    status: 'Achieved',
     icon: Cpu,
     description: 'Enterprise AI governance and model access via IBM Partner Plus. watsonx.governance and Granite models available for regulated pilots.'
-  },
-  {
-    name: 'Khutlo-Tharo',
-    tier: 'Active Training Partnership',
-    status: '150 Enrolled Learners',
-    icon: Users,
-    description: 'Active cohort partnership delivering AI literacy and skills development across Gauteng. 150 learners currently enrolled in structured AI programmes.'
   },
   {
     name: 'POPIA Aligned',
@@ -51,7 +44,7 @@ export default function PartnersSection() {
             {/* CHANGED: "Backed by enterprise-grade infrastructure" →
                 "IBM-aligned governance, SA privacy law, African constraints"
                 "Backed by" implies IBM endorses you. "IBM-aligned" = honest about access. */}
-            IBM-aligned governance, <span className="gradient-text">SA privacy law, African constraints</span>
+            IBM Silver Tier partnership, <span className="gradient-text">SA privacy law, African constraints</span>
           </motion.h2>
         </div>
 
@@ -77,7 +70,7 @@ export default function PartnersSection() {
         <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="mt-16 bg-slate-900 rounded-3xl p-8 md:p-12 text-center">
           <div className="max-w-3xl mx-auto">
             <h3 className="text-2xl md:text-3xl font-bold text-white mb-4">
-              IBM Partner Plus: Registered Tier
+              IBM Partner Plus: Silver Tier · Achieved
             </h3>
             <p className="text-slate-400 mb-8">
               {/* CHANGED: "As an IBM Partner Plus registered member on the Silver tier track, we combine 
@@ -89,10 +82,7 @@ export default function PartnersSection() {
                   from rapid demos to governed pilots on IBM infrastructure. For everyone else, we keep 
                   costs lean and delivery fast."
                   */}
-              As an IBM Partner Plus registered member, we have access to IBM's enterprise AI stack 
-              including watsonx.governance and Granite models. For clients who need it, we can upgrade 
-              from rapid demos to governed pilots on IBM infrastructure. For everyone else, we keep 
-              costs lean and delivery fast.
+              As an IBM Partner Plus Silver Tier partner, we combine Kgotla AI's rapid execution with IBM's enterprise AI infrastructure — watsonx.governance, Granite models, and full PartnerPlus programme access. For clients who need governed enterprise pilots, we bring the full IBM stack. For everyone else, we keep costs lean and delivery fast.
             </p>
             <div className="flex flex-wrap justify-center gap-4">
               {/* CHANGED: "Watson AI Integration" → "watsonx.governance"
