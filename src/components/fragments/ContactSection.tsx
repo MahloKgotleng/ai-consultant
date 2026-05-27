@@ -38,7 +38,7 @@ export default function ContactSection() {
               </div>
               <div className="inline-flex items-center gap-2 px-4 py-2 bg-blue-50 border border-blue-200 rounded-full">
                 <Award className="w-4 h-4 text-blue-600" />
-                <span className="text-sm font-semibold text-blue-700">IBM Partner Plus Registered</span>
+                <span className="text-sm font-semibold text-blue-700">IBM Partner Plus · Silver Tier</span>
               </div>
             </div>
 
