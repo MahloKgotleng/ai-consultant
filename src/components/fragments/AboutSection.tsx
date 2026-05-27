@@ -17,14 +17,14 @@ const values = [
   {
     icon: Users,
     title: 'Lean Team',
-    desc: '4-person team including implementation specialists. IBM Partner Plus registered, Silver tier track. IBM-aligned AI training across fundamentals, generative AI and enterprise models.'
+    desc: '4-person team including implementation specialists. IBM Partner Plus · Silver Tier achieved. IBM-aligned AI training across fundamentals, generative AI and enterprise models.'
   }
 ]
 
 const stats = [
   { icon: Building2, value: 'SA', label: 'Enterprise Focus', sub: 'Mining & Financial Services' },
   { icon: Users, value: '4', label: 'Team Members', sub: 'Implementation Specialists' },
-  { icon: Award, value: 'IBM', label: 'Partner Plus', sub: 'Registered · Silver Track' },
+  { icon: Award, value: 'IBM', label: 'Partner Plus', sub: 'Silver Tier · Achieved' },
   { icon: TrendingUp, value: '72hrs', label: 'Demo Sprint', sub: 'Scoping to Prototype' },
 ]
 
