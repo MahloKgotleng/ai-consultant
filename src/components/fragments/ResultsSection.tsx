@@ -10,7 +10,7 @@ import { TrendingUp, Users, Clock, Award, Quote } from 'lucide-react'
 // "IBM Partner Plus, Registered tier, Silver track" → kept, but "Silver track" implies trajectory, not status.
 const metrics = [
   { icon: Clock, value: '72hrs', label: 'Demo Sprint', subtext: 'From scoping to working demo' },
-  { icon: Users, value: '150+', label: 'Learners Trained', subtext: 'Active cohort via Khutlo-Tharo partnership' },
+  { icon: Award, value: 'Silver', label: 'IBM Tier', subtext: 'IBM Partner Plus · Silver Tier achieved' },
   { icon: TrendingUp, value: 'R45.8M', label: 'Modelled ROI', subtext: 'Across 16 industry AI demos' },
   { icon: Award, value: 'IBM', label: 'Partner Plus', subtext: 'Registered tier · Silver track' },
 ]
