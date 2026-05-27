@@ -5,7 +5,7 @@ import { ArrowRight, Play, Sparkles, Zap, Shield } from 'lucide-react'
 
 const stats = [
   { value: '72hrs', label: 'Demo Sprint' },
-  { value: '150+', label: 'Learners Trained' },
+  { value: 'Silver', label: 'IBM Tier' },
   { value: 'IBM', label: 'Partner Plus' },
   { value: 'Level 1', label: 'B-BBEE Rated' },
 ]
@@ -24,7 +24,7 @@ export default function HeroSection() {
             <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }} className="flex flex-wrap gap-3">
               <div className="inline-flex items-center gap-2 px-4 py-2 bg-primary-50 border border-primary-200 rounded-full">
                 <Sparkles className="w-4 h-4 text-primary-600" />
-                <span className="text-sm font-semibold text-primary-700">IBM Partner Plus Registered</span>
+                <span className="text-sm font-semibold text-primary-700">IBM Partner Plus · Silver Tier</span>
               </div>
               <div className="inline-flex items-center gap-2 px-4 py-2 bg-emerald-50 border border-emerald-200 rounded-full">
                 <Shield className="w-4 h-4 text-emerald-600" />
