@@ -89,7 +89,7 @@ function ROICard({ roi }: { roi: ROI }) {
           <div className="text-xs text-slate-400 mt-0.5">Payback period</div>
         </div>
       </div>
-      <a
+      
         href="#contact"
         className="mt-3 w-full flex items-center justify-center gap-2 py-2.5 bg-emerald-500 hover:bg-emerald-400 text-slate-900 font-bold text-sm rounded-xl transition-colors"
       >
@@ -154,9 +154,9 @@ export default function AIConcierge() {
     if (!started) startChat()
   }
 
-  const modelLabel = 'IBM Granite · watsonx.ai'
-  const modelColor = 'text-blue-400'
-  const dotColor   = 'bg-blue-400'
+  const modelLabel = model === 'watsonx' ? 'IBM Granite · watsonx.ai' : 'Kgotla AI Assistant'
+  const modelColor = model === 'watsonx' ? 'text-blue-400' : 'text-slate-400'
+  const dotColor   = model === 'watsonx' ? 'bg-blue-400' : 'bg-slate-400'
 
   return (
     <>
