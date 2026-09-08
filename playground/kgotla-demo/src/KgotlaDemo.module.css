@@ -1,0 +1,574 @@
+/* ══════════════════════════════════════════
+   KgotlaDemo.module.css
+   KGOTLA AI Solutions Architects — Demo Page
+   Palette: dark navy · pink rose · cream
+══════════════════════════════════════════ */
+
+/* ─── Design tokens ─── */
+.root {
+  --bg:        #0d0d1a;
+  --surface:   #13131f;
+  --surface2:  #1a1a2e;
+  --border:    #2a1f2e;
+  --pink:      #e8547a;
+  --pink-dim:  #c94070;
+  --pink-glow: rgba(232, 84, 122, 0.18);
+  --cream:     #f5e6e8;
+  --muted:     #9a8a90;
+  --text:      #f0dde2;
+
+  background: var(--bg);
+  color: var(--text);
+  font-family: -apple-system, "Segoe UI", system-ui, sans-serif;
+  font-size: 15px;
+  line-height: 1.65;
+  min-height: 100vh;
+  scroll-behavior: smooth;
+}
+
+/* ─── NAV ─── */
+.nav {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: rgba(13, 13, 26, 0.94);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid var(--border);
+  padding: 0 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 62px;
+}
+.navBrand { display: flex; align-items: center; gap: 0.75rem; }
+.navTitle { font-size: 1.1rem; font-weight: 800; letter-spacing: 0.12em; color: var(--cream); }
+.navSub   { font-size: 0.62rem; letter-spacing: 0.18em; color: var(--pink); text-transform: uppercase; }
+.navLinks { display: flex; gap: 1.5rem; }
+.navLink  {
+  color: var(--muted);
+  text-decoration: none;
+  font-size: 0.8rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  transition: color 0.2s;
+}
+.navLink:hover { color: var(--pink); }
+
+/* ─── HERO ─── */
+.hero {
+  text-align: center;
+  padding: 5.5rem 1.5rem 4rem;
+  position: relative;
+  overflow: hidden;
+}
+.hero::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse 70% 55% at 50% 0%, rgba(232,84,122,0.13) 0%, transparent 70%);
+  pointer-events: none;
+}
+.heroBadge {
+  display: inline-block;
+  border: 1px solid var(--pink-dim);
+  color: var(--pink);
+  font-size: 0.7rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  padding: 0.3rem 1rem;
+  border-radius: 2rem;
+  margin-bottom: 1.5rem;
+  background: var(--pink-glow);
+}
+.heroH1 {
+  font-size: clamp(2rem, 5vw, 3.5rem);
+  font-weight: 800;
+  letter-spacing: 0.03em;
+  color: var(--cream);
+  line-height: 1.18;
+  margin-bottom: 1rem;
+}
+.heroAccent { color: var(--pink); }
+.heroP {
+  max-width: 560px;
+  margin: 0 auto 1.8rem;
+  color: var(--muted);
+  font-size: 1.02rem;
+}
+.motto {
+  font-size: 0.72rem;
+  letter-spacing: 0.18em;
+  color: var(--muted);
+  text-transform: uppercase;
+  margin-bottom: 2.4rem;
+}
+.mottoDot { color: var(--pink-dim); margin: 0 0.4rem; }
+
+/* ─── BUTTONS ─── */
+.btnRow { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
+.btn {
+  padding: 0.72rem 1.8rem;
+  border-radius: 0.4rem;
+  font-size: 0.85rem;
+  font-weight: 700;
+  letter-spacing: 0.07em;
+  cursor: pointer;
+  border: none;
+  text-transform: uppercase;
+  transition: all 0.2s;
+  text-decoration: none;
+  display: inline-block;
+  font-family: inherit;
+}
+.btnPrimary { background: var(--pink); color: #fff; }
+.btnPrimary:hover { background: var(--pink-dim); }
+.btnOutline { background: transparent; color: var(--pink); border: 1px solid var(--pink-dim); }
+.btnOutline:hover { background: var(--pink-glow); }
+
+/* ─── SECTION LAYOUT ─── */
+.section { max-width: 1060px; margin: 0 auto; padding: 4.5rem 1.5rem; }
+.sectionLabel {
+  font-size: 0.68rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--pink);
+  margin-bottom: 0.4rem;
+}
+.sectionTitle { font-size: clamp(1.4rem, 3vw, 2rem); font-weight: 700; color: var(--cream); margin-bottom: 0.6rem; }
+.sectionDesc  { color: var(--muted); max-width: 560px; margin-bottom: 2.5rem; font-size: 0.95rem; }
+.divider { border: none; border-top: 1px solid var(--border); margin: 0; }
+
+/* ─── CAPABILITY CARDS ─── */
+.cardGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 1.2rem;
+}
+.capCard {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 0.75rem;
+  padding: 1.6rem;
+  position: relative;
+  overflow: hidden;
+  transition: border-color 0.2s, transform 0.2s;
+}
+.capCard:hover { border-color: var(--pink-dim); transform: translateY(-2px); }
+.capCard::before {
+  content: "";
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, var(--pink), transparent);
+}
+.capIcon {
+  width: 42px; height: 42px;
+  border-radius: 0.5rem;
+  background: var(--pink-glow);
+  border: 1px solid var(--pink-dim);
+  display: flex; align-items: center; justify-content: center;
+  margin-bottom: 1rem;
+  font-size: 1.25rem;
+}
+.capCardTitle { font-size: 1rem; color: var(--cream); margin-bottom: 0.4rem; font-weight: 600; }
+.capCardBody  { font-size: 0.84rem; color: var(--muted); line-height: 1.55; }
+.capTag {
+  display: inline-block;
+  margin-top: 0.9rem;
+  font-size: 0.67rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--pink);
+  background: var(--pink-glow);
+  border: 1px solid var(--pink-dim);
+  border-radius: 2rem;
+  padding: 0.18rem 0.6rem;
+}
+
+/* ─── INTEGRATION FLOW ─── */
+.flowBg {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 0.75rem;
+  padding: 2rem;
+  margin-bottom: 1.4rem;
+  overflow-x: auto;
+}
+.flowDiagram {
+  display: flex;
+  align-items: center;
+  min-width: 580px;
+  justify-content: center;
+}
+.flowNode {
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  border-radius: 0.6rem;
+  padding: 0.9rem 1rem;
+  text-align: center;
+  min-width: 108px;
+  flex-shrink: 0;
+  transition: border-color 0.3s;
+}
+.flowNodeLit { border-color: var(--pink); }
+.fnIcon  { font-size: 1.4rem; margin-bottom: 0.2rem; }
+.fnLabel { font-size: 0.66rem; color: var(--muted); text-transform: uppercase; letter-spacing: 0.08em; }
+.fnName  { font-size: 0.8rem; color: var(--cream); font-weight: 600; }
+.flowArrow {
+  flex: 1;
+  min-width: 32px;
+  max-width: 60px;
+  position: relative;
+  height: 24px;
+}
+.flowArrow::after {
+  content: "";
+  position: absolute;
+  left: 4px; right: 10px; top: 50%;
+  height: 1px;
+  background: linear-gradient(90deg, var(--pink-dim), var(--pink));
+  transform: translateY(-50%);
+}
+.flowArrow::before {
+  content: "▶";
+  position: absolute;
+  right: 0; top: 50%;
+  transform: translateY(-55%);
+  color: var(--pink);
+  font-size: 0.6rem;
+}
+.flowStats {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1rem;
+}
+.flowStat {
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  border-radius: 0.6rem;
+  padding: 1rem;
+  text-align: center;
+}
+.fsNum   { font-size: 1.7rem; font-weight: 700; color: var(--pink); }
+.fsLabel { font-size: 0.72rem; color: var(--muted); text-transform: uppercase; letter-spacing: 0.08em; }
+
+/* ─── CHATBOT ─── */
+.chatContainer {
+  display: grid;
+  grid-template-columns: 1fr 330px;
+  gap: 1.5rem;
+  align-items: start;
+}
+@media (max-width: 740px) {
+  .chatContainer { grid-template-columns: 1fr; }
+  .chatInfo { order: -1; }
+}
+.chatWindow {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 0.75rem;
+  overflow: hidden;
+}
+.chatHeader {
+  background: var(--surface2);
+  border-bottom: 1px solid var(--border);
+  padding: 0.9rem 1.2rem;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+.chatAvatar {
+  width: 34px; height: 34px;
+  border-radius: 50%;
+  background: var(--pink-glow);
+  border: 1.5px solid var(--pink);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1rem;
+  flex-shrink: 0;
+}
+.chatName   { font-size: 0.88rem; font-weight: 600; color: var(--cream); }
+.chatStatus { font-size: 0.7rem; color: var(--pink); }
+.statusDot  {
+  display: inline-block;
+  width: 7px; height: 7px;
+  background: #4ade80;
+  border-radius: 50%;
+  margin-right: 4px;
+  animation: pulse 2s infinite;
+}
+@keyframes pulse { 0%,100% { opacity:1; } 50% { opacity:0.4; } }
+.chatPowered { font-size: 0.63rem; color: var(--muted); letter-spacing: 0.06em; margin-left: auto; }
+
+.chatMessages {
+  padding: 1.2rem;
+  height: 340px;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 0.85rem;
+}
+.chatMessages::-webkit-scrollbar { width: 4px; }
+.chatMessages::-webkit-scrollbar-thumb { background: var(--border); border-radius: 2px; }
+
+.msg { display: flex; gap: 0.5rem; align-items: flex-end; max-width: 88%; }
+.msgUser { align-self: flex-end; flex-direction: row-reverse; }
+.msgBot  { align-self: flex-start; }
+.msgAv {
+  width: 26px; height: 26px;
+  border-radius: 50%;
+  flex-shrink: 0;
+  background: var(--pink-glow);
+  border: 1px solid var(--pink-dim);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 0.7rem;
+}
+.msgUser .msgAv { background: var(--surface2); border-color: var(--border); }
+.msgBubble {
+  padding: 0.65rem 0.9rem;
+  border-radius: 0.65rem;
+  font-size: 0.85rem;
+  line-height: 1.5;
+  white-space: pre-line;
+}
+.msgBot  .msgBubble { background: var(--surface2); color: var(--text); border: 1px solid var(--border); border-bottom-left-radius: 0.1rem; }
+.msgUser .msgBubble { background: var(--pink); color: #fff; border-bottom-right-radius: 0.1rem; }
+.msgTime { font-size: 0.63rem; color: var(--muted); margin-top: 0.2rem; text-align: right; }
+
+.typingIndicator { display: flex; gap: 4px; padding: 0.35rem 0; }
+.typingIndicator span {
+  width: 7px; height: 7px;
+  background: var(--pink);
+  border-radius: 50%;
+  opacity: 0.6;
+  animation: bounce 1.1s infinite;
+}
+.typingIndicator span:nth-child(2) { animation-delay: 0.18s; }
+.typingIndicator span:nth-child(3) { animation-delay: 0.36s; }
+@keyframes bounce { 0%,80%,100% { transform:translateY(0); } 40% { transform:translateY(-5px); } }
+
+.chatSuggestions {
+  padding: 0 0.75rem 0.6rem;
+  display: flex;
+  gap: 0.4rem;
+  flex-wrap: wrap;
+}
+.chip {
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  color: var(--muted);
+  font-size: 0.73rem;
+  border-radius: 2rem;
+  padding: 0.28rem 0.72rem;
+  cursor: pointer;
+  transition: all 0.15s;
+  font-family: inherit;
+}
+.chip:hover { border-color: var(--pink-dim); color: var(--pink); }
+
+.chatInputRow {
+  padding: 0.72rem;
+  border-top: 1px solid var(--border);
+  display: flex;
+  gap: 0.5rem;
+}
+.chatInput {
+  flex: 1;
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  border-radius: 0.4rem;
+  padding: 0.6rem 0.9rem;
+  color: var(--text);
+  font-size: 0.85rem;
+  outline: none;
+  font-family: inherit;
+  transition: border-color 0.2s;
+}
+.chatInput:focus { border-color: var(--pink-dim); }
+.chatInput::placeholder { color: var(--muted); }
+.chatSend {
+  background: var(--pink);
+  color: #fff;
+  border: none;
+  border-radius: 0.4rem;
+  padding: 0 1rem;
+  cursor: pointer;
+  font-size: 1.05rem;
+  transition: background 0.2s;
+  flex-shrink: 0;
+}
+.chatSend:hover { background: var(--pink-dim); }
+
+.chatInfo { display: flex; flex-direction: column; gap: 1rem; }
+.infoCard {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 0.65rem;
+  padding: 1.1rem;
+}
+.infoCardTitle { font-size: 0.85rem; color: var(--cream); margin-bottom: 0.55rem; font-weight: 600; }
+.infoCardBody  { font-size: 0.79rem; color: var(--muted); line-height: 1.6; }
+.capList { list-style: none; display: flex; flex-direction: column; gap: 0.4rem; }
+.capList li { font-size: 0.8rem; color: var(--muted); display: flex; align-items: center; gap: 0.5rem; }
+.capList li::before { content: "◆"; color: var(--pink); font-size: 0.5rem; }
+
+/* ─── WORKFLOW ─── */
+.workflowGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.5rem;
+}
+@media (max-width: 640px) { .workflowGrid { grid-template-columns: 1fr; } }
+
+.wfForm, .wfStatus {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 0.75rem;
+  padding: 1.6rem;
+}
+.wfTitle { font-size: 0.95rem; color: var(--cream); margin-bottom: 1.2rem; font-weight: 600; }
+
+.formGroup { margin-bottom: 1rem; }
+.formLabel {
+  display: block;
+  font-size: 0.76rem;
+  color: var(--muted);
+  margin-bottom: 0.3rem;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+.formInput, .formSelect {
+  width: 100%;
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  border-radius: 0.4rem;
+  padding: 0.6rem 0.8rem;
+  color: var(--text);
+  font-size: 0.85rem;
+  outline: none;
+  font-family: inherit;
+  transition: border-color 0.2s;
+}
+.formInput:focus, .formSelect:focus { border-color: var(--pink-dim); }
+.formSelect option { background: var(--surface2); }
+
+.wfSubmit {
+  width: 100%;
+  background: var(--pink);
+  color: #fff;
+  border: none;
+  border-radius: 0.4rem;
+  padding: 0.75rem;
+  cursor: pointer;
+  font-size: 0.85rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  transition: background 0.2s;
+  font-family: inherit;
+}
+.wfSubmit:hover:not(:disabled) { background: var(--pink-dim); }
+.wfSubmit:disabled { opacity: 0.5; cursor: not-allowed; }
+
+.pipelineSteps { display: flex; flex-direction: column; }
+.pipStep {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.75rem;
+  padding: 0.65rem 0;
+  position: relative;
+}
+.pipStep:not(:last-child)::after {
+  content: "";
+  position: absolute;
+  left: 12px; top: 30px; bottom: -0.65rem;
+  width: 1px;
+  background: var(--border);
+}
+.stepDot {
+  width: 26px; height: 26px;
+  border-radius: 50%;
+  flex-shrink: 0;
+  border: 2px solid var(--border);
+  background: var(--surface2);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 0.7rem;
+  z-index: 1;
+  position: relative;
+  transition: all 0.3s;
+}
+.stepDot_done   { border-color: var(--pink) !important; background: var(--pink) !important; color: #fff; }
+.stepDot_active { border-color: var(--pink) !important; background: var(--pink-glow) !important; color: var(--pink); animation: spinStep 0.8s linear infinite; }
+.stepDot_pending { color: var(--muted); }
+@keyframes spinStep { to { transform: rotate(360deg); } }
+
+.stepBody  { flex: 1; }
+.stepName  { font-size: 0.83rem; color: var(--cream); font-weight: 500; }
+.stepDetail{ font-size: 0.75rem; color: var(--muted); margin-bottom: 0.2rem; }
+.stepBadge {
+  font-size: 0.67rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 0.1rem 0.48rem;
+  border-radius: 2rem;
+  border: 1px solid;
+  display: inline-block;
+}
+.stepBadge_done    { color: #4ade80; border-color: #4ade80; background: rgba(74,222,128,0.1); }
+.stepBadge_active  { color: var(--pink); border-color: var(--pink-dim); background: var(--pink-glow); }
+.stepBadge_pending { color: var(--muted); border-color: var(--border); }
+
+/* ─── CLIENTS ─── */
+.clientsGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+  gap: 1rem;
+}
+.clientCard {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 0.65rem;
+  padding: 1.2rem;
+  transition: border-color 0.2s, transform 0.2s;
+}
+.clientCard:hover { border-color: var(--pink-dim); transform: translateY(-1px); }
+.clientSector { font-size: 0.66rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--pink); margin-bottom: 0.3rem; }
+.clientName   { font-size: 0.9rem; color: var(--cream); font-weight: 600; margin-bottom: 0.35rem; }
+.clientNeed   { font-size: 0.78rem; color: var(--muted); line-height: 1.5; }
+
+/* ─── CTA ─── */
+.ctaSection {
+  background: var(--surface);
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+  padding: 4.5rem 1.5rem;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+.ctaSection::before {
+  content: "";
+  position: absolute; inset: 0;
+  background: radial-gradient(ellipse 60% 80% at 50% 100%, rgba(232,84,122,0.1) 0%, transparent 65%);
+  pointer-events: none;
+}
+.ctaH2 { font-size: clamp(1.4rem, 3vw, 2rem); color: var(--cream); font-weight: 700; margin-bottom: 0.75rem; }
+.ctaP  { color: var(--muted); max-width: 480px; margin: 0 auto 2rem; }
+
+/* ─── FOOTER ─── */
+.footer {
+  text-align: center;
+  padding: 1.5rem;
+  border-top: 1px solid var(--border);
+  color: var(--muted);
+  font-size: 0.74rem;
+  letter-spacing: 0.04em;
+}
+.footer a { color: var(--pink); text-decoration: none; }
+.footer a:hover { text-decoration: underline; }
+.footerMade {
+  margin-top: 0.75rem;
+  padding-top: 0.75rem;
+  border-top: 1px solid var(--border);
+  color: #57606a;
+  font-size: 0.7rem;
+}
