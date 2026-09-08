@@ -182,7 +182,7 @@ export async function POST(req: NextRequest) {
 
   return NextResponse.json({
     content,
-    model: 'watsonx',
+    model,
     roi,
     detectedIndustry,
   })
