@@ -39,6 +39,7 @@ export default function ContactSection() {
           phone: formState.phone.trim(),
           email: formState.email.trim(),
           company_or_school: formState.company.trim(),
+          consent,
           need
         })
       })
