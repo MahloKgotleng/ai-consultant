@@ -73,11 +73,7 @@ export default function HeroSection() {
               ))}
             </div>
 
-            <motion.div animate={{ y: [0, -10, 0] }} transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }} className="absolute -bottom-6 -left-6 bg-slate-900 text-white p-6 rounded-2xl shadow-2xl">
-              <div className="text-sm text-slate-400 mb-1">Modelled ROI Across 16 Demos</div>
-              <div className="text-2xl font-bold text-emerald-400">R45.8M</div>
-              <div className="text-sm text-slate-400 mt-1">Mining · Financial Services · Manufacturing</div>
-            </motion.div>
+
           </motion.div>
         </div>
       </div>
