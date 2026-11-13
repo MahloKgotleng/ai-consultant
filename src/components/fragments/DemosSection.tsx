@@ -14,11 +14,11 @@ const industries = [
     icon: Banknote,
     color: 'emerald',
     demos: [
-      { id: 'kyc', title: 'KYC Document Processing', desc: 'AI-powered identity verification and document analysis', path: '/demos/financial/kyc-demo.html', roi: 'R4.2M savings' },
-      { id: 'fraud', title: 'Fraud Detection System', desc: 'Real-time transaction anomaly detection at scale', path: '/demos/financial/fraud-detection.html', roi: 'R8.1M protected' },
-      { id: 'credit', title: 'Credit Scoring Engine', desc: 'ML-based creditworthiness assessment pipeline', path: '/demos/financial/credit-scoring.html', roi: 'R3.5M efficiency' },
-      { id: 'batch', title: 'Batch Processing Tool', desc: 'High-volume financial data processing automation', path: '/demos/financial/batch-processing.html', roi: 'R2.8M saved' },
-      { id: 'chatbot', title: 'AI Banking Chatbot', desc: 'Intelligent customer service for financial queries', path: '/demos/financial/chatbot-demo.html', roi: 'R1.9M CX value' },
+      { id: 'kyc', title: 'KYC Document Processing', desc: 'Illustrative document review workflow', path: '/demos/financial/kyc-demo.html', roi: 'Illustrative workflow' },
+      { id: 'fraud', title: 'Fraud Detection System', desc: 'Real-time transaction anomaly detection at scale', path: '/demos/financial/fraud-detection.html', roi: 'Illustrative workflow' },
+      { id: 'credit', title: 'Credit Scoring Engine', desc: 'ML-based creditworthiness assessment pipeline', path: '/demos/financial/credit-scoring.html', roi: 'Illustrative workflow' },
+      { id: 'batch', title: 'Batch Processing Tool', desc: 'High-volume financial data processing automation', path: '/demos/financial/batch-processing.html', roi: 'Illustrative workflow' },
+      { id: 'chatbot', title: 'AI Banking Chatbot', desc: 'Intelligent customer service for financial queries', path: '/demos/financial/chatbot-demo.html', roi: 'Illustrative workflow' },
     ]
   },
   {
@@ -27,9 +27,9 @@ const industries = [
     icon: Pickaxe,
     color: 'amber',
     demos: [
-      { id: 'maintenance', title: 'Predictive Maintenance', desc: 'AI-driven equipment failure prevention system', path: '/demos/mining/mining-operations.html', roi: 'R12.4M saved' },
-      { id: 'safety', title: 'Safety Monitoring', desc: 'Real-time hazard detection and safety heatmaps', path: '/demos/mining/safety-heatmap.html', roi: 'Zero-harm target' },
-      { id: 'resource', title: 'Resource Optimisation', desc: 'AI scheduling and production efficiency engine', path: '/demos/mining/production-optimizer.html', roi: 'R6.7M uplift' },
+      { id: 'maintenance', title: 'Predictive Maintenance', desc: 'Illustrative maintenance coordination workflow', path: '/demos/mining/mining-operations.html', roi: 'Illustrative workflow' },
+      { id: 'safety', title: 'Safety Monitoring', desc: 'Illustrative incident triage and safety workflow', path: '/demos/mining/safety-heatmap.html', roi: 'Zero-harm target' },
+      { id: 'resource', title: 'Resource Optimisation', desc: 'AI scheduling and production efficiency engine', path: '/demos/mining/production-optimizer.html', roi: 'Illustrative workflow' },
     ]
   },
   {
@@ -38,8 +38,8 @@ const industries = [
     icon: ShoppingCart,
     color: 'blue',
     demos: [
-      { id: 'inventory', title: 'Inventory Management', desc: 'AI-powered stock optimisation and demand forecasting', path: '/demos/financial/financial-services.html', roi: 'R2.1M reduction' },
-      { id: 'analytics', title: 'Customer Analytics', desc: 'Behavioural analysis and segmentation engine', path: '/demos/financial/roi-calculator.html', roi: 'R1.8M revenue' },
+      { id: 'inventory', title: 'Inventory Management', desc: 'AI-powered stock optimisation and demand forecasting', path: '/demos/financial/financial-services.html', roi: 'Illustrative workflow' },
+      { id: 'analytics', title: 'Customer Analytics', desc: 'Behavioural analysis and segmentation engine', path: '/demos/financial/roi-calculator.html', roi: 'Illustrative workflow' },
     ]
   },
   {
@@ -48,8 +48,8 @@ const industries = [
     icon: Factory,
     color: 'violet',
     demos: [
-      { id: 'quality', title: 'Quality Control AI', desc: 'Computer vision defect detection system', path: '/demos/mining/mining-operations.html', roi: 'R3.2M scrap savings' },
-      { id: 'supply', title: 'Supply Chain Optimisation', desc: 'End-to-end logistics intelligence platform', path: '/demos/mining/production-optimizer.html', roi: 'R4.5M logistics' },
+      { id: 'quality', title: 'Quality Control AI', desc: 'Computer vision defect detection system', path: '/demos/mining/mining-operations.html', roi: 'Illustrative workflow' },
+      { id: 'supply', title: 'Supply Chain Optimisation', desc: 'End-to-end logistics intelligence platform', path: '/demos/mining/production-optimizer.html', roi: 'Illustrative workflow' },
     ]
   },
 ]
@@ -102,7 +102,7 @@ export default function DemosSection() {
           <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}
             className="inline-flex items-center gap-2 px-4 py-2 bg-white/10 border border-white/20 rounded-full mb-6">
             <Zap className="w-4 h-4 text-yellow-400" />
-            <span className="text-sm font-semibold text-white">16 AI Demo Scenarios — IBM Endorsed</span>
+            <span className="text-sm font-semibold text-white">Interactive AI Demo Scenarios</span>
           </motion.div>
           <motion.h2 initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: 0.1 }}
             className="text-4xl sm:text-5xl font-bold text-white mb-6">
@@ -110,7 +110,7 @@ export default function DemosSection() {
           </motion.h2>
           <motion.p initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: 0.2 }}
             className="text-xl text-slate-400">
-            Real working demos across 5 industries. R45.8M total ROI modelled. Click any demo to explore the scenario.
+            Explore illustrative workflow scenarios across selected industries. Use them as a starting point for a client-specific discovery and validation exercise.
           </motion.p>
         </div>
 
@@ -142,7 +142,7 @@ export default function DemosSection() {
                 onClick={() => setActiveDemo(demo.id)}>
                 <div className="flex items-start justify-between mb-4">
                   <div className={`px-3 py-1 rounded-full text-xs font-semibold border ${colors.badge}`}>
-                    {demo.roi}
+                    Scenario focus
                   </div>
                   <Play className="w-5 h-5 text-slate-500 group-hover:text-white transition-colors" />
                 </div>
