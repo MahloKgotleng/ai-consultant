@@ -89,7 +89,7 @@ function ROICard({ roi }: { roi: ROI }) {
           <div className="text-xs text-slate-400 mt-0.5">Payback period</div>
         </div>
       </div>
-      
+      <a
         href="#contact"
         className="mt-3 w-full flex items-center justify-center gap-2 py-2.5 bg-emerald-500 hover:bg-emerald-400 text-slate-900 font-bold text-sm rounded-xl transition-colors"
       >
