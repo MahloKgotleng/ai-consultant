@@ -2,6 +2,7 @@ import Navigation from '@/components/fragments/Navigation'
 import HeroSection from '@/components/fragments/HeroSection'
 import SolutionsSection from '@/components/fragments/SolutionsSection'
 import IndustriesSection from '@/components/fragments/IndustriesSection'
+import OpportunityFinder from '@/components/fragments/OpportunityFinder'
 import DemosSection from '@/components/fragments/DemosSection'
 import ROICalculator from '@/components/fragments/ROICalculator'
 import IntelligenceFeed from '@/components/fragments/IntelligenceFeed'
@@ -20,6 +21,7 @@ export default function Home() {
       <HeroSection />
       <SolutionsSection />
       <IndustriesSection />
+      <OpportunityFinder />
       <DemosSection />
       <ROICalculator />
       <IntelligenceFeed />
