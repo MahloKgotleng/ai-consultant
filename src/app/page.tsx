@@ -4,9 +4,6 @@ import SolutionsSection from '@/components/fragments/SolutionsSection'
 import IndustriesSection from '@/components/fragments/IndustriesSection'
 import OpportunityFinder from '@/components/fragments/OpportunityFinder'
 import DemosSection from '@/components/fragments/DemosSection'
-import ROICalculator from '@/components/fragments/ROICalculator'
-import IntelligenceFeed from '@/components/fragments/IntelligenceFeed'
-import ProposalGenerator from '@/components/fragments/ProposalGenerator'
 import ProcessSection from '@/components/fragments/ProcessSection'
 import AboutSection from '@/components/fragments/AboutSection'
 import PartnersSection from '@/components/fragments/PartnersSection'
@@ -23,9 +20,6 @@ export default function Home() {
       <IndustriesSection />
       <OpportunityFinder />
       <DemosSection />
-      <ROICalculator />
-      <IntelligenceFeed />
-      <ProposalGenerator />
       <ProcessSection />
       <AboutSection />
       <PartnersSection />
