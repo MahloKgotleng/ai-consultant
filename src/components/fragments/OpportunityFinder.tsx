@@ -127,6 +127,7 @@ export default function OpportunityFinder() {
           <p className="text-lg sm:text-xl text-slate-600">
             Describe one repetitive or information-heavy process. Get an initial automation opportunity map based on your inputs, then request a tailored discovery discussion with Kgotla AI.
           </p>
+          <p className="text-sm text-slate-500 mt-3">Version 1 is a transparent, rules-based assessment. Live model reasoning and multi-agent orchestration will be added only after IBM service access, cost limits and safeguards are verified.</p>
         </div>
 
         <div className="grid lg:grid-cols-2 gap-8 items-start">
