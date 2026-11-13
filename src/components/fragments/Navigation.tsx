@@ -7,6 +7,7 @@ import { Menu, X, ChevronRight } from 'lucide-react'
 const navItems = [
   { name: 'Solutions', href: '#solutions' },
   { name: 'Industries', href: '#industries' },
+  { name: 'AI Opportunity Finder', href: '#opportunity-finder' },
   { name: 'Live Demos', href: '#demos' },
   { name: 'Process', href: '#process' },
   { name: 'About', href: '#about' },
