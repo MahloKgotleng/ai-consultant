@@ -97,6 +97,7 @@ export default function OpportunityFinder() {
           phone: phone.trim(),
           email: email.trim(),
           company_or_school: company.trim(),
+          consent: true,
           need: leadSummary,
         }),
       })
