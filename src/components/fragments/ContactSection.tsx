@@ -9,16 +9,53 @@ export default function ContactSection() {
     name: '',
     company: '',
     email: '',
+    phone: '',
     role: '',
     message: '',
     priority: 'standard'
   })
+  const [consent, setConsent] = useState(false)
+  const [isSubmitting, setIsSubmitting] = useState(false)
+  const [submitError, setSubmitError] = useState('')
   const [isSubmitted, setIsSubmitted] = useState(false)
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
-    setIsSubmitted(true)
-    setTimeout(() => setIsSubmitted(false), 5000)
+    setSubmitError('')
+    setIsSubmitting(true)
+
+    const need = [
+      formState.message.trim(),
+      formState.role ? `Role: ${formState.role}` : '',
+      `Timeline priority: ${formState.priority}`
+    ].filter(Boolean).join('\n')
+
+    try {
+      const response = await fetch('https://kgotla-connector.2fpcbne8atou.eu-de.codeengine.appdomain.cloud/lead', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          name: formState.name.trim(),
+          phone: formState.phone.trim(),
+          email: formState.email.trim(),
+          company_or_school: formState.company.trim(),
+          need
+        })
+      })
+
+      const result = await response.json()
+      if (!response.ok || result.status !== 'success') {
+        throw new Error(result.detail || result.message || 'We could not submit your enquiry. Please try again.')
+      }
+
+      setIsSubmitted(true)
+      setFormState({ name: '', company: '', email: '', phone: '', role: '', message: '', priority: 'standard' })
+      setConsent(false)
+    } catch (error) {
+      setSubmitError(error instanceof Error ? error.message : 'Something went wrong. Please try again.')
+    } finally {
+      setIsSubmitting(false)
+    }
   }
 
   return (
@@ -111,9 +148,9 @@ export default function ContactSection() {
                 <div className="w-16 h-16 bg-accent-emerald/10 rounded-full flex items-center justify-center mb-6">
                   <CheckCircle className="w-8 h-8 text-accent-emerald" />
                 </div>
-                <h3 className="text-2xl font-bold text-slate-900 mb-2">Message Sent!</h3>
-                <p className="text-slate-600">Mahlo will be in touch within 4 hours with your Demo plan.</p>
-                <p className="text-sm text-slate-500 mt-2">Prefer faster? WhatsApp us at 073 646 4935</p>
+                <h3 className="text-2xl font-bold text-slate-900 mb-2">Enquiry Received!</h3>
+                <p className="text-slate-600">Thank you. Your enquiry has been securely submitted to our team.</p>
+                <p className="text-sm text-slate-500 mt-2">Prefer a direct conversation? WhatsApp us at 073 646 4935</p>
               </div>
             ) : (
               <form onSubmit={handleSubmit} className="space-y-6">
@@ -123,8 +160,8 @@ export default function ContactSection() {
                     <input type="text" required className="w-full px-4 py-3 bg-white border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all" placeholder="John Smith" value={formState.name} onChange={(e) => setFormState({...formState, name: e.target.value})} />
                   </div>
                   <div>
-                    <label className="block text-sm font-semibold text-slate-700 mb-2">Company</label>
-                    <input type="text" required className="w-full px-4 py-3 bg-white border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all" placeholder="Company Name" value={formState.company} onChange={(e) => setFormState({...formState, company: e.target.value})} />
+                    <label className="block text-sm font-semibold text-slate-700 mb-2">Company / School</label>
+                    <input type="text" required className="w-full px-4 py-3 bg-white border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all" placeholder="Company or school name" value={formState.company} onChange={(e) => setFormState({...formState, company: e.target.value})} />
                   </div>
                 </div>
 
@@ -147,8 +184,13 @@ export default function ContactSection() {
                 </div>
 
                 <div>
+                  <label className="block text-sm font-semibold text-slate-700 mb-2">Phone Number</label>
+                  <input type="tel" required minLength={5} maxLength={30} autoComplete="tel" className="w-full px-4 py-3 bg-white border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all" placeholder="+27 00 000 0000" value={formState.phone} onChange={(e) => setFormState({...formState, phone: e.target.value})} />
+                </div>
+
+                <div>
                   <label className="block text-sm font-semibold text-slate-700 mb-2">Use Case / Challenge</label>
-                  <textarea rows={4} className="w-full px-4 py-3 bg-white border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all resize-none" placeholder="Describe the process or decision you'd like to automate or enhance with AI..." value={formState.message} onChange={(e) => setFormState({...formState, message: e.target.value})} />
+                  <textarea rows={4} required minLength={5} maxLength={1800} className="w-full px-4 py-3 bg-white border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all resize-none" placeholder="Describe the process or decision you'd like to automate or enhance with AI..." value={formState.message} onChange={(e) => setFormState({...formState, message: e.target.value})} />
                 </div>
 
                 <div>
@@ -162,12 +204,21 @@ export default function ContactSection() {
                   </div>
                 </div>
 
-                <button type="submit" className="w-full inline-flex items-center justify-center gap-2 px-8 py-4 bg-primary-600 text-white font-semibold rounded-xl hover:bg-primary-700 transition-all hover:shadow-xl hover:shadow-primary-600/25">
-                  Request PoC Discussion
+                <label className="flex items-start gap-3 text-sm text-slate-600">
+                  <input type="checkbox" required checked={consent} onChange={(e) => setConsent(e.target.checked)} className="mt-1 h-4 w-4 rounded border-slate-300 text-primary-600 focus:ring-primary-500" />
+                  <span>I consent to Kgotla AI processing the information I provide to respond to this enquiry and contact me about the requested services.</span>
+                </label>
+
+                {submitError && (
+                  <p role="alert" className="text-sm text-red-600 bg-red-50 border border-red-200 rounded-xl p-3">{submitError}</p>
+                )}
+
+                <button type="submit" disabled={isSubmitting} className="w-full inline-flex items-center justify-center gap-2 px-8 py-4 bg-primary-600 text-white font-semibold rounded-xl hover:bg-primary-700 transition-all hover:shadow-xl hover:shadow-primary-600/25 disabled:opacity-60 disabled:cursor-not-allowed">
+                  {isSubmitting ? 'Sending enquiry...' : 'Request PoC Discussion'}
                   <ArrowRight className="w-5 h-5" />
                 </button>
 
-                <p className="text-xs text-center text-slate-500">Your information is secure. We never share executive contact details.</p>
+                <p className="text-xs text-center text-slate-500">Your details will be used to respond to your enquiry.</p>
               </form>
             )}
           </motion.div>
