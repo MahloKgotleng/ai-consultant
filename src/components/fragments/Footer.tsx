@@ -104,9 +104,10 @@ export default function Footer() {
         <div className="pt-8 border-t border-white/10 flex flex-col md:flex-row justify-between items-center gap-4">
           <p className="text-sm text-slate-500">© {new Date().getFullYear()} Kgotla AI Pty Ltd. All rights reserved.</p>
           <div className="flex gap-6 text-sm text-slate-500">
-            <a href="#" className="hover:text-white transition-colors">Privacy Policy</a>
-            <a href="#" className="hover:text-white transition-colors">Terms of Service</a>
-            <a href="#" className="hover:text-white transition-colors">Security</a>
+            <a href="/privacy/" className="hover:text-white transition-colors">Privacy Notice</a>
+            <a href="/terms-and-conditions/" className="hover:text-white transition-colors">Terms and Conditions</a>
+            <a href="/tender-shield/" className="hover:text-white transition-colors">Tender Shield Docs</a>
+            <a href="/contact/" className="hover:text-white transition-colors">Support</a>
           </div>
         </div>
       </div>
